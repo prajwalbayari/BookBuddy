@@ -84,7 +84,7 @@ export const userSignup = async (req, res) => {
   }
 };
 
-// Login fro the user
+// Login for the user
 export const userLogin = async (req, res) => {
   const { userEmail, password } = req.body;
   try {
@@ -110,5 +110,21 @@ export const userLogin = async (req, res) => {
   } catch (error) {
     console.log("Error in signup controller", error.message);
     res.status(500).json("Internal server Error");
+  }
+};
+
+// Logout for both user and admin
+export const logout = async (req, res) => {
+  try {
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    });
+
+    return res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    console.log("Error in logout controller:", error.message);
+    res.status(500).json({ message: "Internal server error" });
   }
 };

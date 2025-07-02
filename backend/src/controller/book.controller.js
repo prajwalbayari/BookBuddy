@@ -202,3 +202,37 @@ export const getMyBooks = async (req, res) => {
     res.status(500).json({ message: "Internal server Error" });
   }
 };
+
+// Fetch details of an individual book
+export const getBookDetails = async (req, res) => {
+  const userId = req.user._id;
+  const { bookId } = req.params;
+  try {
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized access!" });
+    }
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+    if (!mongoose.Types.ObjectId.isValid(bookId)) {
+      return res.status(400).json({ message: "Invalid Book ID" });
+    }
+
+    const book = await Book.findOne({ _id: bookId, status: "Approved" }).select(
+      "-status"
+    );
+    if (!book) {
+      return res.status(404).json({ message: "Book not found!" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: book,
+      message: "Book details fetched successfully!",
+    });
+  } catch (error) {
+    console.log("Error in getBookDetails controller", error.message);
+    res.status(500).json({ message: "Internal server Error" });
+  }
+};
