@@ -10,7 +10,6 @@ const bookSchema = new mongoose.Schema(
     edition: {
       type: Number,
       min: [1, "Edition must be at least 1"],
-      default: null,
     },
     description: {
       type: String,
@@ -30,6 +29,11 @@ const bookSchema = new mongoose.Schema(
     bookImages: {
       type: [String],
       default: [],
+    },
+    status: {
+      type: String,
+      enum: ["Pending","Rejected","Approved"],
+      default: "Pending",
     },
   },
   {
