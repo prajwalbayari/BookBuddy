@@ -20,28 +20,8 @@ class AuthService {
   // User signup
   async signup(userData) {
     try {
-      // Mock API call - replace with actual API call
-      // console.log("Signup attempt:", userData);
-
-      // // Simulate API delay
-      // await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // // Mock success response
-      // const mockUser = {
-      //   id: Date.now(),
-      //   name: userData.name,
-      //   email: userData.email,
-      //   role: "user",
-      //   createdAt: new Date().toISOString(),
-      // };
-
-      // const mockToken = "mock-jwt-token-" + Date.now();
-
-      // In real implementation, this would be:
       const response = await authApi.signup(userData);
       console.log("Signup response:", response);
-      // return this.handleAuthSuccess(response.user, response.token);
-
     } catch (error) {
       console.error("Signup failed:", error);
       throw error;
@@ -51,28 +31,8 @@ class AuthService {
   // User login
   async login(credentials) {
     try {
-      // // Mock API call - replace with actual API call
-      // console.log("Login attempt:", credentials);
-
-      // // Simulate API delay
-      // await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Mock success response
-      // const mockUser = {
-      //   id: Date.now(),
-      //   name: 'John Doe',
-      //   email: credentials.email,
-      //   role: credentials.role,
-      //   createdAt: new Date().toISOString(),
-      // };
-
-      // const mockToken = 'mock-jwt-token-' + Date.now();
-
-      // In real implementation, this would be:
       const response = await authApi.login(credentials);
       return this.handleAuthSuccess(response.user, response.token);
-
-      // return this.handleAuthSuccess(mockUser, mockToken);
     } catch (error) {
       console.error("Login failed:", error);
       throw error;
@@ -94,12 +54,11 @@ class AuthService {
   async logout() {
     try {
       // In real implementation, this would be:
-      // await authApi.logout();
+      await authApi.logout();
 
       this.handleAuthLogout();
     } catch (error) {
       console.error("Logout failed:", error);
-      // Even if API call fails, clear local auth state
       this.handleAuthLogout();
     }
   }

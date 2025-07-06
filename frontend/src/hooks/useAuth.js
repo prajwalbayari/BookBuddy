@@ -8,18 +8,19 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Initialize auth state
-    const initAuth = () => {
+    // Listen for auth changes in localStorage (for multi-tab and instant UI update)
+    const handleStorage = () => {
       const currentUser = authService.getCurrentUser();
       const isAuth = authService.isAuth();
-      
       setUser(currentUser);
       setIsAuthenticated(isAuth);
       setIsAdmin(currentUser?.role === 'admin');
       setLoading(false);
     };
-
-    initAuth();
+    window.addEventListener('storage', handleStorage);
+    // Also run on mount
+    handleStorage();
+    return () => window.removeEventListener('storage', handleStorage);
   }, []);
 
   const login = async (credentials) => {
@@ -28,6 +29,8 @@ export const useAuth = () => {
       setUser(result.user);
       setIsAuthenticated(true);
       setIsAdmin(result.user?.role === 'admin');
+      // Broadcast login event for instant UI update
+      window.dispatchEvent(new Event('storage'));
       return result;
     } catch (error) {
       throw error;
@@ -39,7 +42,8 @@ export const useAuth = () => {
       const result = await authService.adminLogin(credentials);
       setUser(result.user);
       setIsAuthenticated(true);
-      setIsAdmin(true);
+      setIsAdmin(result.user?.role === 'admin');
+      window.dispatchEvent(new Event('storage'));
       return result;
     } catch (error) {
       throw error;
@@ -64,12 +68,14 @@ export const useAuth = () => {
       setUser(null);
       setIsAuthenticated(false);
       setIsAdmin(false);
+      // Broadcast logout event for instant UI update
+      window.dispatchEvent(new Event('storage'));
     } catch (error) {
       console.error('Logout failed:', error);
-      // Even if logout fails, clear local state
       setUser(null);
       setIsAuthenticated(false);
       setIsAdmin(false);
+      window.dispatchEvent(new Event('storage'));
     }
   };
 
