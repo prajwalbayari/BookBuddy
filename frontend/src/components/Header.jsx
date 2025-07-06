@@ -16,7 +16,7 @@ const Header = () => {
             <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">BB</span>
             </div>
-            <span className="text-2xl font-bold gradient-text">Book Buddy</span>
+            <span className="text-2xl font-bold gradient-text">BookBuddy</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -47,13 +47,13 @@ const Header = () => {
           <div className="hidden md:flex space-x-4">
             <Link 
               to="/login" 
-              className="px-4 py-2 text-primary-600 border border-primary-600 rounded-lg hover:bg-primary-50 transition-colors"
+              className="px-4 py-2 border border-primary-600 text-primary-600 rounded-lg bg-white hover:bg-primary-50 transition-colors font-medium"
             >
               Login
             </Link>
             <Link 
               to="/signup" 
-              className="btn-primary"
+              className="px-4 py-2 border border-primary-600 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
             >
               Sign Up
             </Link>

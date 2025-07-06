@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Card from '../components/Card';
 import Input from '../components/Input';
 import Button from '../components/Button';
-import { authService } from '../services/authService';
+import { useAuth } from '../hooks/useAuth';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +13,7 @@ const Login = () => {
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const { login, adminLogin } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,12 +57,20 @@ const Login = () => {
     
     setIsLoading(true);
     try {
-      await authService.login({
-        email: formData.email,
-        password: formData.password,
-        role: formData.role,
-      });
-      alert(`Login successful as ${formData.role}!`);
+      if (formData.role === 'admin') {
+        await adminLogin({
+          adminEmail: formData.email,
+          password: formData.password,
+        });
+        alert('Login successful as admin!');
+      } else {
+        await login({
+          userEmail: formData.email,
+          password: formData.password,
+          role: formData.role,
+        });
+        alert('Login successful as user!');
+      }
     } catch (error) {
       setErrors({ submit: error.message || 'Login failed. Please try again.' });
     } finally {
@@ -70,88 +79,95 @@ const Login = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8">
-      <Card>
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-800">Welcome Back</h2>
-          <p className="text-gray-600 mt-2">Login to your Book Buddy account</p>
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-white px-4 py-4">
+      <div className="w-full max-w-md">
+        <Card>
+          <div className="text-center mb-4">
+            <h2 className="text-3xl font-bold text-gray-800">Welcome Back</h2>
+            <p className="text-gray-600 mt-2">Login to your BookBuddy account</p>
+          </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <Input
-            type="email"
-            name="email"
-            label="Email Address"
-            placeholder="Enter your email"
-            value={formData.email}
-            onChange={handleChange}
-            error={errors.email}
-            required
-          />
-
-          <Input
-            type="password"
-            name="password"
-            label="Password"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={handleChange}
-            error={errors.password}
-            required
-          />
-
-          <div>
-            <label className="form-label">Login as</label>
-            <div className="flex space-x-4 mt-2">
-              <label className="flex items-center">
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <div className="flex space-x-6 justify-center mb-2">
+              <label className="flex items-center cursor-pointer">
                 <input
                   type="radio"
                   name="role"
                   value="user"
                   checked={formData.role === 'user'}
                   onChange={handleChange}
-                  className="mr-2 text-primary-600"
+                  className="mr-2 text-primary-600 focus:ring-primary-500"
                 />
                 <span className="text-gray-700">User</span>
               </label>
-              <label className="flex items-center">
+              <label className="flex items-center cursor-pointer">
                 <input
                   type="radio"
                   name="role"
                   value="admin"
                   checked={formData.role === 'admin'}
                   onChange={handleChange}
-                  className="mr-2 text-primary-600"
+                  className="mr-2 text-primary-600 focus:ring-primary-500"
                 />
                 <span className="text-gray-700">Admin</span>
               </label>
             </div>
-          </div>
 
-          {errors.submit && (
-            <div className="text-red-500 text-sm text-center">
-              {errors.submit}
+            <div className="mb-2">
+              <label htmlFor="email" className="form-label block mb-1 text-gray-700 font-medium">Email Address</label>
+              <Input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={handleChange}
+                error={errors.email}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              />
             </div>
-          )}
 
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className="w-full"
-          >
-            {isLoading ? 'Logging in...' : 'Login'}
-          </Button>
-        </form>
+            <div className="mb-2">
+              <label htmlFor="password" className="form-label block mb-1 text-gray-700 font-medium">Password</label>
+              <Input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Enter your password"
+                value={formData.password}
+                onChange={handleChange}
+                error={errors.password}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              />
+            </div>
 
-        <div className="text-center mt-6">
-          <p className="text-gray-600">
-            Don't have an account?{' '}
-            <Link to="/signup" className="text-primary-600 hover:underline font-medium">
-              Sign up here
-            </Link>
-          </p>
-        </div>
-      </Card>
+            {errors.submit && (
+              <div className="text-red-500 text-sm text-center">
+                {errors.submit}
+              </div>
+            )}
+
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full"
+            >
+              {isLoading ? 'Logging in...' : 'Login'}
+            </Button>
+          </form>
+
+          <div className="text-center mt-6">
+            <p className="text-gray-600">
+              Don't have an account?{' '}
+              <Link to="/signup" className="text-primary-600 hover:underline font-medium">
+                Sign up here
+              </Link>
+            </p>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 };

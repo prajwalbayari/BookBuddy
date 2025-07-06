@@ -1,8 +1,8 @@
 // API Configuration
-export const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+export const API_BASE_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:3001/api';
 
 // App Configuration
-export const APP_NAME = 'Book Buddy';
+export const APP_NAME = 'BookBuddy';
 export const APP_VERSION = '1.0.0';
 
 // Pagination

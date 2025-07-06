@@ -4,6 +4,7 @@ import { authService } from '../services/authService';
 export const useAuth = () => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -14,6 +15,7 @@ export const useAuth = () => {
       
       setUser(currentUser);
       setIsAuthenticated(isAuth);
+      setIsAdmin(currentUser?.role === 'admin');
       setLoading(false);
     };
 
@@ -25,6 +27,19 @@ export const useAuth = () => {
       const result = await authService.login(credentials);
       setUser(result.user);
       setIsAuthenticated(true);
+      setIsAdmin(result.user?.role === 'admin');
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const adminLogin = async (credentials) => {
+    try {
+      const result = await authService.adminLogin(credentials);
+      setUser(result.user);
+      setIsAuthenticated(true);
+      setIsAdmin(true);
       return result;
     } catch (error) {
       throw error;
@@ -36,6 +51,7 @@ export const useAuth = () => {
       const result = await authService.signup(userData);
       setUser(result.user);
       setIsAuthenticated(true);
+      setIsAdmin(result.user?.role === 'admin');
       return result;
     } catch (error) {
       throw error;
@@ -47,11 +63,13 @@ export const useAuth = () => {
       await authService.logout();
       setUser(null);
       setIsAuthenticated(false);
+      setIsAdmin(false);
     } catch (error) {
       console.error('Logout failed:', error);
       // Even if logout fails, clear local state
       setUser(null);
       setIsAuthenticated(false);
+      setIsAdmin(false);
     }
   };
 
@@ -59,6 +77,7 @@ export const useAuth = () => {
     try {
       const updatedUser = await authService.updateProfile(userData);
       setUser(updatedUser);
+      setIsAdmin(updatedUser?.role === 'admin');
       return updatedUser;
     } catch (error) {
       throw error;
@@ -68,8 +87,10 @@ export const useAuth = () => {
   return {
     user,
     isAuthenticated,
+    isAdmin,
     loading,
     login,
+    adminLogin,
     signup,
     logout,
     updateProfile,

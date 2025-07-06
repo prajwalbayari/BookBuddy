@@ -19,12 +19,12 @@ export const adminLogin = async (req, res) => {
     if (!checkPassword)
       return res.status(400).json({ message: "Invalid credentials!" });
 
-    generateToken(admin._id, res);
+    const token = generateToken(admin._id, res);
 
     res.status(200).json({
       message: "Login successfull",
-      _id: admin._id,
-      adminEmail,
+      admin: admin,
+      token: token,
     });
   } catch (error) {
     console.log("Error in admin login controller", error.message);
@@ -100,12 +100,12 @@ export const userLogin = async (req, res) => {
     if (!checkPassword)
       return res.status(400).json({ message: "Invalid credentials!" });
 
-    generateToken(user._id, res);
+    const token = generateToken(user._id, res);
 
     res.status(200).json({
       message: "Login successfull",
-      _id: user._id,
-      userEmail,
+      user: user,
+      token: token,
     });
   } catch (error) {
     console.log("Error in signup controller", error.message);

@@ -68,8 +68,8 @@ const Signup = () => {
     setIsLoading(true);
     try {
       await authService.signup({
-        name: formData.name,
-        email: formData.email,
+        userName: formData.name,
+        userEmail: formData.email,
         password: formData.password,
       });
       alert('Signup successful! You can now login.');
@@ -81,82 +81,104 @@ const Signup = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8">
-      <Card>
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-800">Create Account</h2>
-          <p className="text-gray-600 mt-2">Join Book Buddy and start your reading journey</p>
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-white px-4 py-4">
+      <div className="w-full max-w-md">
+        <Card>
+          <div className="text-center mb-4">
+            <h2 className="text-3xl font-bold text-gray-800">Create Account</h2>
+            <p className="text-gray-600 mt-2">Join Book Buddy and start your reading journey</p>
+          </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <Input
-            type="text"
-            name="name"
-            label="Full Name"
-            placeholder="Enter your full name"
-            value={formData.name}
-            onChange={handleChange}
-            error={errors.name}
-            required
-          />
-
-          <Input
-            type="email"
-            name="email"
-            label="Email Address"
-            placeholder="Enter your email"
-            value={formData.email}
-            onChange={handleChange}
-            error={errors.email}
-            required
-          />
-
-          <Input
-            type="password"
-            name="password"
-            label="Password"
-            placeholder="Create a password"
-            value={formData.password}
-            onChange={handleChange}
-            error={errors.password}
-            required
-          />
-
-          <Input
-            type="password"
-            name="confirmPassword"
-            label="Confirm Password"
-            placeholder="Confirm your password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            error={errors.confirmPassword}
-            required
-          />
-
-          {errors.submit && (
-            <div className="text-red-500 text-sm text-center">
-              {errors.submit}
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <div className="mb-2">
+              <label htmlFor="name" className="form-label block mb-1 text-gray-700 font-medium">Full Name</label>
+              <Input
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Enter your full name"
+                value={formData.name}
+                onChange={handleChange}
+                error={errors.name}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              />
+              {errors.name && <div className="text-red-500 text-xs mt-1 text-center">{errors.name}</div>}
             </div>
-          )}
 
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className="w-full"
-          >
-            {isLoading ? 'Creating Account...' : 'Register'}
-          </Button>
-        </form>
+            <div className="mb-2">
+              <label htmlFor="email" className="form-label block mb-1 text-gray-700 font-medium">Email</label>
+              <Input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={handleChange}
+                error={errors.email}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              />
+              {errors.email && <div className="text-red-500 text-xs mt-1 text-center">{errors.email}</div>}
+            </div>
 
-        <div className="text-center mt-6">
-          <p className="text-gray-600">
-            Already have an account?{' '}
-            <Link to="/login" className="text-primary-600 hover:underline font-medium">
-              Login here
-            </Link>
-          </p>
-        </div>
-      </Card>
+            <div className="mb-2">
+              <label htmlFor="password" className="form-label block mb-1 text-gray-700 font-medium">Password</label>
+              <Input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Create a password"
+                value={formData.password}
+                onChange={handleChange}
+                error={errors.password}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              />
+              {errors.password && <div className="text-red-500 text-xs mt-1 text-center">{errors.password}</div>}
+            </div>
+
+            <div className="mb-2">
+              <label htmlFor="confirmPassword" className="form-label block mb-1 text-gray-700 font-medium">Confirm Password</label>
+              <Input
+                type="password"
+                name="confirmPassword"
+                id="confirmPassword"
+                placeholder="Confirm your password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                error={errors.confirmPassword}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              />
+              {errors.confirmPassword && <div className="text-red-500 text-xs mt-1 text-center">{errors.confirmPassword}</div>}
+            </div>
+
+            {errors.submit && (
+              <div className="text-red-500 text-sm text-center">
+                {errors.submit}
+              </div>
+            )}
+
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full"
+            >
+              {isLoading ? 'Creating Account...' : 'Register'}
+            </Button>
+          </form>
+
+          <div className="text-center mt-6">
+            <p className="text-gray-600">
+              Already have an account?{' '}
+              <Link to="/login" className="text-primary-600 hover:underline font-medium">
+                Login here
+              </Link>
+            </p>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 };

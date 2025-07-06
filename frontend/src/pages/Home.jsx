@@ -31,7 +31,7 @@ const Home = () => {
       {/* Hero Section */}
       <div className="text-center py-16">
         <h1 className="text-5xl font-bold text-gray-800 mb-6">
-          Welcome to <span className="gradient-text">Book Buddy</span>
+          Welcome to <span className="gradient-text">BookBuddy</span>
         </h1>
         <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
           Your personal reading companion that helps you discover, track, and enjoy books like never before.
@@ -53,7 +53,7 @@ const Home = () => {
       {/* Features Section */}
       <div className="py-16">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
-          Why Choose Book Buddy?
+          Why Choose BookBuddy?
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (

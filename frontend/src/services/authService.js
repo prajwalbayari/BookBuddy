@@ -1,4 +1,4 @@
-import { authApi } from '../api/authApi';
+import { authApi } from "../api/authApi";
 
 class AuthService {
   constructor() {
@@ -8,9 +8,9 @@ class AuthService {
 
   // Initialize auth state from localStorage
   init() {
-    const token = localStorage.getItem('authToken');
-    const user = localStorage.getItem('currentUser');
-    
+    const token = localStorage.getItem("authToken");
+    const user = localStorage.getItem("currentUser");
+
     if (token && user) {
       this.isAuthenticated = true;
       this.currentUser = JSON.parse(user);
@@ -21,29 +21,29 @@ class AuthService {
   async signup(userData) {
     try {
       // Mock API call - replace with actual API call
-      console.log('Signup attempt:', userData);
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Mock success response
-      const mockUser = {
-        id: Date.now(),
-        name: userData.name,
-        email: userData.email,
-        role: 'user',
-        createdAt: new Date().toISOString(),
-      };
-      
-      const mockToken = 'mock-jwt-token-' + Date.now();
-      
+      // console.log("Signup attempt:", userData);
+
+      // // Simulate API delay
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // // Mock success response
+      // const mockUser = {
+      //   id: Date.now(),
+      //   name: userData.name,
+      //   email: userData.email,
+      //   role: "user",
+      //   createdAt: new Date().toISOString(),
+      // };
+
+      // const mockToken = "mock-jwt-token-" + Date.now();
+
       // In real implementation, this would be:
-      // const response = await authApi.signup(userData);
+      const response = await authApi.signup(userData);
+      console.log("Signup response:", response);
       // return this.handleAuthSuccess(response.user, response.token);
-      
-      return this.handleAuthSuccess(mockUser, mockToken);
+
     } catch (error) {
-      console.error('Signup failed:', error);
+      console.error("Signup failed:", error);
       throw error;
     }
   }
@@ -51,30 +51,41 @@ class AuthService {
   // User login
   async login(credentials) {
     try {
-      // Mock API call - replace with actual API call
-      console.log('Login attempt:', credentials);
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      // // Mock API call - replace with actual API call
+      // console.log("Login attempt:", credentials);
+
+      // // Simulate API delay
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
+
       // Mock success response
-      const mockUser = {
-        id: Date.now(),
-        name: 'John Doe',
-        email: credentials.email,
-        role: credentials.role,
-        createdAt: new Date().toISOString(),
-      };
-      
-      const mockToken = 'mock-jwt-token-' + Date.now();
-      
+      // const mockUser = {
+      //   id: Date.now(),
+      //   name: 'John Doe',
+      //   email: credentials.email,
+      //   role: credentials.role,
+      //   createdAt: new Date().toISOString(),
+      // };
+
+      // const mockToken = 'mock-jwt-token-' + Date.now();
+
       // In real implementation, this would be:
-      // const response = await authApi.login(credentials);
-      // return this.handleAuthSuccess(response.user, response.token);
-      
-      return this.handleAuthSuccess(mockUser, mockToken);
+      const response = await authApi.login(credentials);
+      return this.handleAuthSuccess(response.user, response.token);
+
+      // return this.handleAuthSuccess(mockUser, mockToken);
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error("Login failed:", error);
+      throw error;
+    }
+  }
+
+  // Admin login
+  async adminLogin(credentials) {
+    try {
+      const response = await authApi.adminLogin(credentials);
+      return this.handleAuthSuccess(response.admin, response.token);
+    } catch (error) {
+      console.error("Admin login failed:", error);
       throw error;
     }
   }
@@ -84,10 +95,10 @@ class AuthService {
     try {
       // In real implementation, this would be:
       // await authApi.logout();
-      
+
       this.handleAuthLogout();
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error("Logout failed:", error);
       // Even if API call fails, clear local auth state
       this.handleAuthLogout();
     }
@@ -99,10 +110,10 @@ class AuthService {
       // In real implementation, this would be:
       // const response = await authApi.getProfile();
       // return response.user;
-      
+
       return this.currentUser;
     } catch (error) {
-      console.error('Get profile failed:', error);
+      console.error("Get profile failed:", error);
       throw error;
     }
   }
@@ -115,13 +126,13 @@ class AuthService {
       // this.currentUser = response.user;
       // localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
       // return response.user;
-      
+
       // Mock update
       this.currentUser = { ...this.currentUser, ...userData };
-      localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+      localStorage.setItem("currentUser", JSON.stringify(this.currentUser));
       return this.currentUser;
     } catch (error) {
-      console.error('Update profile failed:', error);
+      console.error("Update profile failed:", error);
       throw error;
     }
   }
@@ -130,10 +141,10 @@ class AuthService {
   handleAuthSuccess(user, token) {
     this.currentUser = user;
     this.isAuthenticated = true;
-    
-    localStorage.setItem('authToken', token);
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    
+
+    localStorage.setItem("authToken", token);
+    localStorage.setItem("currentUser", JSON.stringify(user));
+
     return { user, token };
   }
 
@@ -141,9 +152,9 @@ class AuthService {
   handleAuthLogout() {
     this.currentUser = null;
     this.isAuthenticated = false;
-    
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('currentUser');
+
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("currentUser");
   }
 
   // Check if user is authenticated
@@ -158,7 +169,7 @@ class AuthService {
 
   // Get auth token
   getToken() {
-    return localStorage.getItem('authToken');
+    return localStorage.getItem("authToken");
   }
 }
 

@@ -35,11 +35,11 @@ const About = () => {
       {/* Hero Section */}
       <div className="text-center py-16">
         <h1 className="text-4xl font-bold text-gray-800 mb-6">
-          About <span className="gradient-text">Book Buddy</span>
+          About <span className="gradient-text">BookBuddy</span>
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
           We're on a mission to make reading more social, discoverable, and enjoyable for everyone. 
-          Book Buddy connects readers, helps discover new books, and builds communities around shared reading experiences.
+          BookBuddy connects readers, helps discover new books, and builds communities around shared reading experiences.
         </p>
       </div>
 
@@ -53,7 +53,7 @@ const About = () => {
               We believe that great books should be discoverable, and reading should be a shared experience.
             </p>
             <p className="text-gray-600 mb-6">
-              Book Buddy was created to solve this problem by connecting readers with books they'll love 
+              BookBuddy was created to solve this problem by connecting readers with books they'll love 
               and communities of like-minded people who share their passion for reading.
             </p>
             <div className="flex flex-wrap gap-4">
