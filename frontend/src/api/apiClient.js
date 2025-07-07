@@ -13,6 +13,7 @@ class ApiClient {
     const config = {
       headers: { ...this.defaultHeaders, ...options.headers },
       ...options,
+      credentials: 'include', // Ensure cookies (jwt) are sent with every request
     };
 
     // Add auth token if available

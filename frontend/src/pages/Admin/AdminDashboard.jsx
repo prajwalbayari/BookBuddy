@@ -1,26 +1,22 @@
-import React from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import AdminSidebar from '../../components/Admin/AdminSidebar';
+import Requests from '../../components/Admin/Requests';
+import Statistics from '../../components/Admin/Statistics';
 
 const AdminDashboard = () => {
-  const { logout } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate('/');
-  };
+  // Set default to 'statistics' so admin sees statistics first
+  const [selected, setSelected] = useState('statistics');
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-primary-100 to-primary-300 px-4">
-      <div className="bg-white shadow-xl rounded-2xl p-10 flex flex-col items-center">
-        <h1 className="text-3xl font-bold text-primary-700 mb-6">Admin Dashboard</h1>
-        <button
-          onClick={handleLogout}
-          className="px-6 py-3 bg-primary-600 text-white rounded-lg font-semibold shadow hover:bg-primary-700 transition-colors"
-        >
-          Logout
-        </button>
+    <div className="flex h-screen w-screen overflow-hidden">
+      {/* Sidebar 20% - static */}
+      <div className="w-1/5 min-w-[200px] max-w-xs h-screen bg-gray-100 border-r flex-shrink-0">
+        <AdminSidebar onSelect={setSelected} selected={selected} />
+      </div>
+      {/* Main Content 80% - scrollable */}
+      <div className="w-4/5 h-screen overflow-y-auto bg-white">
+        {selected === 'requests' && <Requests />}
+        {selected === 'statistics' && <Statistics />}
       </div>
     </div>
   );
