@@ -95,22 +95,33 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white px-4 py-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
       <Toaster position="top-center" />
-      <div className="w-full max-w-md">
-        <Card>
-          <div className="text-center mb-4">
-            <h2 className="text-3xl font-bold text-gray-800">Create Account</h2>
-            <p className="text-gray-600 mt-2">
-              Join Book Buddy and start your reading journey
-            </p>
-          </div>
+      
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-100 rounded-full opacity-20 blur-3xl"></div>
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-100 rounded-full opacity-20 blur-3xl"></div>
+      </div>
 
-          <form onSubmit={handleSubmit} className="space-y-3">
-            <div className="mb-2">
+      <div className="relative z-10 w-full max-w-md">
+        {/* Logo/Brand section */}
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center mb-4">
+            <svg className="w-12 h-12 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6 2h12a2 2 0 0 1 2 2v16l-7-3-7 3V4a2 2 0 0 1 2-2z" />
+            </svg>
+          </div>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">Join BookBuddy</h1>
+          <p className="text-gray-600">Create your account and start your reading journey</p>
+        </div>
+
+        <Card className="bg-white/80 backdrop-blur-sm shadow-xl border-0">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
               <label
                 htmlFor="name"
-                className="form-label block mb-1 text-gray-700 font-medium"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
                 Full Name
               </label>
@@ -121,38 +132,32 @@ const Signup = () => {
                 placeholder="Enter your full name"
                 value={formData.name}
                 onChange={handleChange}
-                error={errors.name}
-                // required removed
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-300"
               />
-              {/* error message removed */}
             </div>
 
-            <div className="mb-2">
+            <div>
               <label
                 htmlFor="email"
-                className="form-label block mb-1 text-gray-700 font-medium"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Email
+                Email Address
               </label>
               <Input
                 type="email"
                 name="email"
                 id="email"
-                placeholder="Enter your email"
+                placeholder="Enter your email address"
                 value={formData.email}
                 onChange={handleChange}
-                error={errors.email}
-                // required removed
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-300"
               />
-              {/* error message removed */}
             </div>
 
-            <div className="mb-2">
+            <div>
               <label
                 htmlFor="password"
-                className="form-label block mb-1 text-gray-700 font-medium"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
                 Password
               </label>
@@ -160,20 +165,17 @@ const Signup = () => {
                 type="password"
                 name="password"
                 id="password"
-                placeholder="Create a password"
+                placeholder="Create a strong password"
                 value={formData.password}
                 onChange={handleChange}
-                error={errors.password}
-                // required removed
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-300"
               />
-              {/* error message removed */}
             </div>
 
-            <div className="mb-2">
+            <div>
               <label
                 htmlFor="confirmPassword"
-                className="form-label block mb-1 text-gray-700 font-medium"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
                 Confirm Password
               </label>
@@ -184,38 +186,55 @@ const Signup = () => {
                 placeholder="Confirm your password"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                error={errors.confirmPassword}
-                // required removed
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-300"
               />
-              {/* error message removed */}
             </div>
 
-            {/*
-            {errors.submit && (
-              <div className="text-red-500 text-sm text-center">
-                {errors.submit}
-              </div>
-            )}
-            */}
-
-            <Button type="submit" disabled={isLoading} className="w-full">
-              {isLoading ? "Creating Account..." : "Register"}
+            <Button 
+              type="submit" 
+              disabled={isLoading} 
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Creating Account...
+                </div>
+              ) : (
+                "Create Account"
+              )}
             </Button>
           </form>
 
-          <div className="text-center mt-6">
+          <div className="mt-8 text-center">
             <p className="text-gray-600">
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="text-primary-600 hover:underline font-medium"
+                className="text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200"
               >
-                Login here
+                Sign in here
               </Link>
             </p>
           </div>
         </Card>
+
+        {/* Footer */}
+        <div className="text-center mt-8">
+          <p className="text-sm text-gray-500">
+            By creating an account, you agree to our{" "}
+            <a href="#" className="text-blue-600 hover:text-blue-700 transition-colors duration-200">
+              Terms of Service
+            </a>{" "}
+            and{" "}
+            <a href="#" className="text-blue-600 hover:text-blue-700 transition-colors duration-200">
+              Privacy Policy
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );

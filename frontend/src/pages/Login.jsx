@@ -16,6 +16,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { login, adminLogin, isAuthenticated, setIsAdmin } = useAuth();
   const navigate = useNavigate();
+  
   // Prevent authenticated users from accessing login page
   useEffect(() => {
     if (isAuthenticated) {
@@ -91,47 +92,82 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white px-4 py-4">
-      {/* <Toaster position="top-center" /> */}
-      <div className="w-full max-w-md">
-        <Card>
-          <div className="text-center mb-4">
-            <h2 className="text-3xl font-bold text-gray-800">Welcome Back</h2>
-            <p className="text-gray-600 mt-2">
-              Login to your BookBuddy account
-            </p>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
+      <Toaster position="top-center" />
+      
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-100 rounded-full opacity-20 blur-3xl"></div>
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-100 rounded-full opacity-20 blur-3xl"></div>
+      </div>
 
-          <form onSubmit={handleSubmit} className="space-y-3">
-            <div className="flex space-x-6 justify-center mb-2">
-              <label className="flex items-center cursor-pointer">
-                <input
-                  type="radio"
-                  name="role"
-                  value="user"
-                  checked={formData.role === "user"}
-                  onChange={handleChange}
-                  className="mr-2 text-primary-600 focus:ring-primary-500"
-                />
-                <span className="text-gray-700">User</span>
+      <div className="relative z-10 w-full max-w-md">
+        {/* Logo/Brand section */}
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center mb-4">
+            <svg className="w-12 h-12 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6 2h12a2 2 0 0 1 2 2v16l-7-3-7 3V4a2 2 0 0 1 2-2z" />
+            </svg>
+          </div>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h1>
+          <p className="text-gray-600">Sign in to your BookBuddy account</p>
+        </div>
+
+        <Card className="bg-white/80 backdrop-blur-sm shadow-xl border-0">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Role Selection */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                Login as
               </label>
-              <label className="flex items-center cursor-pointer">
-                <input
-                  type="radio"
-                  name="role"
-                  value="admin"
-                  checked={formData.role === "admin"}
-                  onChange={handleChange}
-                  className="mr-2 text-primary-600 focus:ring-primary-500"
-                />
-                <span className="text-gray-700">Admin</span>
-              </label>
+              <div className="grid grid-cols-2 gap-3">
+                <label className={`relative flex items-center justify-center p-3 border-2 rounded-xl cursor-pointer transition-all duration-200 ${
+                  formData.role === "user" 
+                    ? "border-blue-500 bg-blue-50 text-blue-700" 
+                    : "border-gray-200 hover:border-gray-300"
+                }`}>
+                  <input
+                    type="radio"
+                    name="role"
+                    value="user"
+                    checked={formData.role === "user"}
+                    onChange={handleChange}
+                    className="sr-only"
+                  />
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                    <span className="font-medium">User</span>
+                  </div>
+                </label>
+                <label className={`relative flex items-center justify-center p-3 border-2 rounded-xl cursor-pointer transition-all duration-200 ${
+                  formData.role === "admin" 
+                    ? "border-blue-500 bg-blue-50 text-blue-700" 
+                    : "border-gray-200 hover:border-gray-300"
+                }`}>
+                  <input
+                    type="radio"
+                    name="role"
+                    value="admin"
+                    checked={formData.role === "admin"}
+                    onChange={handleChange}
+                    className="sr-only"
+                  />
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                    </svg>
+                    <span className="font-medium">Admin</span>
+                  </div>
+                </label>
+              </div>
             </div>
 
-            <div className="mb-2">
+            <div>
               <label
                 htmlFor="email"
-                className="form-label block mb-1 text-gray-700 font-medium"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
                 Email Address
               </label>
@@ -139,19 +175,17 @@ const Login = () => {
                 type="email"
                 name="email"
                 id="email"
-                placeholder="Enter your email"
+                placeholder="Enter your email address"
                 value={formData.email}
                 onChange={handleChange}
-                // error removed
-                // required removed
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-300"
               />
             </div>
 
-            <div className="mb-2">
+            <div>
               <label
                 htmlFor="password"
-                className="form-label block mb-1 text-gray-700 font-medium"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
                 Password
               </label>
@@ -162,37 +196,51 @@ const Login = () => {
                 placeholder="Enter your password"
                 value={formData.password}
                 onChange={handleChange}
-                // error removed
-                // required removed
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-300"
               />
             </div>
 
-            {/*
-            {errors.submit && (
-              <div className="text-red-500 text-sm text-center">
-                {errors.submit}
-              </div>
-            )}
-            */}
-
-            <Button type="submit" disabled={isLoading} className="w-full">
-              {isLoading ? "Logging in..." : "Login"}
+            <Button 
+              type="submit" 
+              disabled={isLoading} 
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Signing in...
+                </div>
+              ) : (
+                "Sign In"
+              )}
             </Button>
           </form>
 
-          <div className="text-center mt-6">
+          <div className="mt-8 text-center">
             <p className="text-gray-600">
               Don't have an account?{" "}
               <Link
                 to="/signup"
-                className="text-primary-600 hover:underline font-medium"
+                className="text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200"
               >
-                Sign up here
+                Create one here
               </Link>
             </p>
           </div>
         </Card>
+
+        {/* Additional links */}
+        <div className="text-center mt-6">
+          <a 
+            href="#" 
+            className="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-200"
+          >
+            Forgot your password?
+          </a>
+        </div>
       </div>
     </div>
   );
