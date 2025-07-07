@@ -5,30 +5,68 @@ const AdminSidebar = ({ onSelect, selected }) => {
   const navigate = useNavigate();
   const { logout } = useAuth();
 
+  const menuItems = [
+    { 
+      id: 'statistics', 
+      label: 'Statistics', 
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      )
+    },
+    { 
+      id: 'requests', 
+      label: 'Book Requests', 
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+      )
+    }
+  ];
+
   return (
-    <aside className="h-full w-full flex flex-col bg-gray-100 border-r">
-      <button
-        className={`py-4 px-6 text-left text-lg font-semibold border-b hover:bg-primary-50 transition-colors ${selected === 'statistics' ? 'bg-primary-100 text-primary-700' : ''}`}
-        onClick={() => onSelect('statistics')}
-      >
-        Statistics
-      </button>
-      <button
-        className={`py-4 px-6 text-left text-lg font-semibold border-b hover:bg-primary-50 transition-colors ${selected === 'requests' ? 'bg-primary-100 text-primary-700' : ''}`}
-        onClick={() => onSelect('requests')}
-      >
-        Requests
-      </button>
-      <div className="flex-1" />
-      <button
-        className="py-4 px-6 text-left text-lg font-semibold text-red-600 border-t hover:bg-red-50 transition-colors"
-        onClick={async () => {
-          await logout();
-          navigate('/');
-        }}
-      >
-        Logout
-      </button>
+    <aside className="h-full w-full flex flex-col bg-gradient-to-b from-blue-600 to-blue-700 text-white">
+      {/* Header */}
+      <div className="p-6 border-b border-blue-500">
+        <h2 className="text-xl font-bold">BookBuddy</h2>
+        <p className="text-blue-200 text-sm mt-1">Admin Dashboard</p>
+      </div>
+      
+      {/* Navigation */}
+      <nav className="flex-1 px-4 py-6 space-y-2">
+        {menuItems.map((item) => (
+          <button
+            key={item.id}
+            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-200 ${
+              selected === item.id 
+                ? 'bg-white text-blue-700 shadow-md' 
+                : 'text-blue-100 hover:bg-blue-500 hover:text-white'
+            }`}
+            onClick={() => onSelect(item.id)}
+          >
+            {item.icon}
+            <span className="font-medium">{item.label}</span>
+          </button>
+        ))}
+      </nav>
+      
+      {/* Footer */}
+      <div className="p-4 border-t border-blue-500">
+        <button
+          className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left text-red-200 hover:bg-red-600 hover:text-white transition-all duration-200"
+          onClick={async () => {
+            await logout();
+            navigate('/');
+          }}
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          <span className="font-medium">Logout</span>
+        </button>
+      </div>
     </aside>
   );
 };
