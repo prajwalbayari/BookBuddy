@@ -21,8 +21,8 @@ export const getMessages = async (req, res) => {
         { senderId: userId, receiverId: myId }
       ]
     })
-    .populate("senderId", "name email")
-    .populate("receiverId", "name email")
+    .populate("senderId", "userName userEmail")
+    .populate("receiverId", "userName userEmail")
     .sort({ createdAt: 1 });
 
     res.status(200).json({
@@ -79,8 +79,8 @@ export const sendMessage = async (req, res) => {
 
     const savedMessage = await newMessage.save();
 
-    await savedMessage.populate("senderId", "name email");
-    await savedMessage.populate("receiverId", "name email");
+    await savedMessage.populate("senderId", "userName userEmail");
+    await savedMessage.populate("receiverId", "userName userEmail");
 
     try {
       const messageData = {
@@ -90,8 +90,8 @@ export const sendMessage = async (req, res) => {
         text: savedMessage.text,
         createdAt: savedMessage.createdAt,
         sender: {
-          name: savedMessage.senderId.name,
-          email: savedMessage.senderId.email
+          name: savedMessage.senderId.userName,
+          email: savedMessage.senderId.userEmail
         }
       };
 
@@ -122,8 +122,8 @@ export const getChatMembers = async (req, res) => {
         { receiverId: currentUserId }
       ]
     })
-    .populate("senderId", "name email")
-    .populate("receiverId", "name email")
+    .populate("senderId", "userName userEmail")
+    .populate("receiverId", "userName userEmail")
     .sort({ createdAt: -1 });
 
     if (messages.length === 0) {
@@ -147,10 +147,11 @@ export const getChatMembers = async (req, res) => {
       if (!chatPartnersMap.has(partnerId)) {
         chatPartnersMap.set(partnerId, {
           _id: partner._id,
-          name: partner.name,
-          email: partner.email,
+          name: partner.userName,
+          email: partner.userEmail,
           lastMessageText: message.text,
-          lastMessageTime: message.createdAt
+          lastMessageTime: message.createdAt,
+          receiverName: partner.userName
         });
       }
     });

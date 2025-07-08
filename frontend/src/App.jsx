@@ -10,7 +10,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
-import { UserHome } from "./pages/User";
+import { UserHome, ChatPage } from "./pages/User";
 import { AdminDashboard } from "./pages/Admin";
 import { useAuth } from "./hooks/useAuth";
 import "./App.css";
@@ -42,6 +42,17 @@ function App() {
                     <UserHome />
                   </main>
                 </>
+              ) : (
+                <NotFound />
+              )
+            }
+          />
+          {/* User Chat: only for authenticated users who are not admin */}
+          <Route
+            path="/user/chat"
+            element={
+              isAuthenticated && !isAdmin ? (
+                <ChatPage />
               ) : (
                 <NotFound />
               )
