@@ -69,7 +69,7 @@ const Chat = () => {
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Mobile: Show only sidebar or chat */}
-      <div className={`${selectedUser ? 'hidden' : 'flex'} md:flex w-full md:w-80 bg-white border-r border-gray-200 flex-shrink-0`}>
+      <div className={`${selectedUser ? 'hidden' : 'flex'} md:flex w-full md:w-80 bg-white border-r border-gray-200 flex-shrink-0 shadow-sm`}>
         <ChatMembersList
           members={chatMembers}
           selectedUser={selectedUser}
@@ -90,14 +90,16 @@ const Chat = () => {
           />
         ) : (
           <div className="hidden md:flex items-center justify-center h-full bg-gray-50">
-            <div className="text-center text-gray-500 max-w-md px-4">
+            <div className="text-center max-w-md px-6 py-8 bg-white rounded-lg shadow-sm border border-gray-200">
               <div className="mb-6">
-                <svg className="mx-auto h-20 w-20 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
+                <div className="mx-auto h-16 w-16 bg-blue-500 rounded-full flex items-center justify-center">
+                  <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                </div>
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Welcome to Messages</h3>
-              <p className="text-sm text-gray-500">Select a conversation from the sidebar to start chatting, or start a new conversation.</p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Welcome to BookBuddy Chat</h3>
+              <p className="text-gray-600">Select a conversation from the sidebar to start messaging.</p>
             </div>
           </div>
         )}

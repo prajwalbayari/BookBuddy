@@ -21,7 +21,9 @@ const ChatWindow = ({ selectedUser, currentUser, onMessageSent, onBack, receiver
   }, [messages]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
 
   const fetchMessages = async () => {
@@ -90,7 +92,7 @@ const ChatWindow = ({ selectedUser, currentUser, onMessageSent, onBack, receiver
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-white">
       {/* Chat Header */}
       <div className="flex-shrink-0 bg-white border-b border-gray-200 p-4 shadow-sm">
         <div className="flex items-center space-x-3">
@@ -105,9 +107,9 @@ const ChatWindow = ({ selectedUser, currentUser, onMessageSent, onBack, receiver
           </button>
           
           {/* User Avatar */}
-          <div className="flex-shrink-0 relative">
-            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center shadow-md">
-              <span className="text-white font-semibold text-sm">
+          <div className="flex-shrink-0">
+            <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center">
+              <span className="text-white font-medium text-sm">
                 {(receiverName || selectedUser.name)?.charAt(0)?.toUpperCase() || 'U'}
               </span>
             </div>
@@ -116,8 +118,17 @@ const ChatWindow = ({ selectedUser, currentUser, onMessageSent, onBack, receiver
           {/* User Info */}
           <div className="flex-1 min-w-0">
             <h3 className="text-lg font-semibold text-gray-900 truncate">{receiverName || selectedUser.name}</h3>
-            <p className="text-sm text-gray-500 truncate">{selectedUser.email}</p>
           </div>
+          
+          {/* Close Button */}
+          <button
+            onClick={onBack}
+            className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
+          >
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
       </div>
 

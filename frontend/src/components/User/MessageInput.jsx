@@ -21,7 +21,7 @@ const MessageInput = ({ onSendMessage, disabled, recipientName }) => {
   return (
     <div className="space-y-3">
       {/* Typing indicator */}
-      <div className="text-xs text-gray-500 px-1">
+      <div className="text-sm text-gray-500 px-1">
         Message {recipientName}
       </div>
       
@@ -32,10 +32,10 @@ const MessageInput = ({ onSendMessage, disabled, recipientName }) => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder={`Type a message to ${recipientName}...`}
+            placeholder={`Write your message here...`}
             disabled={disabled}
             rows="1"
-            className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 bg-gray-50 focus:bg-white"
+            className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 bg-white shadow-sm"
             style={{ minHeight: '44px', maxHeight: '120px' }}
             onInput={(e) => {
               e.target.style.height = 'auto';
@@ -51,7 +51,7 @@ const MessageInput = ({ onSendMessage, disabled, recipientName }) => {
           className={`flex-shrink-0 p-3 rounded-full transition-all duration-200 ${
             !message.trim() || disabled
               ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-              : 'bg-primary-600 text-white hover:bg-primary-700 shadow-md hover:shadow-lg transform hover:scale-105'
+              : 'bg-blue-500 text-white hover:bg-blue-600 shadow-md hover:shadow-lg transform hover:scale-105'
           }`}
         >
           {disabled ? (
