@@ -5,6 +5,7 @@ import {
   getMyBooks,
   removeBook,
   updateBookDetails,
+  getBookDetails,
 } from "../controller/book.controller.js";
 import { protectedRoute } from "../middleware/auth.middleware.js";
 import { uploadBookImages } from "../middleware/multer.middleware.js";
@@ -16,5 +17,6 @@ router.patch("/updateBook/:bookId", protectedRoute, updateBookDetails);
 router.delete("/removeBook/:bookId", protectedRoute, removeBook);
 router.get("/getAll", protectedRoute, getAllBooks);
 router.get("/myBooks", protectedRoute, getMyBooks);
+router.get("/details/:bookId", protectedRoute, getBookDetails);
 
 export default router;

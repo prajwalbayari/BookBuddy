@@ -26,6 +26,11 @@ export const booksApi = {
     return apiClient.delete(`/book/removeBook/${bookId}`);
   },
 
+  // Get book details by ID (protected)
+  getBookDetails: async (bookId) => {
+    return apiClient.get(`/book/details/${bookId}`);
+  },
+
   // --- The following methods are not implemented in the backend yet ---
 
   // // Get book by ID

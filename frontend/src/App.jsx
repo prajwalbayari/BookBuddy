@@ -10,7 +10,7 @@ import Signup from "./pages/LandingPage/Signup";
 import Login from "./pages/LandingPage/Login";
 import About from "./pages/LandingPage/About";
 import NotFound from "./pages/NotFound";
-import { UserHome, ChatPage, Profile, AddBook, EditBook } from "./pages/User";
+import { UserHome, ChatPage, Profile, AddBook, EditBook, BooksPage } from "./pages/User";
 import { AdminDashboard } from "./pages/Admin";
 import { useAuth } from "./hooks/useAuth";
 import "./App.css";
@@ -67,6 +67,22 @@ function App() {
                   <Header />
                   <main>
                     <Profile />
+                  </main>
+                </>
+              ) : (
+                <NotFound />
+              )
+            }
+          />
+          {/* User Books: only for authenticated users who are not admin */}
+          <Route
+            path="/user/books"
+            element={
+              isAuthenticated && !isAdmin ? (
+                <>
+                  <Header />
+                  <main className="container mx-auto px-4 py-8">
+                    <BooksPage />
                   </main>
                 </>
               ) : (

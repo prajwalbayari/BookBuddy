@@ -1,6 +1,12 @@
 import { formatDistanceToNow } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 const ChatMembersList = ({ members, selectedUser, onMemberSelect, currentUser }) => {
+  const navigate = useNavigate();
+
+  const handleBackToHome = () => {
+    navigate('/user/home');
+  };
   const formatTime = (timestamp) => {
     if (!timestamp) return '';
     try {
@@ -19,6 +25,17 @@ const ChatMembersList = ({ members, selectedUser, onMemberSelect, currentUser })
     <div className="h-full flex flex-col w-full">
       {/* Header */}
       <div className="p-4 border-b border-gray-200 bg-white">
+        <div className="flex items-center justify-between mb-3">
+          <button
+            onClick={handleBackToHome}
+            className="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span>Back to Home</span>
+          </button>
+        </div>
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold text-gray-900">Conversations</h2>

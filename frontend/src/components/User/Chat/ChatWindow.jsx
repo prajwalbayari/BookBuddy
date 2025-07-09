@@ -1,14 +1,20 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { chatApi } from '../../../api/chatApi';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 
 const ChatWindow = ({ selectedUser, currentUser, onMessageSent, onBack, receiverName }) => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sending, setSending] = useState(false);
   const messagesEndRef = useRef(null);
+
+  const handleBackToHome = () => {
+    navigate('/user/home');
+  };
 
   useEffect(() => {
     if (selectedUser) {
@@ -119,6 +125,17 @@ const ChatWindow = ({ selectedUser, currentUser, onMessageSent, onBack, receiver
           <div className="flex-1 min-w-0">
             <h3 className="text-lg font-semibold text-gray-900 truncate">{receiverName || selectedUser.name}</h3>
           </div>
+          
+          {/* Back to Home Button */}
+          <button
+            onClick={handleBackToHome}
+            className="hidden md:flex items-center space-x-1 px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors mr-2"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            <span>Home</span>
+          </button>
           
           {/* Close Button */}
           <button

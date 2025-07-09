@@ -4,7 +4,7 @@ import { useAuth } from '../../../hooks/useAuth';
 import ChatMembersList from './ChatMembersList';
 import ChatWindow from './ChatWindow';
 
-const Chat = () => {
+const Chat = ({ initialSelectedUser = null }) => {
   const { user } = useAuth();
   const [chatMembers, setChatMembers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -14,6 +14,20 @@ const Chat = () => {
   useEffect(() => {
     fetchChatMembers();
   }, []);
+
+  // Set initial selected user if provided
+  useEffect(() => {
+    if (initialSelectedUser && initialSelectedUser.selectedUserId) {
+      // If we have initial user data, create a user object to be used
+      const initialUser = {
+        _id: initialSelectedUser.selectedUserId,
+        userName: initialSelectedUser.userName || 'Book Owner',
+        name: initialSelectedUser.userName || 'Book Owner',
+        receiverName: initialSelectedUser.userName || 'Book Owner',
+      };
+      setSelectedUser(initialUser);
+    }
+  }, [initialSelectedUser]);
 
   const fetchChatMembers = async () => {
     try {

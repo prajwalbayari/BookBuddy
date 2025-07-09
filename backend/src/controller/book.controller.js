@@ -169,11 +169,20 @@ export const getAllBooks = async (req, res) => {
     const books = await Book.find({
       owner: { $ne: userId },
       status: "Approved",
+    }).populate("owner", "userName");
+
+    // Transform the data to include owner name explicitly
+    const booksWithOwnerName = books.map(book => {
+      const bookObj = book.toObject();
+      return {
+        ...bookObj,
+        ownerName: book.owner && book.owner.userName ? book.owner.userName : "Unknown"
+      };
     });
 
     res.status(200).json({
       success: true,
-      data: books,
+      data: booksWithOwnerName,
       message: "Fetched all the books successfully!",
     });
   } catch (error) {
@@ -192,9 +201,19 @@ export const getMyBooks = async (req, res) => {
       return res.status(401).json({ message: "Unauthorized access!" });
     }
     const books = await Book.find({ owner: userId });
+    
+    // Add owner name to the response
+    const booksWithOwnerName = books.map(book => {
+      const bookObj = book.toObject();
+      return {
+        ...bookObj,
+        ownerName: user.userName || "Unknown"
+      };
+    });
+    
     res.status(200).json({
       success: true,
-      data: books,
+      data: booksWithOwnerName,
       message: "Fetched book successfully!",
     });
   } catch (error) {
@@ -219,16 +238,26 @@ export const getBookDetails = async (req, res) => {
       return res.status(400).json({ message: "Invalid Book ID" });
     }
 
-    const book = await Book.findOne({ _id: bookId, status: "Approved" }).select(
-      "-status"
-    );
+    const book = await Book.findOne({ _id: bookId, status: "Approved" })
+      .select("-status")
+      .populate("owner", "userName");
+      
     if (!book) {
       return res.status(404).json({ message: "Book not found!" });
     }
 
+    // Extract owner name from populated owner field
+    const ownerName = book.owner && book.owner.userName ? book.owner.userName : "Unknown";
+
+    // Create response object with owner name
+    const bookData = {
+      ...book.toObject(),
+      ownerName
+    };
+
     return res.status(200).json({
       success: true,
-      data: book,
+      data: bookData,
       message: "Book details fetched successfully!",
     });
   } catch (error) {
