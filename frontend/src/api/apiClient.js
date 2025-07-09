@@ -16,6 +16,11 @@ class ApiClient {
       credentials: 'include', // Ensure cookies (jwt) are sent with every request
     };
 
+    // Don't set Content-Type for FormData - let browser handle it
+    if (options.body instanceof FormData) {
+      delete config.headers['Content-Type'];
+    }
+
     // Add auth token if available
     const token = localStorage.getItem('authToken');
     if (token) {
@@ -43,10 +48,11 @@ class ApiClient {
   }
 
   post(endpoint, data, options = {}) {
+    const body = data instanceof FormData ? data : JSON.stringify(data);
     return this.request(endpoint, {
       ...options,
       method: 'POST',
-      body: JSON.stringify(data),
+      body,
     });
   }
 

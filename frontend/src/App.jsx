@@ -10,7 +10,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
-import { UserHome, ChatPage } from "./pages/User";
+import { UserHome, ChatPage, Profile, AddBook, EditBook } from "./pages/User";
 import { AdminDashboard } from "./pages/Admin";
 import { useAuth } from "./hooks/useAuth";
 import "./App.css";
@@ -53,6 +53,54 @@ function App() {
             element={
               isAuthenticated && !isAdmin ? (
                 <ChatPage />
+              ) : (
+                <NotFound />
+              )
+            }
+          />
+          {/* User Profile: only for authenticated users who are not admin */}
+          <Route
+            path="/user/profile"
+            element={
+              isAuthenticated && !isAdmin ? (
+                <>
+                  <Header />
+                  <main>
+                    <Profile />
+                  </main>
+                </>
+              ) : (
+                <NotFound />
+              )
+            }
+          />
+          {/* Add Book: only for authenticated users who are not admin */}
+          <Route
+            path="/user/books/add"
+            element={
+              isAuthenticated && !isAdmin ? (
+                <>
+                  <Header />
+                  <main>
+                    <AddBook />
+                  </main>
+                </>
+              ) : (
+                <NotFound />
+              )
+            }
+          />
+          {/* Edit Book: only for authenticated users who are not admin */}
+          <Route
+            path="/user/books/edit/:bookId"
+            element={
+              isAuthenticated && !isAdmin ? (
+                <>
+                  <Header />
+                  <main>
+                    <EditBook />
+                  </main>
+                </>
               ) : (
                 <NotFound />
               )

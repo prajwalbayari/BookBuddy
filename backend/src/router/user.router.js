@@ -3,6 +3,7 @@ import { protectedRoute } from "../middleware/auth.middleware.js";
 import {
   getUserDetails,
   updateUserDetails,
+  changePassword,
 } from "../controller/user.controller.js";
 import { uploadProfileImage } from "../middleware/multer.middleware.js";
 
@@ -15,5 +16,6 @@ router.patch(
   uploadProfileImage,
   updateUserDetails
 );
+router.patch("/change-password", protectedRoute, changePassword);
 
 export default router;

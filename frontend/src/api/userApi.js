@@ -11,8 +11,8 @@ export const userApi = {
     return apiClient.patch('/user/updateDetails', userData);
   },
 
-  // Change password (if you have a dedicated endpoint, otherwise remove this)
-  // changePassword: async (passwordData) => {
-  //   return apiClient.patch('/user/change-password', passwordData);
-  // },
+  // Change password
+  changePassword: async (passwordData) => {
+    return apiClient.patch('/user/change-password', passwordData);
+  },
 };
