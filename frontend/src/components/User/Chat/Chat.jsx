@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { chatApi } from '../../api/chatApi';
-import { useAuth } from '../../hooks/useAuth';
+import { chatApi } from '../../../api/chatApi';
+import { useAuth } from '../../../hooks/useAuth';
 import ChatMembersList from './ChatMembersList';
 import ChatWindow from './ChatWindow';
 

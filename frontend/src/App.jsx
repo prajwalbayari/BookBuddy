@@ -5,10 +5,10 @@ import {
   Navigate,
 } from "react-router-dom";
 import Header from "./components/Header";
-import Home from "./pages/Home";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
-import About from "./pages/About";
+import Home from "./pages/LandingPage/Home";
+import Signup from "./pages/LandingPage/Signup";
+import Login from "./pages/LandingPage/Login";
+import About from "./pages/LandingPage/About";
 import NotFound from "./pages/NotFound";
 import { UserHome, ChatPage, Profile, AddBook, EditBook } from "./pages/User";
 import { AdminDashboard } from "./pages/Admin";

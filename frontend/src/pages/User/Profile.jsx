@@ -4,9 +4,9 @@ import { useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { userApi } from '../../api/userApi';
 import { booksApi } from '../../api/booksApi';
-import ProfileHeader from '../../components/User/ProfileHeader';
-import ProfileDetails from '../../components/User/ProfileDetails';
-import UserBooks from '../../components/User/UserBooks';
+import ProfileHeader from '../../components/User/Profile/ProfileHeader';
+import ProfileDetails from '../../components/User/Profile/ProfileDetails';
+import UserBooks from '../../components/User/Profile/UserBooks';
 
 const Profile = () => {
   const { user } = useAuth();

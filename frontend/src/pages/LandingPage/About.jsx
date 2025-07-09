@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Card from '../components/Card';
-import Button from '../components/Button';
+import Card from '../../components/Card';
+import Button from '../../components/Button';
 
 const About = () => {
   const [isLoaded, setIsLoaded] = useState(false);

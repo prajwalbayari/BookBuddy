@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
-import { userApi } from '../../api/userApi';
+import { userApi } from '../../../api/userApi';
 
 const ProfileDetails = ({ user, onUpdate, bookCount = 0 }) => {
   const [showChangePassword, setShowChangePassword] = useState(false);
