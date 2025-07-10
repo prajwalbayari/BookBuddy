@@ -59,7 +59,7 @@ export const addBookDetails = async (req, res) => {
 
 // Update details of book that already exist in database
 export const updateBookDetails = async (req, res) => {
-  const { bookName, edition, description, available } = req.body;
+  const { bookName, edition, description, available, borrowerId } = req.body;
   const userId = req.user._id;
   const { bookId } = req.params;
   try {
@@ -90,6 +90,19 @@ export const updateBookDetails = async (req, res) => {
       return res.status(400).json({ message: "Invalid Book ID" });
     }
 
+    // Validate borrowerId if provided
+    if (borrowerId && !mongoose.Types.ObjectId.isValid(borrowerId)) {
+      return res.status(400).json({ message: "Invalid Borrower ID" });
+    }
+
+    // Validate that borrower exists if borrowerId is provided
+    if (borrowerId) {
+      const borrower = await User.findById(borrowerId);
+      if (!borrower) {
+        return res.status(404).json({ message: "Borrower not found!" });
+      }
+    }
+
     const book = await Book.findById(bookId);
     if (!book) {
       return res.status(404).json({ message: "Book not found!" });
@@ -102,6 +115,13 @@ export const updateBookDetails = async (req, res) => {
     book.available = available.trim();
     book.edition = parseInt(edition);
     book.description = description.trim();
+
+    // Handle borrowedBy field based on book status
+    if (available.trim() === "Borrowed" && borrowerId) {
+      book.borrowedBy = borrowerId;
+    } else if (["Available", "Requested", "Returned"].includes(available.trim())) {
+      book.borrowedBy = null;
+    }
 
     await book.save();
 
@@ -169,20 +189,23 @@ export const getAllBooks = async (req, res) => {
     const books = await Book.find({
       owner: { $ne: userId },
       status: "Approved",
-    }).populate("owner", "userName");
+    })
+    .populate("owner", "userName")
+    .populate("borrowedBy", "userName");
 
-    // Transform the data to include owner name explicitly
-    const booksWithOwnerName = books.map(book => {
+    // Transform the data to include owner name and borrower name explicitly
+    const booksWithDetails = books.map(book => {
       const bookObj = book.toObject();
       return {
         ...bookObj,
-        ownerName: book.owner && book.owner.userName ? book.owner.userName : "Unknown"
+        ownerName: book.owner && book.owner.userName ? book.owner.userName : "Unknown",
+        borrowerName: book.borrowedBy && book.borrowedBy.userName ? book.borrowedBy.userName : null
       };
     });
 
     res.status(200).json({
       success: true,
-      data: booksWithOwnerName,
+      data: booksWithDetails,
       message: "Fetched all the books successfully!",
     });
   } catch (error) {
@@ -200,20 +223,21 @@ export const getMyBooks = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "Unauthorized access!" });
     }
-    const books = await Book.find({ owner: userId });
+    const books = await Book.find({ owner: userId }).populate("borrowedBy", "userName");
     
-    // Add owner name to the response
-    const booksWithOwnerName = books.map(book => {
+    // Add owner name and borrower name to the response
+    const booksWithDetails = books.map(book => {
       const bookObj = book.toObject();
       return {
         ...bookObj,
-        ownerName: user.userName || "Unknown"
+        ownerName: user.userName || "Unknown",
+        borrowerName: book.borrowedBy && book.borrowedBy.userName ? book.borrowedBy.userName : null
       };
     });
     
     res.status(200).json({
       success: true,
-      data: booksWithOwnerName,
+      data: booksWithDetails,
       message: "Fetched book successfully!",
     });
   } catch (error) {
@@ -240,19 +264,22 @@ export const getBookDetails = async (req, res) => {
 
     const book = await Book.findOne({ _id: bookId, status: "Approved" })
       .select("-status")
-      .populate("owner", "userName");
+      .populate("owner", "userName")
+      .populate("borrowedBy", "userName");
       
     if (!book) {
       return res.status(404).json({ message: "Book not found!" });
     }
 
-    // Extract owner name from populated owner field
+    // Extract owner name and borrower name from populated fields
     const ownerName = book.owner && book.owner.userName ? book.owner.userName : "Unknown";
+    const borrowerName = book.borrowedBy && book.borrowedBy.userName ? book.borrowedBy.userName : null;
 
-    // Create response object with owner name
+    // Create response object with owner name and borrower name
     const bookData = {
       ...book.toObject(),
-      ownerName
+      ownerName,
+      borrowerName
     };
 
     return res.status(200).json({
@@ -262,6 +289,29 @@ export const getBookDetails = async (req, res) => {
     });
   } catch (error) {
     console.log("Error in getBookDetails controller", error.message);
+    res.status(500).json({ message: "Internal server Error" });
+  }
+};
+
+// Get all users for borrower selection
+export const getAllUsers = async (req, res) => {
+  const userId = req.user._id;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized access!" });
+    }
+
+    // Get all users except the current user, only return id and userName
+    const users = await User.find({ _id: { $ne: userId } }).select("_id userName");
+
+    res.status(200).json({
+      success: true,
+      data: users,
+      message: "Fetched all users successfully!",
+    });
+  } catch (error) {
+    console.log("Error in getAllUsers controller", error.message);
     res.status(500).json({ message: "Internal server Error" });
   }
 };

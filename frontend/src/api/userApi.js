@@ -15,4 +15,9 @@ export const userApi = {
   changePassword: async (passwordData) => {
     return apiClient.patch('/user/change-password', passwordData);
   },
+
+  // Get borrowed books
+  getBorrowedBooks: async () => {
+    return apiClient.get('/user/borrowedBooks');
+  },
 };

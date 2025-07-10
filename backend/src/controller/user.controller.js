@@ -1,5 +1,6 @@
 import cloudinary from "../lib/cloudinary.js";
 import User from "../models/user.model.js";
+import Book from "../models/book.model.js";
 import bcrypt from "bcryptjs";
 
 export const getUserDetails = async (req, res) => {
@@ -132,6 +133,44 @@ export const changePassword = async (req, res) => {
   } catch (error) {
     console.log("Error in changePassword controller", error.message);
     console.log("Full error:", error);
+    res.status(500).json({ message: "Internal server Error" });
+  }
+};
+
+export const getBorrowedBooks = async (req, res) => {
+  const userId = req.user._id;
+  try {
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized access!" });
+    }
+    
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    // Find all books where the current user is the borrower
+    const borrowedBooks = await Book.find({ borrowedBy: userId })
+      .populate("owner", "userName")
+      .sort({ updatedAt: -1 });
+
+    // Transform the data to include owner name
+    const booksWithDetails = borrowedBooks.map(book => {
+      const bookObj = book.toObject();
+      return {
+        ...bookObj,
+        ownerName: book.owner && book.owner.userName ? book.owner.userName : "Unknown",
+        borrowerName: user.userName || "Unknown"
+      };
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: booksWithDetails,
+      message: "Borrowed books fetched successfully!",
+    });
+  } catch (error) {
+    console.log("Error in getBorrowedBooks controller", error.message);
     res.status(500).json({ message: "Internal server Error" });
   }
 };

@@ -21,6 +21,11 @@ export const booksApi = {
     return apiClient.patch(`/book/updateBook/${bookId}`, bookData);
   },
 
+  // Get all users for borrower selection (protected)
+  getAllUsers: async () => {
+    return apiClient.get('/book/users');
+  },
+
   // Remove a book (protected)
   removeBook: async (bookId) => {
     return apiClient.delete(`/book/removeBook/${bookId}`);

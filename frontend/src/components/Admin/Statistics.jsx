@@ -21,13 +21,13 @@ const Statistics = () => {
           (user.books || []).forEach(book => {
             allBooks.push({
               ...book,
-              ownerName: user.userName,
+              ownerName: book.ownerName || user.userName,
               createdAt: book.createdAt,
             });
           });
         });
-        // Sort by creation time descending (most recent first)
-        allBooks.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        // Sort by creation time ascending (oldest first)
+        allBooks.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
         setBooks(allBooks);
       } catch (err) {
         setError(err?.response?.data?.message || "Failed to fetch statistics");
@@ -133,19 +133,22 @@ const Statistics = () => {
             </div>
           ) : (
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+              <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                     Book Name
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                     Edition
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                     Owner
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                     Description
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    Status
                   </th>
                 </tr>
               </thead>
@@ -157,15 +160,51 @@ const Statistics = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        Edition {book.edition}
+                        {book.edition ? `Edition ${book.edition}` : 'No Edition'}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">{book.ownerName}</div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-sm text-gray-500 max-w-xs truncate">
-                        {book.description || 'No description'}
+                      <div className="text-sm text-gray-700 leading-relaxed">
+                        {book.description ? (
+                          <p className="line-clamp-3">{book.description}</p>
+                        ) : (
+                          <span className="italic text-gray-400">No description available</span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="space-y-2">
+                        <div className="flex items-center">
+                          <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
+                            book.available === 'Available' ? 'bg-green-100 text-green-800 border border-green-200' :
+                            book.available === 'Borrowed' ? 'bg-red-100 text-red-800 border border-red-200' :
+                            book.available === 'Requested' ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
+                            book.available === 'Returned' ? 'bg-blue-100 text-blue-800 border border-blue-200' :
+                            'bg-gray-100 text-gray-800 border border-gray-200'
+                          }`}>
+                            <div className={`w-2 h-2 rounded-full mr-2 ${
+                              book.available === 'Available' ? 'bg-green-500' :
+                              book.available === 'Borrowed' ? 'bg-red-500' :
+                              book.available === 'Requested' ? 'bg-yellow-500' :
+                              book.available === 'Returned' ? 'bg-blue-500' :
+                              'bg-gray-500'
+                            }`}></div>
+                            {book.available || 'Unknown'}
+                          </span>
+                        </div>
+                        {book.available === 'Borrowed' && book.borrowerName && (
+                          <div className="flex items-center space-x-2">
+                            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            <span className="text-sm text-gray-600">
+                              <span className="font-medium text-gray-800">{book.borrowerName}</span>
+                            </span>
+                          </div>
+                        )}
                       </div>
                     </td>
                   </tr>

@@ -21,6 +21,11 @@ const bookSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
+    borrowedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
     available: {
       type: String,
       enum: ["Available", "Requested", "Borrowed", "Returned"],

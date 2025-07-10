@@ -99,8 +99,11 @@ export const getUsersWithBooks = async (req, res) => {
   try {
     // Fetch all users
     const users = await User.find({}, 'userName userEmail');
-    // Fetch only approved books
-    const books = await Book.find({ status: "Approved" }, 'bookName edition description owner createdAt');
+    // Fetch only approved books with owner and borrower info
+    const books = await Book.find({ status: "Approved" })
+      .populate('owner', 'userName')
+      .populate('borrowedBy', 'userName')
+      .select('bookName edition description owner borrowedBy available createdAt');
 
     // Map userId to books
     const userBooksMap = {};
@@ -113,13 +116,17 @@ export const getUsersWithBooks = async (req, res) => {
     });
 
     books.forEach(book => {
-      const ownerId = book.owner?.toString();
+      const ownerId = book.owner?._id?.toString();
       if (userBooksMap[ownerId]) {
         userBooksMap[ownerId].books.push({
           bookName: book.bookName,
           edition: book.edition,
           description: book.description,
-          bookId: book._id
+          bookId: book._id,
+          ownerName: book.owner?.userName,
+          borrowerName: book.borrowedBy?.userName || null,
+          available: book.available,
+          createdAt: book.createdAt
         });
       }
     });

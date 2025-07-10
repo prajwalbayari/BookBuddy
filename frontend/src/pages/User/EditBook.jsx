@@ -2,23 +2,39 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { booksApi } from '../../api/booksApi';
+import { useAuth } from '../../hooks/useAuth';
 
 const EditBook = () => {
   const navigate = useNavigate();
   const { bookId } = useParams();
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const [formData, setFormData] = useState({
     bookName: '',
     edition: '',
     description: '',
-    available: 'Available'
+    available: 'Available',
+    borrowerId: ''
   });
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [loadingUsers, setLoadingUsers] = useState(false);
 
   useEffect(() => {
-    fetchBookDetails();
-  }, [bookId]);
+    if (!authLoading && isAuthenticated) {
+      fetchBookDetails();
+    } else if (!authLoading && !isAuthenticated) {
+      navigate('/login');
+    }
+  }, [bookId, authLoading, isAuthenticated]);
+
+  useEffect(() => {
+    // Fetch users when status is set to Borrowed and user is authenticated
+    if (formData.available === 'Borrowed' && isAuthenticated) {
+      fetchUsers();
+    }
+  }, [formData.available, isAuthenticated]);
 
   const fetchBookDetails = async () => {
     try {
@@ -39,7 +55,8 @@ const EditBook = () => {
         bookName: book.bookName || '',
         edition: book.edition?.toString() || '',
         description: book.description || '',
-        available: book.available || 'Available'
+        available: book.available || 'Available',
+        borrowerId: book.borrowedBy || ''
       });
     } catch (err) {
       console.error('Error fetching book details:', err);
@@ -50,12 +67,44 @@ const EditBook = () => {
     }
   };
 
+  const fetchUsers = async () => {
+    try {
+      setLoadingUsers(true);
+      const response = await booksApi.getAllUsers();
+      
+      // Check if response has data and the success flag
+      if (response?.data?.success && response?.data?.data) {
+        setUsers(response.data.data);
+      } else if (response?.data && Array.isArray(response.data)) {
+        // Fallback in case the response structure is different
+        setUsers(response.data);
+      } else {
+        console.error('Unexpected response structure:', response);
+        toast.error('Failed to load users - unexpected response format');
+      }
+    } catch (err) {
+      console.error('Error fetching users:', err);
+      toast.error('Failed to load users');
+    } finally {
+      setLoadingUsers(false);
+    }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => {
+      const newData = {
+        ...prev,
+        [name]: value
+      };
+      
+      // Clear borrowerId when status is not Borrowed
+      if (name === 'available' && value !== 'Borrowed') {
+        newData.borrowerId = '';
+      }
+      
+      return newData;
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -77,12 +126,24 @@ const EditBook = () => {
         return;
       }
 
+      // Validate borrower selection for Borrowed status
+      if (formData.available === 'Borrowed' && !formData.borrowerId) {
+        setError('Please select a borrower when status is set to Borrowed');
+        toast.error('Please select a borrower when status is set to Borrowed');
+        return;
+      }
+
       const updateData = {
         bookName: formData.bookName.trim(),
         edition: parseInt(formData.edition),
         description: formData.description.trim(),
         available: formData.available
       };
+
+      // Add borrowerId only if status is Borrowed and borrowerId is selected
+      if (formData.available === 'Borrowed' && formData.borrowerId) {
+        updateData.borrowerId = formData.borrowerId;
+      }
 
       await booksApi.updateBook(bookId, updateData);
       
@@ -108,7 +169,7 @@ const EditBook = () => {
     navigate('/user/profile', { state: { activeTab: 'books' } });
   };
 
-  if (loading) {
+  if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="flex flex-col items-center space-y-4">
@@ -244,6 +305,44 @@ const EditBook = () => {
                 <option value="Returned">Returned</option>
               </select>
             </div>
+
+            {/* Borrower Selection - Only show when status is Borrowed */}
+            {formData.available === 'Borrowed' && (
+              <div>
+                <label htmlFor="borrowerId" className="block text-sm font-medium text-gray-700 mb-2">
+                  Borrower *
+                </label>
+                {loadingUsers ? (
+                  <div className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 flex items-center">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                    <span className="text-gray-500">Loading users...</span>
+                  </div>
+                ) : (
+                  <select
+                    id="borrowerId"
+                    name="borrowerId"
+                    value={formData.borrowerId}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  >
+                    <option value="">Select a borrower</option>
+                    {users.length > 0 ? (
+                      users.map((user) => (
+                        <option key={user._id} value={user._id}>
+                          {user.userName}
+                        </option>
+                      ))
+                    ) : (
+                      <option value="" disabled>No users available</option>
+                    )}
+                  </select>
+                )}
+                <p className="text-xs text-gray-500 mt-1">
+                  Select the user who has borrowed this book (Found {users.length} users)
+                </p>
+              </div>
+            )}
 
             {/* Submit Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-6">

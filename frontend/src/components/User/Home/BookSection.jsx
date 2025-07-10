@@ -353,6 +353,14 @@ const BookSection = () => {
                   <p className="text-gray-700 mb-1">
                     <span className="font-medium">Owner:</span> {selectedBook.ownerName || (selectedBook.owner && (typeof selectedBook.owner === 'object' ? selectedBook.owner.userName : selectedBook.owner)) || 'Unknown'}
                   </p>
+                  {/* Show borrower name if book is borrowed or requested */}
+                  {selectedBook.borrowerName && (selectedBook.available === 'Borrowed' || selectedBook.available === 'Requested') && (
+                    <p className="text-gray-700 mb-1">
+                      <span className="font-medium">
+                        {selectedBook.available === 'Borrowed' ? 'Borrowed by:' : 'Requested by:'}
+                      </span> {selectedBook.borrowerName}
+                    </p>
+                  )}
                 </div>
                 
                 <div className="mb-4">

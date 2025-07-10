@@ -122,6 +122,17 @@ const UserBooks = ({ books, onRefresh }) => {
               </p>
             )}
 
+            {/* Borrower Information */}
+            {book.borrowerName && (book.available === 'Borrowed' || book.available === 'Requested') && (
+              <div className="mb-3 p-2 bg-blue-50 border border-blue-200 rounded-md">
+                <p className="text-sm text-blue-800">
+                  <span className="font-medium">
+                    {book.available === 'Borrowed' ? 'Borrowed by:' : 'Requested by:'}
+                  </span> {book.borrowerName}
+                </p>
+              </div>
+            )}
+
             {/* Status Badges */}
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-3">
               <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${

@@ -7,12 +7,14 @@ import { booksApi } from '../../api/booksApi';
 import ProfileHeader from '../../components/User/Profile/ProfileHeader';
 import ProfileDetails from '../../components/User/Profile/ProfileDetails';
 import UserBooks from '../../components/User/Profile/UserBooks';
+import BorrowedBooks from '../../components/User/Profile/BorrowedBooks';
 
 const Profile = () => {
   const { user } = useAuth();
   const location = useLocation();
   const [profile, setProfile] = useState(null);
   const [userBooks, setUserBooks] = useState([]);
+  const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('details');
@@ -41,13 +43,15 @@ const Profile = () => {
       setLoading(true);
       setError(null);
       
-      const [profileResponse, booksResponse] = await Promise.all([
+      const [profileResponse, booksResponse, borrowedResponse] = await Promise.all([
         userApi.getProfile(),
-        booksApi.getMyBooks()
+        booksApi.getMyBooks(),
+        userApi.getBorrowedBooks()
       ]);
 
       setProfile(profileResponse.data);
       setUserBooks(booksResponse.data || []);
+      setBorrowedBooks(borrowedResponse.data || []);
     } catch (err) {
       console.error('Error fetching user data:', err);
       setError('Failed to load profile data');
@@ -134,6 +138,16 @@ const Profile = () => {
               >
                 My Books ({userBooks.length})
               </button>
+              <button
+                onClick={() => setActiveTab('borrowed')}
+                className={`py-3 px-1 border-b-2 font-medium text-sm transition-colors ${
+                  activeTab === 'borrowed'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Borrowed Books ({borrowedBooks.length})
+              </button>
             </nav>
           </div>
         </div>
@@ -150,6 +164,12 @@ const Profile = () => {
           {activeTab === 'books' && (
             <UserBooks 
               books={userBooks} 
+              onRefresh={fetchUserData}
+            />
+          )}
+          {activeTab === 'borrowed' && (
+            <BorrowedBooks 
+              books={borrowedBooks} 
               onRefresh={fetchUserData}
             />
           )}
