@@ -266,13 +266,13 @@ const About = () => {
               </Button>
             </Link>
             
-            <Link to="/contact">
+            <Link to="/login">
               <Button 
                 variant="outline" 
                 size="lg" 
                 className="w-full sm:w-auto border-2 border-gray-300 text-gray-700 hover:border-blue-500 hover:text-blue-600 font-semibold py-3 px-8 rounded-lg transition-colors duration-200"
               >
-                Contact Us
+                Sign In
               </Button>
             </Link>
           </div>

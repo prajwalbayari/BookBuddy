@@ -21,7 +21,7 @@ class AuthService {
   async signup(userData) {
     try {
       const response = await authApi.signup(userData);
-      console.log("Signup response:", response);
+      // console.log("Signup response:", response);
     } catch (error) {
       console.error("Signup failed:", error);
       throw error;

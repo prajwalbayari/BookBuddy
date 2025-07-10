@@ -46,9 +46,6 @@ const Profile = () => {
         booksApi.getMyBooks()
       ]);
 
-      console.log('Books Response:', booksResponse);
-      console.log('Books Data:', booksResponse.data);
-      
       setProfile(profileResponse.data);
       setUserBooks(booksResponse.data || []);
     } catch (err) {

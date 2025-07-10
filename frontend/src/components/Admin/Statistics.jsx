@@ -68,7 +68,7 @@ const Statistics = () => {
       </div>
       
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
         <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-6 text-white shadow-lg">
           <div className="flex items-center justify-between">
             <div>
@@ -97,20 +97,7 @@ const Statistics = () => {
           </div>
         </div>
         
-        <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl p-6 text-white shadow-lg">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-purple-100 text-sm font-medium">Active Users</p>
-              <p className="text-3xl font-bold">{users.filter(user => user.books && user.books.length > 0).length}</p>
-            </div>
-            <div className="bg-purple-400 bg-opacity-50 rounded-lg p-3">
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-          </div>
-        </div>
-        
+
         <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl p-6 text-white shadow-lg">
           <div className="flex items-center justify-between">
             <div>

@@ -122,7 +122,7 @@ class BookService {
       // In real implementation, this would be:
       // return await booksApi.addToFavorites(bookId);
       
-      console.log('Added book to favorites:', bookId);
+      // console.log('Added book to favorites:', bookId);
       return { success: true };
     } catch (error) {
       console.error('Add to favorites failed:', error);
@@ -136,7 +136,7 @@ class BookService {
       // In real implementation, this would be:
       // return await booksApi.removeFromFavorites(bookId);
       
-      console.log('Removed book from favorites:', bookId);
+      // console.log('Removed book from favorites:', bookId);
       return { success: true };
     } catch (error) {
       console.error('Remove from favorites failed:', error);
@@ -150,7 +150,7 @@ class BookService {
       // In real implementation, this would be:
       // return await booksApi.rateBook(bookId, rating);
       
-      console.log('Rated book:', bookId, 'Rating:', rating);
+      // console.log('Rated book:', bookId, 'Rating:', rating);
       return { success: true, rating };
     } catch (error) {
       console.error('Rate book failed:', error);

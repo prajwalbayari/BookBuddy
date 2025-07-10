@@ -18,7 +18,6 @@ const BookSection = () => {
       try {
         setLoading(true);
         const response = await booksApi.getAllBooks();
-        console.log("BookSection API Response:", response); // Debug response
         
         // Access the data correctly based on API response structure
         const booksData = response.data.data || response.data;
@@ -57,11 +56,9 @@ const BookSection = () => {
   });
 
   const handleViewBook = async (book) => {
-    console.log("BookSection - Book owner data:", book.owner, book.ownerName, typeof book.owner); // Enhanced debug owner data
     try {
       // Fetch detailed book information
       const response = await booksApi.getBookDetails(book._id);
-      console.log("Book details response:", response);
       if (response.data.success) {
         setSelectedBook(response.data.data);
       } else {
@@ -111,22 +108,44 @@ const BookSection = () => {
 
   const getStatusButtonClass = (status) => {
     return statusFilter === status 
-      ? 'bg-blue-600 text-white' 
-      : 'bg-white text-gray-700 hover:bg-gray-50';
+      ? 'bg-blue-600 text-white shadow-md border border-blue-200' 
+      : 'bg-white text-gray-700 hover:bg-gray-50 hover:shadow-md border border-gray-200 hover:border-blue-200';
   };
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center py-16">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="flex justify-center items-center py-20">
+        <div className="text-center">
+          <div className="relative mb-4">
+            <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary-200 border-t-primary-600 mx-auto"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+          </div>
+          <p className="text-gray-600 font-medium">Loading amazing books...</p>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="text-center py-16">
-        <p className="text-red-500">{error}</p>
+      <div className="text-center py-16 bg-white/40 backdrop-blur-sm rounded-2xl border border-white/20">
+        <div className="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-2xl flex items-center justify-center">
+          <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 16.5C3.498 18.333 4.46 20 6 20z" />
+          </svg>
+        </div>
+        <h3 className="text-lg font-semibold text-gray-700 mb-2">Oops! Something went wrong</h3>
+        <p className="text-red-500 mb-4">{error}</p>
+        <button 
+          onClick={() => window.location.reload()} 
+          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-semibold"
+        >
+          Try Again
+        </button>
       </div>
     );
   }
@@ -134,26 +153,43 @@ const BookSection = () => {
   return (
     <section className="py-8" id="books-section">
       <div className="container mx-auto px-4 max-w-7xl">
-        <div className="mb-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-            <div>
-              <h2 className="text-3xl font-bold mb-2 text-gray-800">All Books</h2>
-              <p className="text-gray-600">
-                Browse through our collection of books shared by the community
+        {/* Header Section */}
+        <div className="bg-white rounded-lg p-6 mb-8 border shadow-sm">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-6">
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+                </div>
+                <h2 className="text-3xl font-bold text-gray-800">
+                  Community Library
+                </h2>
+              </div>
+              <p className="text-gray-600 text-lg">
+                Discover amazing books shared by our passionate reading community
               </p>
             </div>
-            <div className="relative w-full md:w-64">
+            
+            {/* Search Bar */}
+            <div className="relative w-full lg:w-80">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
               <input
                 type="text"
-                placeholder="Search books..."
+                placeholder="Search books, authors..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-12 pr-12 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
               />
               {searchTerm && (
                 <button 
                   onClick={() => setSearchTerm('')}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors duration-200"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -163,79 +199,108 @@ const BookSection = () => {
             </div>
           </div>
           
-          <div className="flex flex-wrap gap-2 mb-6">
+          {/* Filter Buttons */}
+          <div className="flex flex-wrap gap-3 mb-4">
+            <span className="text-sm font-medium text-gray-600 flex items-center">
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z" />
+              </svg>
+              Filter by status:
+            </span>
             <button 
               onClick={() => setStatusFilter('all')} 
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${getStatusButtonClass('all')}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${getStatusButtonClass('all')}`}
             >
-              All
+              All Books
             </button>
             <button 
               onClick={() => setStatusFilter('Available')} 
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${getStatusButtonClass('Available')}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${getStatusButtonClass('Available')}`}
             >
               Available
             </button>
             <button 
               onClick={() => setStatusFilter('Requested')} 
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${getStatusButtonClass('Requested')}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${getStatusButtonClass('Requested')}`}
             >
               Requested
             </button>
             <button 
               onClick={() => setStatusFilter('Returned')} 
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${getStatusButtonClass('Returned')}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${getStatusButtonClass('Returned')}`}
             >
               Returned
             </button>
             <button 
               onClick={() => setStatusFilter('Borrowed')} 
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${getStatusButtonClass('Borrowed')}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${getStatusButtonClass('Borrowed')}`}
             >
               Borrowed
             </button>
           </div>
+          
+          {/* Results Counter */}
+          <div className="flex items-center justify-between text-sm text-gray-500 pt-4 border-t border-gray-200">
+            <span>Showing {filteredBooks.length} of {books.length} books</span>
+            {searchTerm && (
+              <span className="flex items-center">
+                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                Results for "{searchTerm}"
+              </span>
+            )}
+          </div>
         </div>
 
         {filteredBooks.length === 0 ? (
-          <div className="text-center py-12 bg-gray-50 rounded-xl">
-            <svg className="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-            <p className="text-gray-600">No books found matching your criteria.</p>
+          <div className="text-center py-16 bg-white rounded-lg border border-gray-200">
+            <div className="w-20 h-20 mx-auto mb-6 bg-blue-100 rounded-lg flex items-center justify-center">
+              <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">No books found</h3>
+            <p className="text-gray-600">Try adjusting your search or filter criteria</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredBooks.map((book) => (
-              <Card key={book._id} className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                <div className="relative h-48 mb-4 bg-gray-100 rounded-md overflow-hidden">
+              <Card key={book._id} className="group h-full flex flex-col overflow-hidden bg-white/70 backdrop-blur-sm border border-white/30 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:bg-white/90">
+                <div className="relative h-52 mb-4 bg-gray-100 rounded-lg overflow-hidden">
                   {book.bookImages && book.bookImages.length > 0 ? (
                     <img 
                       src={book.bookImages[0]} 
                       alt={book.bookName} 
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gray-200">
-                      <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-full h-full flex items-center justify-center bg-blue-50">
+                      <svg className="w-16 h-16 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                       </svg>
                     </div>
                   )}
-                  <span className={`absolute top-2 right-2 px-2 py-1 text-xs font-medium rounded-full ${getAvailabilityColor(book.available)}`}>
+                  <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <span className={`absolute top-3 right-3 px-3 py-1 text-xs font-semibold rounded-xl backdrop-blur-sm border border-white/30 ${getAvailabilityColor(book.available)}`}>
                     {book.available}
                   </span>
                 </div>
-                <h3 className="font-semibold text-lg mb-2 text-gray-800 line-clamp-1">{book.bookName}</h3>
-                <p className="text-sm text-gray-600 mb-4 line-clamp-3">{book.description}</p>
-                <div className="mt-auto flex justify-between items-center">
-                  <p className="text-xs text-gray-500">Edition: {book.edition || 'N/A'}</p>
-                  <button 
-                    onClick={() => handleViewBook(book)}
-                    className="text-sm px-4 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-                  >
-                    View
-                  </button>
+                <div className="flex-1 flex flex-col p-1">
+                  <h3 className="font-bold text-lg mb-2 text-gray-800 line-clamp-1 group-hover:text-primary-600 transition-colors duration-200">{book.bookName}</h3>
+                  <p className="text-sm text-gray-600 mb-4 line-clamp-3 leading-relaxed">{book.description}</p>
+                  <div className="mt-auto flex justify-between items-center pt-2">
+                    <div className="flex flex-col">
+                      <p className="text-xs text-gray-500 font-medium">Edition</p>
+                      <p className="text-sm font-semibold text-gray-700">{book.edition || 'N/A'}</p>
+                    </div>
+                    <button 
+                      onClick={() => handleViewBook(book)}
+                      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-sm hover:shadow-md text-sm font-semibold"
+                    >
+                      <span>View</span>
+                    </button>
+                  </div>
                 </div>
               </Card>
             ))}

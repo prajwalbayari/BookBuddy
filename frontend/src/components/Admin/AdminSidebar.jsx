@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import { toast } from 'react-hot-toast';
 
 const AdminSidebar = ({ onSelect, selected }) => {
   const navigate = useNavigate();
@@ -57,8 +58,15 @@ const AdminSidebar = ({ onSelect, selected }) => {
         <button
           className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left text-red-200 hover:bg-red-600 hover:text-white transition-all duration-200"
           onClick={async () => {
-            await logout();
-            navigate('/');
+            try {
+              toast.success('Logged out successfully!', { duration: 3000 });
+              await logout();
+              navigate('/', { replace: true });
+            } catch (error) {
+              console.error('Logout error:', error);
+              toast.success('Logged out successfully!', { duration: 3000 });
+              navigate('/', { replace: true });
+            }
           }}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

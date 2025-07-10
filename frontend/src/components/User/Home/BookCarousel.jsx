@@ -18,14 +18,12 @@ const BookCarousel = () => {
       try {
         setLoading(true);
         const response = await booksApi.getAllBooks();
-        console.log("API Response:", response); // Log full response
         
         // Access the data correctly based on API response structure
         const booksData = response.data.data || response.data;
         
         // Filter only approved books
         const approvedBooks = booksData.filter(book => book.status === "Approved");
-        console.log("Approved books:", approvedBooks); // Log approved books
         
         // Sort by availability: Available, Requested, Returned, Borrowed
         const sortedBooks = approvedBooks.sort((a, b) => {
@@ -56,11 +54,9 @@ const BookCarousel = () => {
   };
 
   const handleViewBook = async (book) => {
-    console.log("Book owner data:", book.owner, book.ownerName, typeof book.owner); // Enhanced debug owner data
     try {
       // Fetch detailed book information
       const response = await booksApi.getBookDetails(book._id);
-      console.log("Book details response:", response);
       if (response.data.success) {
         setSelectedBook(response.data.data);
       } else {
@@ -133,19 +129,17 @@ const BookCarousel = () => {
   }
 
   return (
-    <div className="relative py-8">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Featured Books</h2>
-      
-      <div className="relative overflow-hidden">
+    <div className="relative">
+      <div className="relative overflow-hidden rounded-lg">
         <div 
           ref={carouselRef}
-          className="flex transition-transform duration-300 ease-in-out"
+          className="flex transition-transform duration-300 ease-out"
           style={{ transform: `translateX(-${activeIndex * 25}%)` }}
         >
-            {books.map((book) => (
+            {books.map((book, index) => (
               <div key={book._id} className="min-w-[280px] max-w-[280px] px-3 flex-shrink-0">
-                <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                  <div className="relative h-40 mb-4 bg-gray-100 rounded-md overflow-hidden">
+                <Card className="h-full flex flex-col overflow-hidden bg-white border transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                  <div className="relative h-48 mb-4 bg-gray-100 rounded-lg overflow-hidden">
                     {book.bookImages && book.bookImages.length > 0 ? (
                       <img 
                         src={book.bookImages[0]} 
@@ -153,7 +147,7 @@ const BookCarousel = () => {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-gray-200">
+                      <div className="w-full h-full flex items-center justify-center bg-gray-100">
                         <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                         </svg>
@@ -163,16 +157,21 @@ const BookCarousel = () => {
                       {book.available}
                     </span>
                   </div>
-                  <h3 className="font-semibold text-lg mb-2 text-gray-800 line-clamp-1">{book.bookName}</h3>
-                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">{book.description}</p>
-                  <div className="mt-auto flex justify-between items-center">
-                    <p className="text-xs text-gray-500">Edition: {book.edition || 'N/A'}</p>
-                    <button 
-                      onClick={() => handleViewBook(book)}
-                      className="text-sm px-4 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-                    >
-                      View
-                    </button>
+                  <div className="flex-1 flex flex-col p-1">
+                    <h3 className="font-semibold text-lg mb-2 text-gray-800 line-clamp-1">{book.bookName}</h3>
+                    <p className="text-sm text-gray-600 mb-4 line-clamp-2 leading-relaxed">{book.description}</p>
+                    <div className="mt-auto flex justify-between items-center pt-2">
+                      <div className="flex flex-col">
+                        <p className="text-xs text-gray-500 font-medium">Edition</p>
+                        <p className="text-sm font-semibold text-gray-700">{book.edition || 'N/A'}</p>
+                      </div>
+                      <button 
+                        onClick={() => handleViewBook(book)}
+                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm font-medium"
+                      >
+                        View
+                      </button>
+                    </div>
                   </div>
                 </Card>
               </div>
@@ -184,19 +183,19 @@ const BookCarousel = () => {
         <div className="flex justify-center mt-6 space-x-4">
           <button 
             onClick={prevSlide}
-            className="p-2 rounded-full bg-white shadow-md hover:bg-gray-50 transition-all"
+            className="p-2 rounded-lg bg-white border shadow-sm hover:bg-gray-50 transition-colors duration-200"
             aria-label="Previous slide"
           >
-            <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           <button 
             onClick={nextSlide}
-            className="p-2 rounded-full bg-white shadow-md hover:bg-gray-50 transition-all"
+            className="p-2 rounded-lg bg-white border shadow-sm hover:bg-gray-50 transition-colors duration-200"
             aria-label="Next slide"
           >
-            <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>

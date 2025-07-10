@@ -130,11 +130,19 @@ const Requests = () => {
                   {/* Book Image */}
                   <div className="flex-shrink-0 mx-auto xl:mx-0">
                     <div className="relative group">
-                      <img
-                        src={book.bookImages?.[0] || "/no-image.png"}
-                        alt={book.bookName}
-                        className="w-32 h-44 sm:w-36 sm:h-48 object-cover rounded-xl border-2 border-gray-200 shadow-md group-hover:shadow-lg transition-shadow duration-200"
-                      />
+                      {book.bookImages && book.bookImages.length > 0 ? (
+                        <img
+                          src={book.bookImages[0]}
+                          alt={book.bookName}
+                          className="w-32 h-44 sm:w-36 sm:h-48 object-cover rounded-xl border-2 border-gray-200 shadow-md group-hover:shadow-lg transition-shadow duration-200"
+                        />
+                      ) : (
+                        <div className="w-32 h-44 sm:w-36 sm:h-48 flex items-center justify-center bg-blue-50 rounded-xl border-2 border-gray-200 shadow-md group-hover:shadow-lg transition-shadow duration-200">
+                          <svg className="w-16 h-16 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                          </svg>
+                        </div>
+                      )}
                       <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 rounded-xl transition-all duration-200"></div>
                     </div>
                   </div>
@@ -161,7 +169,7 @@ const Requests = () => {
                             <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
-                            <span className="text-sm font-medium text-gray-600 uppercase tracking-wide">Author/Owner</span>
+                            <span className="text-sm font-medium text-gray-600 uppercase tracking-wide">Owner</span>
                           </div>
                           <p className="text-lg font-semibold text-blue-600">{book.requestedBy || 'Unknown'}</p>
                         </div>

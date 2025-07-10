@@ -68,6 +68,7 @@ export const useAuth = () => {
       setUser(null);
       setIsAuthenticated(false);
       setIsAdmin(false);
+      setLoading(false); // Reset loading state after logout
       // Broadcast logout event for instant UI update
       window.dispatchEvent(new Event('storage'));
     } catch (error) {
@@ -75,6 +76,7 @@ export const useAuth = () => {
       setUser(null);
       setIsAuthenticated(false);
       setIsAdmin(false);
+      setLoading(false); // Reset loading state even on error
       window.dispatchEvent(new Event('storage'));
     }
   };

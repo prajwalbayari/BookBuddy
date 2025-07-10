@@ -5,6 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Header from "./components/Header";
+import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/LandingPage/Home";
 import Signup from "./pages/LandingPage/Signup";
 import Login from "./pages/LandingPage/Login";
@@ -17,9 +18,20 @@ import "./App.css";
 import { Toaster } from "react-hot-toast";
 
 function App() {
-  const { isAuthenticated, isAdmin } = useAuth();
+  const { isAuthenticated, isAdmin, loading } = useAuth();
+  
+  // Show loading spinner while authentication state is being determined
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+  
   return (
     <Router>
+      <ScrollToTop />
       <div className="min-h-screen bg-gray-50">
         <Toaster position="top-center" />
         <Routes>

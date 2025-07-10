@@ -1,9 +1,11 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import { toast } from 'react-hot-toast';
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { isAuthenticated, isAdmin, logout } = useAuth();
@@ -171,8 +173,15 @@ const Header = () => {
                 <button
                   className="flex items-center space-x-2 px-4 py-2.5 bg-gradient-to-r from-red-500 to-red-600 text-white font-medium rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
                   onClick={async () => {
-                    await logout();
-                    window.location.assign('/');
+                    try {
+                      toast.success('Logged out successfully!', { duration: 3000 });
+                      await logout();
+                      navigate('/', { replace: true });
+                    } catch (error) {
+                      console.error('Logout error:', error);
+                      toast.success('Logged out successfully!', { duration: 3000 });
+                      navigate('/', { replace: true });
+                    }
                   }}
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -324,8 +333,15 @@ const Header = () => {
                     className="w-full flex items-center space-x-3 px-4 py-3 text-left font-medium text-white bg-gradient-to-r from-red-500 to-red-600 rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg"
                     onClick={async () => {
                       setIsMenuOpen(false);
-                      await logout();
-                      window.location.assign('/');
+                      try {
+                        toast.success('Logged out successfully!', { duration: 3000 });
+                        await logout();
+                        navigate('/', { replace: true });
+                      } catch (error) {
+                        console.error('Logout error:', error);
+                        toast.success('Logged out successfully!', { duration: 3000 });
+                        navigate('/', { replace: true });
+                      }
                     }}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
