@@ -12,36 +12,17 @@ const About = () => {
 
   const teamMembers = [
     {
-      name: 'Sarah Johnson',
-      role: 'Founder & CEO',
-      bio: 'Passionate reader with 15+ years in tech, dedicated to connecting readers worldwide.',
-      avatar: '👩‍💼',
-      gradient: 'from-blue-400 to-cyan-500',
-      bgColor: 'bg-blue-50',
+      name: 'Prajwal Bayari',
     },
     {
-      name: 'Mike Chen',
-      role: 'Lead Developer',
-      bio: 'Full-stack developer who loves building tools that make reading more enjoyable.',
-      avatar: '👨‍💻',
-      gradient: 'from-purple-400 to-pink-500',
-      bgColor: 'bg-purple-50',
+      name: 'Vinit Afzalpurkar',
     },
     {
-      name: 'Emma Davis',
-      role: 'UX Designer',
-      bio: 'Design enthusiast focused on creating intuitive and beautiful user experiences.',
-      avatar: '👩‍🎨',
-      gradient: 'from-green-400 to-emerald-500',
-      bgColor: 'bg-green-50',
+      name: 'Akshay K Y',
     },
-  ];
-
-  const stats = [
-    { label: 'Books in Library', value: '100K+', icon: '📚', color: 'text-blue-600' },
-    { label: 'Active Readers', value: '50K+', icon: '👥', color: 'text-purple-600' },
-    { label: 'Books Recommended', value: '1M+', icon: '⭐', color: 'text-green-600' },
-    { label: 'Reading Communities', value: '500+', icon: '🏆', color: 'text-orange-600' },
+    {
+      name: 'Mohammed Safi ur Rahman',
+    },
   ];
 
   const values = [
@@ -98,9 +79,9 @@ const About = () => {
       {/* Mission Section */}
       <div className="py-16 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="max-w-4xl mx-auto text-center">
             <div className={`transform transition-all duration-700 ease-out ${
-              isLoaded ? 'translate-x-0 opacity-100' : '-translate-x-5 opacity-0'
+              isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
             }`}>
               <span className="inline-block px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full mb-6">
                 🎯 Our Mission
@@ -121,7 +102,7 @@ const About = () => {
                 </p>
               </div>
               
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap justify-center gap-3">
                 <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
                   📚 Discovery
                 </span>
@@ -133,73 +114,6 @@ const About = () => {
                 </span>
               </div>
             </div>
-            
-            <div className={`transform transition-all duration-700 ease-out delay-300 ${
-              isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-5 opacity-0'
-            }`}>
-              <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-200">
-                <div className="grid grid-cols-2 gap-6">
-                  {stats.map((stat, index) => (
-                    <div key={index} className="text-center">
-                      <div className="bg-gray-50 rounded-lg p-4">
-                        <div className="text-2xl mb-2">{stat.icon}</div>
-                        <div className={`text-2xl font-bold ${stat.color} mb-1`}>
-                          {stat.value}
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          {stat.label}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Team Section */}
-      <div className="bg-white py-16 sm:py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <span className="inline-block px-3 py-1 bg-purple-100 text-purple-800 text-sm font-medium rounded-full mb-4">
-              👨‍👩‍👧‍👦 Our Team
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Meet the People Behind BookBuddy
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              We're a passionate team of readers, developers, and designers committed to making your reading experience extraordinary.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
-              <div 
-                key={index} 
-                className={`bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 text-center ${
-                  isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
-                }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
-              >
-                <div className={`w-16 h-16 ${member.bgColor} rounded-xl flex items-center justify-center mb-4 mx-auto`}>
-                  <div className="text-3xl">{member.avatar}</div>
-                </div>
-                
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {member.name}
-                </h3>
-                
-                <p className="text-blue-600 font-medium mb-3">
-                  {member.role}
-                </p>
-                
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {member.bio}
-                </p>
-              </div>
-            ))}
           </div>
         </div>
       </div>
@@ -209,7 +123,7 @@ const About = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <span className="inline-block px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full mb-4">
-              💎 Our Values
+              � Our Values
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
               What Drives Us Forward
@@ -244,6 +158,41 @@ const About = () => {
           </div>
         </div>
       </div>
+
+      {/* Team Section - Commented out for now */}
+      {/* 
+      <div className="bg-white py-16 sm:py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <span className="inline-block px-3 py-1 bg-purple-100 text-purple-800 text-sm font-medium rounded-full mb-4">
+              �‍👩‍👧‍👦 Our Team
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+              Meet the People Behind BookBuddy
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              We're a passionate team of readers, developers, and designers committed to making your reading experience extraordinary.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {teamMembers.map((member, index) => (
+              <div 
+                key={index} 
+                className={`bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 text-center ${
+                  isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
+                }`}
+                style={{ transitionDelay: `${index * 150}ms` }}
+              >
+                <h3 className="text-lg font-semibold text-gray-900">
+                  {member.name}
+                </h3>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      */}
 
       {/* CTA Section */}
       <div className="bg-white border-t border-gray-200">

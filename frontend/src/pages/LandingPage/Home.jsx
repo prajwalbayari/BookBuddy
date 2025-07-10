@@ -37,13 +37,6 @@ const Home = () => {
     },
   ];
 
-  const stats = [
-    { label: "Books Available", value: "100K+", icon: "📚" },
-    { label: "Active Readers", value: "25K+", icon: "👥" },
-    { label: "Books Reviewed", value: "500K+", icon: "⭐" },
-    { label: "Reading Lists", value: "50K+", icon: "📝" },
-  ];
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -88,22 +81,6 @@ const Home = () => {
                   Learn More
                 </Button>
               </Link>
-            </div>
-
-            {/* Stats Section */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-              {stats.map((stat, index) => (
-                <div
-                  key={index}
-                  className="bg-white border border-gray-200 rounded-lg p-6 text-center shadow-sm hover:shadow-md transition-shadow duration-200"
-                >
-                  <div className="text-2xl mb-2">{stat.icon}</div>
-                  <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-gray-600">{stat.label}</div>
-                </div>
-              ))}
             </div>
           </div>
         </div>

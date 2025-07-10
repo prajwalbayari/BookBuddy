@@ -193,7 +193,6 @@ export const getAllBooks = async (req, res) => {
     .populate("owner", "userName")
     .populate("borrowedBy", "userName");
 
-    // Transform the data to include owner name and borrower name explicitly
     const booksWithDetails = books.map(book => {
       const bookObj = book.toObject();
       return {
@@ -225,7 +224,6 @@ export const getMyBooks = async (req, res) => {
     }
     const books = await Book.find({ owner: userId }).populate("borrowedBy", "userName");
     
-    // Add owner name and borrower name to the response
     const booksWithDetails = books.map(book => {
       const bookObj = book.toObject();
       return {
@@ -271,11 +269,9 @@ export const getBookDetails = async (req, res) => {
       return res.status(404).json({ message: "Book not found!" });
     }
 
-    // Extract owner name and borrower name from populated fields
     const ownerName = book.owner && book.owner.userName ? book.owner.userName : "Unknown";
     const borrowerName = book.borrowedBy && book.borrowedBy.userName ? book.borrowedBy.userName : null;
 
-    // Create response object with owner name and borrower name
     const bookData = {
       ...book.toObject(),
       ownerName,
@@ -302,7 +298,6 @@ export const getAllUsers = async (req, res) => {
       return res.status(401).json({ message: "Unauthorized access!" });
     }
 
-    // Get all users except the current user, only return id and userName
     const users = await User.find({ _id: { $ne: userId } }).select("_id userName");
 
     res.status(200).json({

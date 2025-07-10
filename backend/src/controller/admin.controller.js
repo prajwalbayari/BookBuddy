@@ -14,7 +14,7 @@ export const getAllRequests = async (req, res) => {
       path: 'owner',
       select: 'userName',
     });
-    // Attach userName to each book as requestedBy
+
     const booksWithUser = books.map(book => ({
       ...book.toObject(),
       requestedBy: book.owner?.userName || 'Unknown',
@@ -97,15 +97,13 @@ export const rejectBook = async (req, res) => {
 // Get all users mapped with their owned books
 export const getUsersWithBooks = async (req, res) => {
   try {
-    // Fetch all users
     const users = await User.find({}, 'userName userEmail');
-    // Fetch only approved books with owner and borrower info
+
     const books = await Book.find({ status: "Approved" })
       .populate('owner', 'userName')
       .populate('borrowedBy', 'userName')
       .select('bookName edition description owner borrowedBy available createdAt');
 
-    // Map userId to books
     const userBooksMap = {};
     users.forEach(user => {
       userBooksMap[user._id] = {
@@ -131,7 +129,6 @@ export const getUsersWithBooks = async (req, res) => {
       }
     });
 
-    // Convert map to array
     const result = Object.values(userBooksMap);
     return res.status(200).json({
       success: true,

@@ -81,17 +81,6 @@ export const useAuth = () => {
     }
   };
 
-  const updateProfile = async (userData) => {
-    try {
-      const updatedUser = await authService.updateProfile(userData);
-      setUser(updatedUser);
-      setIsAdmin(updatedUser?.role === 'admin');
-      return updatedUser;
-    } catch (error) {
-      throw error;
-    }
-  };
-
   return {
     user,
     isAuthenticated,
@@ -101,6 +90,5 @@ export const useAuth = () => {
     adminLogin,
     signup,
     logout,
-    updateProfile,
   };
 };

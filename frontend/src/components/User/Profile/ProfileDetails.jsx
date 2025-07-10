@@ -77,7 +77,7 @@ const ProfileDetails = ({ user, onUpdate, bookCount = 0 }) => {
       label: 'Member Since',
       value: formatDate(user?.createdAt),
       icon: (
-        <svg className="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
       )
@@ -86,17 +86,8 @@ const ProfileDetails = ({ user, onUpdate, bookCount = 0 }) => {
       label: 'Profile Updated',
       value: formatDate(user?.updatedAt),
       icon: (
-        <svg className="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-        </svg>
-      )
-    },
-    {
-      label: 'Feedback Count',
-      value: user?.feedback?.length || 0,
-      icon: (
-        <svg className="h-5 w-5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-1l-4 4z" />
         </svg>
       )
     }
@@ -131,16 +122,25 @@ const ProfileDetails = ({ user, onUpdate, bookCount = 0 }) => {
 
       {/* Account Statistics */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Account Statistics</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="flex items-center mb-4">
+          <div className="p-2 bg-gray-100 rounded-lg mr-3">
+            <svg className="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900">Account Statistics</h3>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {profileStats.map((stat, index) => (
-            <div key={index} className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
-              <div className="flex-shrink-0">
-                {stat.icon}
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-500">{stat.label}</p>
-                <p className="text-lg font-semibold text-gray-900">{stat.value}</p>
+            <div key={index} className="bg-gray-50 rounded-lg p-4 border border-gray-100">
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 rounded-lg mr-3">
+                  {stat.icon}
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-500">{stat.label}</p>
+                  <p className="text-lg font-semibold text-gray-900">{stat.value}</p>
+                </div>
               </div>
             </div>
           ))}

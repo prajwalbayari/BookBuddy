@@ -21,7 +21,6 @@ class AuthService {
   async signup(userData) {
     try {
       const response = await authApi.signup(userData);
-      // console.log("Signup response:", response);
     } catch (error) {
       console.error("Signup failed:", error);
       throw error;
@@ -63,39 +62,6 @@ class AuthService {
     }
   }
 
-  // Get current user profile
-  async getProfile() {
-    try {
-      // In real implementation, this would be:
-      // const response = await authApi.getProfile();
-      // return response.user;
-
-      return this.currentUser;
-    } catch (error) {
-      console.error("Get profile failed:", error);
-      throw error;
-    }
-  }
-
-  // Update user profile
-  async updateProfile(userData) {
-    try {
-      // In real implementation, this would be:
-      // const response = await authApi.updateProfile(userData);
-      // this.currentUser = response.user;
-      // localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-      // return response.user;
-
-      // Mock update
-      this.currentUser = { ...this.currentUser, ...userData };
-      localStorage.setItem("currentUser", JSON.stringify(this.currentUser));
-      return this.currentUser;
-    } catch (error) {
-      console.error("Update profile failed:", error);
-      throw error;
-    }
-  }
-
   // Handle successful authentication
   handleAuthSuccess(user, token) {
     this.currentUser = user;
@@ -124,11 +90,6 @@ class AuthService {
   // Get current user
   getCurrentUser() {
     return this.currentUser;
-  }
-
-  // Get auth token
-  getToken() {
-    return localStorage.getItem("authToken");
   }
 }
 

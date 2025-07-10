@@ -67,7 +67,6 @@ export const changePassword = async (req, res) => {
   const userId = req.user._id;
 
   try {
-    // Validate input
     if (!currentPassword || !newPassword) {
       return res
         .status(400)
@@ -86,19 +85,16 @@ export const changePassword = async (req, res) => {
         });
     }
 
-    // Find user with password field explicitly included (since it has select: false in schema)
     const user = await User.findById(userId).select("+password");
     if (!user) {
       return res.status(404).json({ message: "User not found!" });
     }
 
-    // Ensure password field exists
     if (!user.password) {
       console.log("Password field missing for user:", userId);
       return res.status(500).json({ message: "User password data not found!" });
     }
 
-    // Check if current password is correct
     const isCurrentPasswordValid = await bcrypt.compare(
       currentPassword,
       user.password
@@ -107,7 +103,6 @@ export const changePassword = async (req, res) => {
       return res.status(400).json({ message: "Current password is incorrect!" });
     }
 
-    // Check if new password is different from current password
     const isSamePassword = await bcrypt.compare(newPassword, user.password);
     if (isSamePassword) {
       return res
@@ -118,11 +113,9 @@ export const changePassword = async (req, res) => {
         });
     }
 
-    // Hash the new password
     const saltRounds = 10;
     const hashedNewPassword = await bcrypt.hash(newPassword, saltRounds);
 
-    // Update the password
     user.password = hashedNewPassword;
     await user.save();
 
@@ -149,12 +142,10 @@ export const getBorrowedBooks = async (req, res) => {
       return res.status(404).json({ message: "User not found!" });
     }
 
-    // Find all books where the current user is the borrower
     const borrowedBooks = await Book.find({ borrowedBy: userId })
       .populate("owner", "userName")
       .sort({ updatedAt: -1 });
 
-    // Transform the data to include owner name
     const booksWithDetails = borrowedBooks.map(book => {
       const bookObj = book.toObject();
       return {
