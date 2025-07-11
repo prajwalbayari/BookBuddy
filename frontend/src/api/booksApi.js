@@ -35,4 +35,9 @@ export const booksApi = {
   getBookDetails: async (bookId) => {
     return apiClient.get(`/book/details/${bookId}`);
   },
+
+  // Add feedback to a book (protected)
+  addBookFeedback: async (bookId, feedbackData) => {
+    return apiClient.post(`/book/feedback/${bookId}`, feedbackData);
+  },
 };

@@ -11,7 +11,7 @@ import Signup from "./pages/LandingPage/Signup";
 import Login from "./pages/LandingPage/Login";
 import About from "./pages/LandingPage/About";
 import NotFound from "./pages/NotFound";
-import { UserHome, ChatPage, Profile, AddBook, EditBook, BooksPage } from "./pages/User";
+import { UserHome, ChatPage, Profile, AddBook, EditBook, BooksPage, BookDetails } from "./pages/User";
 import { AdminDashboard } from "./pages/Admin";
 import { useAuth } from "./hooks/useAuth";
 import "./App.css";
@@ -129,6 +129,17 @@ function App() {
                     <EditBook />
                   </main>
                 </>
+              ) : (
+                <NotFound />
+              )
+            }
+          />
+          {/* Book Details: only for authenticated users who are not admin */}
+          <Route
+            path="/book-details/:bookId"
+            element={
+              isAuthenticated && !isAdmin ? (
+                <BookDetails />
               ) : (
                 <NotFound />
               )

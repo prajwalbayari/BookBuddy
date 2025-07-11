@@ -144,6 +144,7 @@ export const getBorrowedBooks = async (req, res) => {
 
     const borrowedBooks = await Book.find({ borrowedBy: userId })
       .populate("owner", "userName")
+      .populate("feedback.userId", "userName userEmail")
       .sort({ updatedAt: -1 });
 
     const booksWithDetails = borrowedBooks.map(book => {

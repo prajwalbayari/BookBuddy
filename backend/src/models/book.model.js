@@ -40,6 +40,30 @@ const bookSchema = new mongoose.Schema(
       enum: ["Pending","Rejected","Approved"],
       default: "Pending",
     },
+    feedback: [
+      {
+        rating: {
+          type: Number,
+          required: true,
+          min: 1,
+          max: 5,
+        },
+        description: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+        userId: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: "User",
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   {
     timestamps: true,

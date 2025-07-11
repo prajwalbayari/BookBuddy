@@ -19,11 +19,12 @@ const Chat = ({ initialSelectedUser = null }) => {
   useEffect(() => {
     if (initialSelectedUser && initialSelectedUser.selectedUserId) {
       // If we have initial user data, create a user object to be used
+      const ownerName = initialSelectedUser.userName || 'Book Owner';
       const initialUser = {
         _id: initialSelectedUser.selectedUserId,
-        userName: initialSelectedUser.userName || 'Book Owner',
-        name: initialSelectedUser.userName || 'Book Owner',
-        receiverName: initialSelectedUser.userName || 'Book Owner',
+        userName: ownerName,
+        name: ownerName,
+        receiverName: ownerName,
       };
       setSelectedUser(initialUser);
     }

@@ -191,7 +191,8 @@ export const getAllBooks = async (req, res) => {
       status: "Approved",
     })
     .populate("owner", "userName")
-    .populate("borrowedBy", "userName");
+    .populate("borrowedBy", "userName")
+    .populate("feedback.userId", "userName userEmail");
 
     const booksWithDetails = books.map(book => {
       const bookObj = book.toObject();
@@ -222,7 +223,9 @@ export const getMyBooks = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "Unauthorized access!" });
     }
-    const books = await Book.find({ owner: userId }).populate("borrowedBy", "userName");
+    const books = await Book.find({ owner: userId })
+      .populate("borrowedBy", "userName")
+      .populate("feedback.userId", "userName userEmail");
     
     const booksWithDetails = books.map(book => {
       const bookObj = book.toObject();
@@ -260,10 +263,20 @@ export const getBookDetails = async (req, res) => {
       return res.status(400).json({ message: "Invalid Book ID" });
     }
 
-    const book = await Book.findOne({ _id: bookId, status: "Approved" })
+    // First try to find an approved book (for general browsing)
+    let book = await Book.findOne({ _id: bookId, status: "Approved" })
       .select("-status")
       .populate("owner", "userName")
-      .populate("borrowedBy", "userName");
+      .populate("borrowedBy", "userName")
+      .populate("feedback.userId", "userName userEmail");
+      
+    // If not found and user is the owner, allow access to their own book regardless of status
+    if (!book) {
+      book = await Book.findOne({ _id: bookId, owner: userId })
+        .populate("owner", "userName")
+        .populate("borrowedBy", "userName")
+        .populate("feedback.userId", "userName userEmail");
+    }
       
     if (!book) {
       return res.status(404).json({ message: "Book not found!" });
@@ -308,5 +321,72 @@ export const getAllUsers = async (req, res) => {
   } catch (error) {
     console.log("Error in getAllUsers controller", error.message);
     res.status(500).json({ message: "Internal server Error" });
+  }
+};
+
+// Add feedback to a book
+export const addBookFeedback = async (req, res) => {
+  const { bookId } = req.params;
+  const { rating, description } = req.body;
+  const userId = req.user._id;
+
+  try {
+    // Validate input
+    if (!rating || !description?.trim()) {
+      return res.status(400).json({ message: "Rating and description are required!" });
+    }
+
+    if (rating < 1 || rating > 5 || !Number.isInteger(Number(rating))) {
+      return res.status(400).json({ message: "Rating must be an integer between 1 and 5!" });
+    }
+
+    // Validate book exists
+    if (!mongoose.Types.ObjectId.isValid(bookId)) {
+      return res.status(400).json({ message: "Invalid book ID!" });
+    }
+
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).json({ message: "Book not found!" });
+    }
+
+    // Prevent book owners from giving feedback to their own books
+    if (book.owner.toString() === userId.toString()) {
+      return res.status(400).json({ message: "You cannot give feedback to your own book!" });
+    }
+
+    // Check if user already gave feedback for this book
+    const existingFeedback = book.feedback.find(
+      (feedback) => feedback.userId.toString() === userId.toString()
+    );
+
+    if (existingFeedback) {
+      return res.status(400).json({ message: "You have already provided feedback for this book!" });
+    }
+
+    // Add feedback to the book
+    const newFeedback = {
+      rating: parseInt(rating),
+      description: description.trim(),
+      userId: userId,
+    };
+
+    book.feedback.push(newFeedback);
+    await book.save();
+
+    // Populate the user details for the response
+    await book.populate({
+      path: 'feedback.userId',
+      select: 'userName userEmail'
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "Feedback added successfully!",
+      data: book.feedback[book.feedback.length - 1],
+    });
+  } catch (error) {
+    console.log("Error in addBookFeedback controller", error.message);
+    res.status(500).json({ message: "Internal server error" });
   }
 };

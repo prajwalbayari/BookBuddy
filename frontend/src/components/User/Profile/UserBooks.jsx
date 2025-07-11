@@ -59,11 +59,9 @@ const UserBooks = ({ books, onRefresh }) => {
   });
 
   const filteredBooks = sortedBooks.filter(book => {
-    // Filter by availability
     if (filterBy === 'available' && book.available !== 'Available') return false;
     if (filterBy === 'unavailable' && book.available === 'Available') return false;
     
-    // Filter by status
     if (statusFilter === 'pending' && book.status !== 'Pending') return false;
     if (statusFilter === 'approved' && book.status !== 'Approved') return false;
     if (statusFilter === 'rejected' && book.status !== 'Rejected') return false;
@@ -75,7 +73,6 @@ const UserBooks = ({ books, onRefresh }) => {
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
       <div className="p-4 sm:p-5">
         <div className="flex flex-col sm:flex-row sm:items-start space-y-4 sm:space-y-0 sm:space-x-4">
-          {/* Book Cover */}
           <div className="flex-shrink-0 mx-auto sm:mx-0">
             {book.bookImages && book.bookImages.length > 0 ? (
               <img
@@ -92,9 +89,7 @@ const UserBooks = ({ books, onRefresh }) => {
             )}
           </div>
 
-          {/* Book Details */}
           <div className="flex-1 min-w-0 text-center sm:text-left">
-            {/* Title and Edit Button */}
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 space-y-2 sm:space-y-0">
               <div className="min-w-0 flex-1">
                 <h4 className="text-lg font-semibold text-gray-900 break-words">
@@ -104,36 +99,36 @@ const UserBooks = ({ books, onRefresh }) => {
                   <p className="text-sm text-gray-600 mt-1">Edition: {book.edition}</p>
                 )}
               </div>
-              <button
-                onClick={() => navigate(`/user/books/edit/${book._id}`)}
-                className="sm:ml-3 inline-flex items-center justify-center px-3 py-1.5 border border-gray-300 rounded-md text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors flex-shrink-0"
-              >
-                <svg className="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                </svg>
-                Edit
-              </button>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => navigate(`/book-details/${book._id}`, { 
+                    state: { book: book, fromProfile: true } 
+                  })}
+                  className="inline-flex items-center justify-center px-3 py-1.5 border border-blue-300 rounded-md text-xs font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors flex-shrink-0"
+                >
+                  <svg className="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Details
+                </button>
+                <button
+                  onClick={() => navigate(`/user/books/edit/${book._id}`)}
+                  className="inline-flex items-center justify-center px-3 py-1.5 border border-gray-300 rounded-md text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors flex-shrink-0"
+                >
+                  <svg className="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                  Edit
+                </button>
+              </div>
             </div>
 
-            {/* Description */}
             {book.description && (
               <p className="text-sm text-gray-600 mb-3 line-clamp-2 leading-relaxed">
                 {book.description}
               </p>
             )}
 
-            {/* Borrower Information */}
-            {book.borrowerName && (book.available === 'Borrowed' || book.available === 'Requested') && (
-              <div className="mb-3 p-2 bg-blue-50 border border-blue-200 rounded-md">
-                <p className="text-sm text-blue-800">
-                  <span className="font-medium">
-                    {book.available === 'Borrowed' ? 'Borrowed by:' : 'Requested by:'}
-                  </span> {book.borrowerName}
-                </p>
-              </div>
-            )}
-
-            {/* Status Badges */}
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-3">
               <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                 book.available === 'Available'
@@ -153,7 +148,6 @@ const UserBooks = ({ books, onRefresh }) => {
               </span>
             </div>
 
-            {/* Date */}
             <div className="text-xs text-gray-500">
               Added {new Date(book.createdAt).toLocaleDateString()}
             </div>
@@ -165,10 +159,8 @@ const UserBooks = ({ books, onRefresh }) => {
 
   return (
     <div className="space-y-6">
-      {/* Header with Actions */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
         <div className="space-y-4">
-          {/* Top Row: Title and Action Buttons */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
             <div>
               <h3 className="text-xl font-semibold text-gray-900">My Books</h3>
@@ -198,15 +190,12 @@ const UserBooks = ({ books, onRefresh }) => {
             </div>
           </div>
 
-          {/* Filters and Sort Section */}
           <div className="pt-4 border-t border-gray-100">
             <div className="space-y-4">
-              {/* Section Title */}
               <div>
                 <h4 className="text-sm font-medium text-gray-700 mb-3">Filter & Sort Options</h4>
               </div>
               
-              {/* Filter Controls */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <label htmlFor="filter" className="block text-sm font-medium text-gray-700">
@@ -258,7 +247,6 @@ const UserBooks = ({ books, onRefresh }) => {
                 </div>
               </div>
               
-              {/* Active Filters Summary */}
               {(filterBy !== 'all' || statusFilter !== 'all' || sortBy !== 'newest') && (
                 <div className="flex flex-wrap items-center gap-2 pt-2">
                   <span className="text-xs text-gray-500">Active filters:</span>
@@ -312,7 +300,6 @@ const UserBooks = ({ books, onRefresh }) => {
         </div>
       </div>
 
-      {/* Books Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {filteredBooks.map((book) => (
           <BookCard key={book._id} book={book} />
