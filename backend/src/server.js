@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(cookieParser());
 // CORS setup for credentials
 app.use(cors({
-  origin: 'http://localhost:5173', // frontend URL
+  origin: process.env.CLIENT_URL, // frontend URL
   credentials: true,
 }));
 
