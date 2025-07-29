@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { booksApi } from '../../../api/booksApi';
 import { useNavigate } from 'react-router-dom';
-import Card from '../../Card';
+import BookCard from './BookCard';
 
 const BookSection = () => {
   const [books, setBooks] = useState([]);
@@ -223,47 +223,49 @@ const BookSection = () => {
           </div>
           
           {/* Filter Buttons */}
-          <div className="flex flex-wrap gap-3 mb-4">
-            <span className="text-sm font-medium text-gray-600 flex items-center">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+            <span className="text-sm font-medium text-gray-600 flex items-center flex-shrink-0">
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z" />
               </svg>
               Filter by status:
             </span>
-            <button 
-              onClick={() => setStatusFilter('all')} 
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${getStatusButtonClass('all')}`}
-            >
-              All Books
-            </button>
-            <button 
-              onClick={() => setStatusFilter('Available')} 
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${getStatusButtonClass('Available')}`}
-            >
-              Available
-            </button>
-            <button 
-              onClick={() => setStatusFilter('Requested')} 
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${getStatusButtonClass('Requested')}`}
-            >
-              Requested
-            </button>
-            <button 
-              onClick={() => setStatusFilter('Returned')} 
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${getStatusButtonClass('Returned')}`}
-            >
-              Returned
-            </button>
-            <button 
-              onClick={() => setStatusFilter('Borrowed')} 
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${getStatusButtonClass('Borrowed')}`}
-            >
-              Borrowed
-            </button>
+            <div className="flex flex-wrap gap-2 sm:gap-3">
+              <button 
+                onClick={() => setStatusFilter('all')} 
+                className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors duration-200 ${getStatusButtonClass('all')}`}
+              >
+                All Books
+              </button>
+              <button 
+                onClick={() => setStatusFilter('Available')} 
+                className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors duration-200 ${getStatusButtonClass('Available')}`}
+              >
+                Available
+              </button>
+              <button 
+                onClick={() => setStatusFilter('Requested')} 
+                className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors duration-200 ${getStatusButtonClass('Requested')}`}
+              >
+                Requested
+              </button>
+              <button 
+                onClick={() => setStatusFilter('Returned')} 
+                className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors duration-200 ${getStatusButtonClass('Returned')}`}
+              >
+                Returned
+              </button>
+              <button 
+                onClick={() => setStatusFilter('Borrowed')} 
+                className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors duration-200 ${getStatusButtonClass('Borrowed')}`}
+              >
+                Borrowed
+              </button>
+            </div>
           </div>
           
           {/* Results Counter */}
-          <div className="flex items-center justify-between text-sm text-gray-500 pt-4 border-t border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 text-xs sm:text-sm text-gray-500 pt-4 border-t border-gray-200">
             <span>Showing {filteredBooks.length} of {books.length} books</span>
             {searchTerm && (
               <span className="flex items-center">
@@ -289,43 +291,14 @@ const BookSection = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredBooks.map((book) => (
-              <Card key={book._id} className="group h-full flex flex-col overflow-hidden bg-white/70 backdrop-blur-sm border border-white/30 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:bg-white/90">
-                <div className="relative h-52 mb-4 bg-gray-100 rounded-lg overflow-hidden">
-                  {book.bookImages && book.bookImages.length > 0 ? (
-                    <img 
-                      src={book.bookImages[0]} 
-                      alt={book.bookName} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-blue-50">
-                      <svg className="w-16 h-16 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                      </svg>
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className={`absolute top-3 right-3 px-3 py-1 text-xs font-semibold rounded-xl backdrop-blur-sm border border-white/30 ${getAvailabilityColor(book.available)}`}>
-                    {book.available}
-                  </span>
-                </div>
-                <div className="flex-1 flex flex-col p-1">
-                  <h3 className="font-bold text-lg mb-2 text-gray-800 line-clamp-1 group-hover:text-primary-600 transition-colors duration-200">{book.bookName}</h3>
-                  <p className="text-sm text-gray-600 mb-4 line-clamp-3 leading-relaxed">{book.description}</p>
-                  <div className="mt-auto flex justify-between items-center pt-2">
-                    <div className="flex flex-col">
-                      <p className="text-xs text-gray-500 font-medium">Edition</p>
-                      <p className="text-sm font-semibold text-gray-700">{book.edition || 'N/A'}</p>
-                    </div>
-                    <button 
-                      onClick={() => handleViewBook(book)}
-                      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-sm hover:shadow-md text-sm font-semibold"
-                    >
-                      <span>View</span>
-                    </button>
-                  </div>
-                </div>
-              </Card>
+              <BookCard 
+                key={book._id} 
+                book={book}
+                onViewBook={handleViewBook}
+                className="group bg-white/70 backdrop-blur-sm border-white/30 hover:shadow-xl hover:-translate-y-2 hover:bg-white/90"
+                showFullDescription={false}
+                imageHeight="h-52"
+              />
             ))}
           </div>
         )}

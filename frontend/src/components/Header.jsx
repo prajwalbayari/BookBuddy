@@ -44,31 +44,33 @@ const Header = () => {
       }
     `}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 lg:h-20">
-          {/* Logo */}
-          <Link 
-            to="/" 
-            className="flex items-center space-x-3 group"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <div className="relative">
-              <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                <svg className="w-6 h-6 lg:w-7 lg:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
+        <div className="flex items-center h-16 lg:h-20">
+          {/* Logo - Fixed width container */}
+          <div className="flex-1">
+            <Link 
+              to="/" 
+              className="flex items-center space-x-3 group w-fit"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <div className="relative">
+                <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                  <svg className="w-6 h-6 lg:w-7 lg:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </div>
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                BookBuddy
-              </span>
-              <span className="text-xs text-gray-500 hidden sm:block">Share • Discover • Connect</span>
-            </div>
-          </Link>
+              <div className="flex flex-col">
+                <span className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  BookBuddy
+                </span>
+                <span className="text-xs text-gray-500 hidden sm:block">Share • Discover • Connect</span>
+              </div>
+            </Link>
+          </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          {/* Centered Navigation */}
+          <div className="hidden lg:flex justify-center flex-1">
             {!isAuthenticated && (
               <nav className="flex items-center space-x-8">
                 <Link
@@ -99,98 +101,98 @@ const Header = () => {
                 </Link>
               </nav>
             )}
+            {isAuthenticated && !isAdmin && (
+              <nav className="flex items-center space-x-8">
+                <Link
+                  to="/user/home"
+                  className={`relative font-medium transition-all duration-300 hover:scale-105 ${
+                    isActive('/user/home')
+                      ? 'text-blue-600'
+                      : 'text-gray-700 hover:text-blue-600'
+                  }`}
+                >
+                  Home
+                  {isActive('/user/home') && (
+                    <span className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></span>
+                  )}
+                </Link>
+                <Link
+                  to="/user/books"
+                  className={`relative font-medium transition-all duration-300 hover:scale-105 ${
+                    isActive('/user/books')
+                      ? 'text-blue-600'
+                      : 'text-gray-700 hover:text-blue-600'
+                  }`}
+                >
+                  Books
+                  {isActive('/user/books') && (
+                    <span className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></span>
+                  )}
+                </Link>
+              </nav>
+            )}
           </div>
 
-          {/* Desktop Navigation for authenticated users */}
-          {isAuthenticated && !isAdmin && (
-            <nav className="hidden lg:flex items-center space-x-8">
-              <Link
-                to="/user/home"
-                className={`relative font-medium transition-all duration-300 hover:scale-105 ${
-                  isActive('/user/home')
-                    ? 'text-blue-600'
-                    : 'text-gray-700 hover:text-blue-600'
-                }`}
-              >
-                Home
-                {isActive('/user/home') && (
-                  <span className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></span>
-                )}
-              </Link>
-              <Link
-                to="/user/books"
-                className={`relative font-medium transition-all duration-300 hover:scale-105 ${
-                  isActive('/user/books')
-                    ? 'text-blue-600'
-                    : 'text-gray-700 hover:text-blue-600'
-                }`}
-              >
-                Books
-                {isActive('/user/books') && (
-                  <span className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></span>
-                )}
-              </Link>
-            </nav>
-          )}
-
-          {/* Desktop Auth Buttons */}
-          <div className="hidden lg:flex items-center space-x-4">
-            {!isAuthenticated ? (
-              <>
-                <Link
-                  to="/login"
-                  className="px-6 py-2.5 text-gray-700 font-medium rounded-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105"
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/signup"
-                  className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
-                >
-                  Sign Up
-                </Link>
-              </>
-            ) : (
-              <div className="flex items-center space-x-3">
-                <button
-                  className="flex items-center space-x-2 px-4 py-2.5 text-gray-700 font-medium rounded-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105"
-                  onClick={() => location.pathname !== '/user/chat' && window.location.assign('/user/chat')}
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
-                  <span>Chat</span>
-                </button>
-                <button
-                  className="flex items-center space-x-2 px-4 py-2.5 text-gray-700 font-medium rounded-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105"
-                  onClick={() => location.pathname !== '/user/profile' && window.location.assign('/user/profile')}
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  <span>Profile</span>
-                </button>
-                <button
-                  className="flex items-center space-x-2 px-4 py-2.5 bg-gradient-to-r from-red-500 to-red-600 text-white font-medium rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
-                  onClick={async () => {
-                    try {
-                      toast.success('Logged out successfully!', { duration: 3000 });
-                      await logout();
-                      navigate('/', { replace: true });
-                    } catch (error) {
-                      console.error('Logout error:', error);
-                      toast.success('Logged out successfully!', { duration: 3000 });
-                      navigate('/', { replace: true });
-                    }
-                  }}
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                  </svg>
-                  <span>Logout</span>
-                </button>
-              </div>
-            )}
+          {/* Auth Buttons - Fixed width container */}
+          <div className="flex-1 flex justify-end">
+            <div className="hidden lg:flex items-center space-x-4">
+              {!isAuthenticated ? (
+                <>
+                  <Link
+                    to="/login"
+                    className="px-6 py-2.5 text-gray-700 font-medium rounded-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              ) : (
+                <div className="flex items-center space-x-3">
+                  <button
+                    className="flex items-center space-x-2 px-4 py-2.5 text-gray-700 font-medium rounded-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105"
+                    onClick={() => location.pathname !== '/user/chat' && window.location.assign('/user/chat')}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                    <span>Chat</span>
+                  </button>
+                  <button
+                    className="flex items-center space-x-2 px-4 py-2.5 text-gray-700 font-medium rounded-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105"
+                    onClick={() => location.pathname !== '/user/profile' && window.location.assign('/user/profile')}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    <span>Profile</span>
+                  </button>
+                  <button
+                    className="flex items-center space-x-2 px-4 py-2.5 bg-gradient-to-r from-red-500 to-red-600 text-white font-medium rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                    onClick={async () => {
+                      try {
+                        toast.success('Logged out successfully!', { duration: 3000 });
+                        await logout();
+                        navigate('/', { replace: true });
+                      } catch (error) {
+                        console.error('Logout error:', error);
+                        toast.success('Logged out successfully!', { duration: 3000 });
+                        navigate('/', { replace: true });
+                      }
+                    }}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    <span>Logout</span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Mobile Menu Button */}

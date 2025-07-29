@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Card from "../../components/Card";
 import Button from "../../components/Button";
 
 const Home = () => {

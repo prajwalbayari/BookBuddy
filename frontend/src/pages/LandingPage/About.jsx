@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Card from '../../components/Card';
 import Button from '../../components/Button';
 
 const About = () => {
@@ -158,41 +157,6 @@ const About = () => {
           </div>
         </div>
       </div>
-
-      {/* Team Section - Commented out for now */}
-      {/* 
-      <div className="bg-white py-16 sm:py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <span className="inline-block px-3 py-1 bg-purple-100 text-purple-800 text-sm font-medium rounded-full mb-4">
-              �‍👩‍👧‍👦 Our Team
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Meet the People Behind BookBuddy
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              We're a passionate team of readers, developers, and designers committed to making your reading experience extraordinary.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
-              <div 
-                key={index} 
-                className={`bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 text-center ${
-                  isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
-                }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
-              >
-                <h3 className="text-lg font-semibold text-gray-900">
-                  {member.name}
-                </h3>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      */}
 
       {/* CTA Section */}
       <div className="bg-white border-t border-gray-200">
