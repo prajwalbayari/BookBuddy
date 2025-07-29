@@ -81,166 +81,168 @@ const Requests = () => {
     );
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 w-full max-w-6xl mx-auto">
-      <div className="mb-6">
-        <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Pending Book Requests</h2>
-        <p className="text-gray-600">Review and manage book submission requests</p>
-      </div>
-      
-      {requests.length === 0 ? (
-        <div className="text-center py-12">
-          <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-          </svg>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No pending requests</h3>
-          <p className="text-gray-500">All book requests have been processed.</p>
+    <div className="p-4 sm:p-6 lg:p-8 xl:p-10 2xl:p-12 w-full max-w-none">
+      <div className="max-w-8xl mx-auto">
+        <div className="mb-6 lg:mb-8">
+          <h2 className="text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-2">Pending Book Requests</h2>
+          <p className="text-gray-600 text-base lg:text-lg">Review and manage book submission requests</p>
         </div>
-      ) : (
-        <div className="grid gap-6">
-          {requests.map((book) => (
-            <div key={book._id} className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl hover:border-blue-200 transition-all duration-300 transform hover:-translate-y-1">
-              {/* Card Header */}
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-4 border-b border-gray-100">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="bg-blue-100 rounded-full p-2">
-                      <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                      </svg>
+        
+        {requests.length === 0 ? (
+          <div className="text-center py-12 lg:py-16">
+            <svg className="w-16 h-16 lg:w-20 lg:h-20 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            <h3 className="text-lg lg:text-xl font-medium text-gray-900 mb-2">No pending requests</h3>
+            <p className="text-gray-500">All book requests have been processed.</p>
+          </div>
+        ) : (
+          <div className="grid gap-6 lg:gap-8">
+            {requests.map((book) => (
+              <div key={book._id} className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl hover:border-blue-200 transition-all duration-300 transform hover:-translate-y-1">
+                {/* Card Header */}
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 lg:px-8 py-4 lg:py-6 border-b border-gray-100">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="bg-blue-100 rounded-full p-2 lg:p-3">
+                        <svg className="w-5 h-5 lg:w-6 lg:h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="text-lg lg:text-xl xl:text-2xl font-semibold text-gray-900">{book.bookName}</h3>
+                        <p className="text-sm lg:text-base text-gray-600">Submitted by {book.requestedBy || 'Unknown'}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900">{book.bookName}</h3>
-                      <p className="text-sm text-gray-600">Submitted by {book.requestedBy || 'Unknown'}</p>
+                    <div className="flex items-center space-x-2">
+                      <span className="inline-flex items-center px-3 py-1 lg:px-4 lg:py-1.5 rounded-full text-xs lg:text-sm font-medium bg-yellow-100 text-yellow-800">
+                        <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                        </svg>
+                        Pending Review
+                      </span>
                     </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                      <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                      </svg>
-                      Pending Review
-                    </span>
                   </div>
                 </div>
-              </div>
 
-              {/* Card Content */}
-              <div className="p-6">
-                <div className="flex flex-col xl:flex-row gap-6">
-                  {/* Book Image */}
-                  <div className="flex-shrink-0 mx-auto xl:mx-0">
-                    <div className="relative group">
-                      {book.bookImages && book.bookImages.length > 0 ? (
-                        <img
-                          src={book.bookImages[0]}
-                          alt={book.bookName}
-                          className="w-32 h-44 sm:w-36 sm:h-48 object-cover rounded-xl border-2 border-gray-200 shadow-md group-hover:shadow-lg transition-shadow duration-200"
-                        />
-                      ) : (
-                        <div className="w-32 h-44 sm:w-36 sm:h-48 flex items-center justify-center bg-blue-50 rounded-xl border-2 border-gray-200 shadow-md group-hover:shadow-lg transition-shadow duration-200">
-                          <svg className="w-16 h-16 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                          </svg>
-                        </div>
-                      )}
-                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 rounded-xl transition-all duration-200"></div>
-                    </div>
-                  </div>
-                  
-                  {/* Book Details */}
-                  <div className="flex-1">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                      {/* Left Column */}
-                      <div className="space-y-4">
-                        <div className="bg-gray-50 rounded-lg p-4">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                {/* Card Content */}
+                <div className="p-6 lg:p-8">
+                  <div className="flex flex-col 2xl:flex-row gap-6 lg:gap-8">
+                    {/* Book Image */}
+                    <div className="flex-shrink-0 mx-auto 2xl:mx-0">
+                      <div className="relative group">
+                        {book.bookImages && book.bookImages.length > 0 ? (
+                          <img
+                            src={book.bookImages[0]}
+                            alt={book.bookName}
+                            className="w-36 h-48 sm:w-40 sm:h-52 lg:w-44 lg:h-56 xl:w-48 xl:h-60 object-cover rounded-xl border-2 border-gray-200 shadow-md group-hover:shadow-lg transition-shadow duration-200"
+                          />
+                        ) : (
+                          <div className="w-36 h-48 sm:w-40 sm:h-52 lg:w-44 lg:h-56 xl:w-48 xl:h-60 flex items-center justify-center bg-blue-50 rounded-xl border-2 border-gray-200 shadow-md group-hover:shadow-lg transition-shadow duration-200">
+                            <svg className="w-16 h-16 lg:w-20 lg:h-20 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                             </svg>
-                            <span className="text-sm font-medium text-gray-600 uppercase tracking-wide">Edition</span>
                           </div>
-                          <p className="text-lg font-semibold text-gray-900">
-                            {book.edition ? `Edition ${book.edition}` : "N/A"}
-                          </p>
+                        )}
+                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 rounded-xl transition-all duration-200"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Book Details */}
+                    <div className="flex-1 min-w-0">
+                      <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-2 gap-6 lg:gap-8">
+                        {/* Left Column */}
+                        <div className="space-y-4 lg:space-y-6">
+                          <div className="bg-gray-50 rounded-lg p-4 lg:p-6">
+                            <div className="flex items-center space-x-2 mb-2 lg:mb-3">
+                              <svg className="w-4 h-4 lg:w-5 lg:h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                              </svg>
+                              <span className="text-sm lg:text-base font-medium text-gray-600 uppercase tracking-wide">Edition</span>
+                            </div>
+                            <p className="text-lg lg:text-xl xl:text-2xl font-semibold text-gray-900">
+                              {book.edition ? `Edition ${book.edition}` : "N/A"}
+                            </p>
+                          </div>
+                          
+                          <div className="bg-gray-50 rounded-lg p-4 lg:p-6">
+                            <div className="flex items-center space-x-2 mb-2 lg:mb-3">
+                              <svg className="w-4 h-4 lg:w-5 lg:h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                              </svg>
+                              <span className="text-sm lg:text-base font-medium text-gray-600 uppercase tracking-wide">Owner</span>
+                            </div>
+                            <p className="text-lg lg:text-xl xl:text-2xl font-semibold text-blue-600 break-words">{book.requestedBy || 'Unknown'}</p>
+                          </div>
                         </div>
                         
-                        <div className="bg-gray-50 rounded-lg p-4">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                            <span className="text-sm font-medium text-gray-600 uppercase tracking-wide">Owner</span>
+                        {/* Right Column */}
+                        <div className="space-y-4 lg:space-y-6">
+                          <div className="bg-gray-50 rounded-lg p-4 lg:p-6 h-full">
+                            <div className="flex items-center space-x-2 mb-2 lg:mb-3">
+                              <svg className="w-4 h-4 lg:w-5 lg:h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
+                              </svg>
+                              <span className="text-sm lg:text-base font-medium text-gray-600 uppercase tracking-wide">Description</span>
+                            </div>
+                            <div className="text-sm lg:text-base xl:text-lg text-gray-700 leading-relaxed break-words">
+                              {book.description || "No description provided."}
+                            </div>
                           </div>
-                          <p className="text-lg font-semibold text-blue-600">{book.requestedBy || 'Unknown'}</p>
-                        </div>
-                      </div>
-                      
-                      {/* Right Column */}
-                      <div className="space-y-4">
-                        <div className="bg-gray-50 rounded-lg p-4">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
-                            </svg>
-                            <span className="text-sm font-medium text-gray-600 uppercase tracking-wide">Description</span>
-                          </div>
-                          <p className="text-gray-700 leading-relaxed">
-                            {book.description || "No description provided."}
-                          </p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Card Footer with Actions */}
-              <div className="bg-gray-50 px-6 py-4 border-t border-gray-100">
-                <div className="flex flex-col sm:flex-row gap-3 sm:justify-end">
-                  <button
-                    className="flex items-center justify-center px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium text-sm shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-                    onClick={() => handleReject(book._id)}
-                    disabled={actionLoading === book._id}
-                  >
-                    {actionLoading === book._id ? (
-                      <>
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                        Rejecting...
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                        Reject Request
-                      </>
-                    )}
-                  </button>
-                  <button
-                    className="flex items-center justify-center px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:from-green-600 hover:to-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium text-sm shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-                    onClick={() => handleApprove(book._id)}
-                    disabled={actionLoading === book._id}
-                  >
-                    {actionLoading === book._id ? (
-                      <>
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                        Approving...
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        Approve Request
-                      </>
-                    )}
-                  </button>
+                {/* Card Footer with Actions */}
+                <div className="bg-gray-50 px-6 lg:px-8 py-4 lg:py-6 border-t border-gray-100">
+                  <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 sm:justify-end">
+                    <button
+                      className="flex items-center justify-center px-6 lg:px-8 py-3 lg:py-4 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium text-sm lg:text-base shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                      onClick={() => handleReject(book._id)}
+                      disabled={actionLoading === book._id}
+                    >
+                      {actionLoading === book._id ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 lg:h-5 lg:w-5 border-b-2 border-white mr-2"></div>
+                          Rejecting...
+                        </>
+                      ) : (
+                        <>
+                          <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                          Reject Request
+                        </>
+                      )}
+                    </button>
+                    <button
+                      className="flex items-center justify-center px-6 lg:px-8 py-3 lg:py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:from-green-600 hover:to-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium text-sm lg:text-base shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                      onClick={() => handleApprove(book._id)}
+                      disabled={actionLoading === book._id}
+                    >
+                      {actionLoading === book._id ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 lg:h-5 lg:w-5 border-b-2 border-white mr-2"></div>
+                          Approving...
+                        </>
+                      ) : (
+                        <>
+                          <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          Approve Request
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

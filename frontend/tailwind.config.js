@@ -15,6 +15,15 @@ export default {
 
   theme: {
     extend: {
+      screens: {
+        '3xl': '1600px',
+        '4xl': '1920px',
+      },
+      maxWidth: {
+        '8xl': '88rem',
+        '9xl': '96rem',
+        '10xl': '104rem',
+      },
       colors: {
         primary: {
           50: "#f0f9ff",

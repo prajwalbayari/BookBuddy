@@ -13,17 +13,19 @@ const AdminDashboard = () => {
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 xl:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
       
-      {/* Sidebar - responsive */}
+      {/* Sidebar - responsive for all screen sizes */}
       <div className={`
-        fixed lg:relative inset-y-0 left-0 z-50 w-64 lg:w-80 
+        fixed xl:relative inset-y-0 left-0 z-50 
+        w-64 sm:w-72 lg:w-80 xl:w-72 2xl:w-80
         transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
-        lg:translate-x-0 transition-transform duration-300 ease-in-out
-        bg-white shadow-xl lg:shadow-none border-r border-gray-200
+        xl:translate-x-0 transition-transform duration-300 ease-in-out
+        bg-white shadow-xl xl:shadow-none border-r border-gray-200
+        flex-shrink-0
       `}>
         <AdminSidebar 
           onSelect={(option) => {
@@ -35,12 +37,12 @@ const AdminDashboard = () => {
       </div>
       
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden min-w-0">
         {/* Mobile header */}
-        <div className="lg:hidden bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
+        <div className="xl:hidden bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between flex-shrink-0">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+            className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -50,10 +52,12 @@ const AdminDashboard = () => {
           <div className="w-8" />
         </div>
         
-        {/* Content area */}
+        {/* Content area - responsive container */}
         <div className="flex-1 overflow-auto bg-gray-50">
-          {selected === 'requests' && <Requests />}
-          {selected === 'statistics' && <Statistics />}
+          <div className="min-h-full">
+            {selected === 'requests' && <Requests />}
+            {selected === 'statistics' && <Statistics />}
+          </div>
         </div>
       </div>
     </div>
