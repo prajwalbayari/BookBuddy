@@ -13,18 +13,18 @@ const AdminDashboard = () => {
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 xl:hidden"
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 admin:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
       
       {/* Sidebar - responsive for all screen sizes */}
       <div className={`
-        fixed xl:relative inset-y-0 left-0 z-50 
-        w-64 sm:w-72 lg:w-80 xl:w-72 2xl:w-80
+        fixed admin:relative inset-y-0 left-0 z-50 
+        w-64 sm:w-72 lg:w-80 admin:w-72 2xl:w-80
         transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
-        xl:translate-x-0 transition-transform duration-300 ease-in-out
-        bg-white shadow-xl xl:shadow-none border-r border-gray-200
+        admin:translate-x-0 transition-transform duration-300 ease-in-out
+        bg-white shadow-xl admin:shadow-none border-r border-gray-200
         flex-shrink-0
       `}>
         <AdminSidebar 
@@ -39,7 +39,7 @@ const AdminDashboard = () => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden min-w-0">
         {/* Mobile header */}
-        <div className="xl:hidden bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between flex-shrink-0">
+        <div className="admin:hidden bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between flex-shrink-0">
           <button
             onClick={() => setSidebarOpen(true)}
             className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"

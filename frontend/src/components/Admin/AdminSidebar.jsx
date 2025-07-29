@@ -31,8 +31,8 @@ const AdminSidebar = ({ onSelect, selected }) => {
     <aside className="h-full w-full flex flex-col bg-gradient-to-b from-blue-600 to-blue-700 text-white">
       {/* Header */}
       <div className="p-4 sm:p-6 border-b border-blue-500 flex-shrink-0">
-        <h2 className="text-lg sm:text-xl font-bold">BookBuddy</h2>
-        <p className="text-blue-200 text-xs sm:text-sm mt-1">Admin Dashboard</p>
+        <h2 className="text-base sm:text-lg font-bold">BookBuddy</h2>
+        <p className="text-blue-200 text-xs mt-1">Admin Dashboard</p>
       </div>
       
       {/* Navigation */}
@@ -40,7 +40,7 @@ const AdminSidebar = ({ onSelect, selected }) => {
         {menuItems.map((item) => (
           <button
             key={item.id}
-            className={`w-full flex items-center space-x-3 px-3 sm:px-4 py-3 rounded-lg text-left transition-all duration-200 text-sm sm:text-base ${
+            className={`w-full flex items-center space-x-3 px-3 sm:px-4 py-3 rounded-lg text-left transition-all duration-200 text-xs sm:text-sm ${
               selected === item.id 
                 ? 'bg-white text-blue-700 shadow-md' 
                 : 'text-blue-100 hover:bg-blue-500 hover:text-white'
@@ -58,7 +58,7 @@ const AdminSidebar = ({ onSelect, selected }) => {
       {/* Footer */}
       <div className="p-3 sm:p-4 border-t border-blue-500 flex-shrink-0">
         <button
-          className="w-full flex items-center space-x-3 px-3 sm:px-4 py-3 rounded-lg text-left text-red-200 hover:bg-red-600 hover:text-white transition-all duration-200 text-sm sm:text-base"
+          className="w-full flex items-center space-x-3 px-3 sm:px-4 py-3 rounded-lg text-left text-red-200 hover:bg-red-600 hover:text-white transition-all duration-200 text-xs sm:text-sm"
           onClick={async () => {
             try {
               toast.success('Logged out successfully!', { duration: 3000 });

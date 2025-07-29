@@ -16,6 +16,7 @@ export default {
   theme: {
     extend: {
       screens: {
+        'admin': '1080px', // Custom breakpoint for admin layout
         '3xl': '1600px',
         '4xl': '1920px',
       },
