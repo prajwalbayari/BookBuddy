@@ -2,6 +2,7 @@ import User from "../models/user.model.js";
 import Admin from "../models/admin.model.js";
 import { generateToken } from "../lib/token.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 // Login for the admin
 export const adminLogin = async (req, res) => {
@@ -113,13 +114,56 @@ export const userLogin = async (req, res) => {
   }
 };
 
+// Check authentication status
+export const checkAuth = async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    if (!token) {
+      return res.status(401).json({ message: "No token provided" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decoded) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+
+    // Check if it's an admin or user
+    let user = await User.findById(decoded.userId).select("-password");
+    if (user) {
+      return res.status(200).json({
+        success: true,
+        user: user,
+        token: token,
+        message: "User authenticated"
+      });
+    }
+
+    // Check if it's an admin
+    let admin = await Admin.findById(decoded.userId).select("-password");
+    if (admin) {
+      const result = { ...admin._doc, role: "admin" };
+      return res.status(200).json({
+        success: true,
+        user: result,
+        token: token,
+        message: "Admin authenticated"
+      });
+    }
+
+    return res.status(401).json({ message: "User not found" });
+  } catch (error) {
+    console.log("Error in checkAuth controller:", error.message);
+    res.status(401).json({ message: "Invalid token" });
+  }
+};
+
 // Logout for both user and admin
 export const logout = async (req, res) => {
   try {
     res.clearCookie("jwt", {
       httpOnly: true,
-      sameSite: "strict",
-      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "development" ? "lax" : "none", // Match the sameSite setting from token generation
+      secure: process.env.NODE_ENV !== "development",
     });
 
     return res.status(200).json({ message: "Logout successful" });

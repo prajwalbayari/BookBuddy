@@ -4,10 +4,26 @@ class AuthService {
   constructor() {
     this.currentUser = null;
     this.isAuthenticated = false;
+    this.isInitialized = false;
   }
 
-  // Initialize auth state from localStorage
-  init() {
+  // Initialize auth state by checking both localStorage and cookie authentication
+  async init() {
+    if (this.isInitialized) return;
+    
+    try {
+      // First check if we have a valid cookie-based session
+      const cookieAuth = await this.checkCookieAuth();
+      if (cookieAuth.success) {
+        this.handleAuthSuccess(cookieAuth.user, cookieAuth.token, false); // Don't store in localStorage if from cookie
+        this.isInitialized = true;
+        return;
+      }
+    } catch (error) {
+      console.log("Cookie auth check failed:", error);
+    }
+
+    // Fallback to localStorage if cookie auth fails
     const token = localStorage.getItem("authToken");
     const user = localStorage.getItem("currentUser");
 
@@ -15,12 +31,29 @@ class AuthService {
       this.isAuthenticated = true;
       this.currentUser = JSON.parse(user);
     }
+    
+    this.isInitialized = true;
+  }
+
+  // Check authentication status using cookies
+  async checkCookieAuth() {
+    try {
+      const response = await authApi.checkAuth();
+      return {
+        success: true,
+        user: response.user,
+        token: response.token
+      };
+    } catch (error) {
+      return { success: false };
+    }
   }
 
   // User signup
   async signup(userData) {
     try {
       const response = await authApi.signup(userData);
+      return response;
     } catch (error) {
       console.error("Signup failed:", error);
       throw error;
@@ -52,9 +85,7 @@ class AuthService {
   // User logout
   async logout() {
     try {
-      // In real implementation, this would be:
       await authApi.logout();
-
       this.handleAuthLogout();
     } catch (error) {
       console.error("Logout failed:", error);
@@ -63,12 +94,15 @@ class AuthService {
   }
 
   // Handle successful authentication
-  handleAuthSuccess(user, token) {
+  handleAuthSuccess(user, token, storeInLocalStorage = true) {
     this.currentUser = user;
     this.isAuthenticated = true;
 
-    localStorage.setItem("authToken", token);
-    localStorage.setItem("currentUser", JSON.stringify(user));
+    // Only store in localStorage if explicitly requested (for login actions)
+    if (storeInLocalStorage) {
+      localStorage.setItem("authToken", token);
+      localStorage.setItem("currentUser", JSON.stringify(user));
+    }
 
     return { user, token };
   }

@@ -20,4 +20,9 @@ export const authApi = {
   adminLogin: async (credentials) => {
     return apiClient.post('/auth/adminLogin', credentials);
   },
+
+  // Check authentication status
+  checkAuth: async () => {
+    return apiClient.get('/auth/check');
+  },
 };

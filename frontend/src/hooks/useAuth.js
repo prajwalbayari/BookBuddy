@@ -8,18 +8,32 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Listen for auth changes in localStorage (for multi-tab and instant UI update)
-    const handleStorage = () => {
-      const currentUser = authService.getCurrentUser();
-      const isAuth = authService.isAuth();
-      setUser(currentUser);
-      setIsAuthenticated(isAuth);
-      setIsAdmin(currentUser?.role === 'admin');
-      setLoading(false);
+    const initializeAuth = async () => {
+      try {
+        await authService.init();
+        const currentUser = authService.getCurrentUser();
+        const isAuth = authService.isAuth();
+        
+        setUser(currentUser);
+        setIsAuthenticated(isAuth);
+        setIsAdmin(currentUser?.role === 'admin');
+      } catch (error) {
+        console.error('Auth initialization failed:', error);
+      } finally {
+        setLoading(false);
+      }
     };
+
+    // Listen for auth changes in localStorage (for multi-tab and instant UI update)
+    const handleStorage = async () => {
+      await initializeAuth();
+    };
+
     window.addEventListener('storage', handleStorage);
-    // Also run on mount
-    handleStorage();
+    
+    // Initialize on mount
+    initializeAuth();
+    
     return () => window.removeEventListener('storage', handleStorage);
   }, []);
 
@@ -53,9 +67,11 @@ export const useAuth = () => {
   const signup = async (userData) => {
     try {
       const result = await authService.signup(userData);
-      setUser(result.user);
-      setIsAuthenticated(true);
-      setIsAdmin(result.user?.role === 'admin');
+      if (result?.user) {
+        setUser(result.user);
+        setIsAuthenticated(true);
+        setIsAdmin(result.user?.role === 'admin');
+      }
       return result;
     } catch (error) {
       throw error;
