@@ -107,7 +107,7 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div className="max-w-6xl xl:max-w-7xl 2xl:max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-6 sm:py-8 xl:py-12">
         {/* Profile Header */}
         <ProfileHeader 
           user={profile || user} 
@@ -117,36 +117,38 @@ const Profile = () => {
         {/* Navigation Tabs */}
         <div className="mt-6 sm:mt-8">
           <div className="border-b border-gray-200">
-            <nav className="-mb-px flex space-x-8">
+            <nav className="-mb-px flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-8 xl:justify-center xl:space-x-16">
               <button
                 onClick={() => setActiveTab('details')}
-                className={`py-3 px-1 border-b-2 font-medium text-sm transition-colors ${
+                className={`py-3 px-4 sm:px-6 xl:px-8 border-b-2 font-medium text-sm xl:text-base transition-colors text-center sm:text-left rounded-t-lg sm:rounded-none ${
                   activeTab === 'details'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-blue-500 text-blue-600 bg-blue-50 sm:bg-transparent'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-50 sm:hover:bg-transparent'
                 }`}
               >
                 Profile Details
               </button>
               <button
                 onClick={() => setActiveTab('books')}
-                className={`py-3 px-1 border-b-2 font-medium text-sm transition-colors ${
+                className={`py-3 px-4 sm:px-6 xl:px-8 border-b-2 font-medium text-sm xl:text-base transition-colors text-center sm:text-left rounded-t-lg sm:rounded-none ${
                   activeTab === 'books'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-blue-500 text-blue-600 bg-blue-50 sm:bg-transparent'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-50 sm:hover:bg-transparent'
                 }`}
               >
-                My Books ({userBooks.length})
+                <span className="block sm:inline">My Books</span>
+                <span className="block sm:inline sm:ml-1 xl:ml-2">({userBooks.length})</span>
               </button>
               <button
                 onClick={() => setActiveTab('borrowed')}
-                className={`py-3 px-1 border-b-2 font-medium text-sm transition-colors ${
+                className={`py-3 px-4 sm:px-6 xl:px-8 border-b-2 font-medium text-sm xl:text-base transition-colors text-center sm:text-left rounded-t-lg sm:rounded-none ${
                   activeTab === 'borrowed'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-blue-500 text-blue-600 bg-blue-50 sm:bg-transparent'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-50 sm:hover:bg-transparent'
                 }`}
               >
-                Borrowed Books ({borrowedBooks.length})
+                <span className="block sm:inline">Borrowed Books</span>
+                <span className="block sm:inline sm:ml-1 xl:ml-2">({borrowedBooks.length})</span>
               </button>
             </nav>
           </div>

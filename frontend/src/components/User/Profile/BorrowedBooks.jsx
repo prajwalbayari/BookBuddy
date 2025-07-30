@@ -90,19 +90,19 @@ const BorrowedBooks = ({ books, onRefresh }) => {
     
     return (
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
-        <div className="p-4 sm:p-5">
-          <div className="flex flex-col sm:flex-row sm:items-start space-y-4 sm:space-y-0 sm:space-x-4">
+        <div className="p-3 sm:p-4 lg:p-5">
+          <div className="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-4">
             {/* Book Cover */}
             <div className="flex-shrink-0 mx-auto sm:mx-0">
               {book.bookImages && book.bookImages.length > 0 ? (
                 <img
                   src={book.bookImages[0]}
                   alt={book.bookName}
-                  className="h-28 w-20 sm:h-24 sm:w-18 object-cover rounded-md shadow-sm"
+                  className="h-24 w-16 sm:h-28 sm:w-20 lg:h-24 lg:w-18 object-cover rounded-md shadow-sm"
                 />
               ) : (
-                <div className="h-28 w-20 sm:h-24 sm:w-18 bg-gray-200 rounded-md flex items-center justify-center">
-                  <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="h-24 w-16 sm:h-28 sm:w-20 lg:h-24 lg:w-18 bg-gray-200 rounded-md flex items-center justify-center">
+                  <svg className="h-6 w-6 sm:h-8 sm:w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
                 </div>
@@ -114,13 +114,13 @@ const BorrowedBooks = ({ books, onRefresh }) => {
               {/* Title and Owner */}
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 space-y-2 sm:space-y-0">
                 <div className="min-w-0 flex-1">
-                  <h4 className="text-lg font-semibold text-gray-900 break-words">
+                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 break-words">
                     {book.bookName}
                   </h4>
                   {book.edition && (
-                    <p className="text-sm text-gray-600 mt-1">Edition: {book.edition}</p>
+                    <p className="text-xs sm:text-sm text-gray-600 mt-1">Edition: {book.edition}</p>
                   )}
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="text-xs sm:text-sm text-gray-600 mt-1">
                     <span className="font-medium">Owner:</span> {book.ownerName}
                   </p>
                 </div>
@@ -129,7 +129,7 @@ const BorrowedBooks = ({ books, onRefresh }) => {
               {/* Description */}
               {book.description && (
                 <div className="mb-3">
-                  <p className="text-sm text-gray-700 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-gray-700 leading-relaxed break-words">
                     <span className="font-medium text-gray-900">Description:</span> {book.description}
                   </p>
                 </div>
@@ -165,7 +165,7 @@ const BorrowedBooks = ({ books, onRefresh }) => {
                 {!userHasFeedback && (
                   <button
                     onClick={() => openFeedbackModal(book)}
-                    className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded-md hover:bg-blue-700 transition-colors"
+                    className="w-full sm:w-auto inline-flex items-center justify-center px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded-md hover:bg-blue-700 transition-colors"
                   >
                     <svg className="w-3 h-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10m0 0V6a2 2 0 00-2-2H9a2 2 0 00-2 2v2m0 0v8a2 2 0 002 2h6a2 2 0 002-2V8M7 8v8a2 2 0 002 2h6a2 2 0 002-2V8" />
@@ -207,7 +207,7 @@ const BorrowedBooks = ({ books, onRefresh }) => {
       </div>
 
       {/* Books Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
         {sortedBooks.map((book) => (
           <BookCard key={book._id} book={book} />
         ))}
@@ -217,15 +217,15 @@ const BorrowedBooks = ({ books, onRefresh }) => {
       {feedbackModal.isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" onClick={closeFeedbackModal}>
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-gray-900">Give Feedback</h3>
                 <button
                   onClick={closeFeedbackModal}
-                  className="text-gray-400 hover:text-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+                  className="text-gray-400 hover:text-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded p-1"
                   aria-label="Close modal"
                 >
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
@@ -233,8 +233,8 @@ const BorrowedBooks = ({ books, onRefresh }) => {
 
               {/* Book Info */}
               <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-                <h4 className="font-medium text-gray-900">{feedbackModal.book?.bookName}</h4>
-                <p className="text-sm text-gray-600">by {feedbackModal.book?.ownerName}</p>
+                <h4 className="font-medium text-gray-900 break-words">{feedbackModal.book?.bookName}</h4>
+                <p className="text-sm text-gray-600 break-words">by {feedbackModal.book?.ownerName}</p>
               </div>
 
               {/* Feedback Form */}
@@ -250,7 +250,7 @@ const BorrowedBooks = ({ books, onRefresh }) => {
                         key={star}
                         type="button"
                         onClick={() => setFeedbackData(prev => ({ ...prev, rating: star }))}
-                        className={`w-8 h-8 ${
+                        className={`w-6 h-6 sm:w-8 sm:h-8 ${
                           star <= feedbackData.rating
                             ? 'text-yellow-400'
                             : 'text-gray-300'
@@ -261,7 +261,7 @@ const BorrowedBooks = ({ books, onRefresh }) => {
                         </svg>
                       </button>
                     ))}
-                    <span className="ml-2 text-sm text-gray-600">
+                    <span className="ml-2 text-xs sm:text-sm text-gray-600">
                       {feedbackData.rating} out of 5 stars
                     </span>
                   </div>
@@ -277,18 +277,18 @@ const BorrowedBooks = ({ books, onRefresh }) => {
                     rows={4}
                     value={feedbackData.description}
                     onChange={(e) => setFeedbackData(prev => ({ ...prev, description: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none text-sm sm:text-base"
                     placeholder="Share your thoughts about this book..."
                     required
                   />
                 </div>
 
                 {/* Submit Buttons */}
-                <div className="flex space-x-3 pt-4">
+                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 pt-4">
                   <button
                     type="submit"
                     disabled={submittingFeedback}
-                    className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full sm:flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed text-sm"
                   >
                     {submittingFeedback ? 'Submitting...' : 'Submit Feedback'}
                   </button>
@@ -296,7 +296,7 @@ const BorrowedBooks = ({ books, onRefresh }) => {
                     type="button"
                     onClick={closeFeedbackModal}
                     disabled={submittingFeedback}
-                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                    className="w-full sm:w-auto px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm"
                   >
                     Cancel
                   </button>

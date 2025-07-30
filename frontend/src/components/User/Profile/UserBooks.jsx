@@ -71,18 +71,18 @@ const UserBooks = ({ books, onRefresh }) => {
 
   const BookCard = ({ book }) => (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
-      <div className="p-4 sm:p-5">
-        <div className="flex flex-col sm:flex-row sm:items-start space-y-4 sm:space-y-0 sm:space-x-4">
+      <div className="p-3 sm:p-4 lg:p-5">
+        <div className="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-4">
           <div className="flex-shrink-0 mx-auto sm:mx-0">
             {book.bookImages && book.bookImages.length > 0 ? (
               <img
                 src={book.bookImages[0]}
                 alt={book.bookName}
-                className="h-28 w-20 sm:h-24 sm:w-18 object-cover rounded-md shadow-sm"
+                className="h-24 w-16 sm:h-28 sm:w-20 lg:h-24 lg:w-18 object-cover rounded-md shadow-sm"
               />
             ) : (
-              <div className="h-28 w-20 sm:h-24 sm:w-18 bg-gray-200 rounded-md flex items-center justify-center">
-                <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="h-24 w-16 sm:h-28 sm:w-20 lg:h-24 lg:w-18 bg-gray-200 rounded-md flex items-center justify-center">
+                <svg className="h-6 w-6 sm:h-8 sm:w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
@@ -92,14 +92,14 @@ const UserBooks = ({ books, onRefresh }) => {
           <div className="flex-1 min-w-0 text-center sm:text-left">
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 space-y-2 sm:space-y-0">
               <div className="min-w-0 flex-1">
-                <h4 className="text-lg font-semibold text-gray-900 break-words">
+                <h4 className="text-base sm:text-lg font-semibold text-gray-900 break-words">
                   {book.bookName}
                 </h4>
                 {book.edition && (
-                  <p className="text-sm text-gray-600 mt-1">Edition: {book.edition}</p>
+                  <p className="text-xs sm:text-sm text-gray-600 mt-1">Edition: {book.edition}</p>
                 )}
               </div>
-              <div className="flex space-x-2">
+              <div className="flex flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-2">
                 <button
                   onClick={() => navigate(`/book-details/${book._id}`, { 
                     state: { book: book, fromProfile: true } 
@@ -124,7 +124,7 @@ const UserBooks = ({ books, onRefresh }) => {
             </div>
 
             {book.description && (
-              <p className="text-sm text-gray-600 mb-3 line-clamp-2 leading-relaxed">
+              <p className="text-xs sm:text-sm text-gray-600 mb-3 line-clamp-2 leading-relaxed break-words">
                 {book.description}
               </p>
             )}
@@ -196,7 +196,7 @@ const UserBooks = ({ books, onRefresh }) => {
                 <h4 className="text-sm font-medium text-gray-700 mb-3">Filter & Sort Options</h4>
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
                 <div className="space-y-2">
                   <label htmlFor="filter" className="block text-sm font-medium text-gray-700">
                     Availability
@@ -230,7 +230,7 @@ const UserBooks = ({ books, onRefresh }) => {
                   </select>
                 </div>
                 
-                <div className="space-y-2">
+                <div className="space-y-2 sm:col-span-2 xl:col-span-1">
                   <label htmlFor="sort" className="block text-sm font-medium text-gray-700">
                     Sort Order
                   </label>
@@ -300,7 +300,7 @@ const UserBooks = ({ books, onRefresh }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
         {filteredBooks.map((book) => (
           <BookCard key={book._id} book={book} />
         ))}

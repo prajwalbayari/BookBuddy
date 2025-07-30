@@ -49,7 +49,7 @@ const ProfileHeader = ({ user, onUpdate }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-      <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-8">
+      <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-4 sm:px-6 py-6 sm:py-8">
         <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
           {/* Profile Picture */}
           <div className="flex-shrink-0">
@@ -57,11 +57,11 @@ const ProfileHeader = ({ user, onUpdate }) => {
               <img
                 src={user.profilePic}
                 alt={user.userName}
-                className="h-24 w-24 rounded-full border-4 border-white shadow-lg object-cover"
+                className="h-20 w-20 sm:h-24 sm:w-24 rounded-full border-4 border-white shadow-lg object-cover"
               />
             ) : (
-              <div className="h-24 w-24 rounded-full border-4 border-white shadow-lg bg-white flex items-center justify-center">
-                <span className="text-3xl font-bold text-blue-600">
+              <div className="h-20 w-20 sm:h-24 sm:w-24 rounded-full border-4 border-white shadow-lg bg-white flex items-center justify-center">
+                <span className="text-2xl sm:text-3xl font-bold text-blue-600">
                   {getInitials(user?.userName)}
                 </span>
               </div>
@@ -69,44 +69,44 @@ const ProfileHeader = ({ user, onUpdate }) => {
           </div>
 
           {/* User Info */}
-          <div className="flex-1 text-center sm:text-left">
-            <h1 className="text-2xl font-bold text-white mb-2">
+          <div className="flex-1 text-center sm:text-left min-w-0">
+            <h1 className="text-xl sm:text-2xl font-bold text-white mb-2 break-words">
               {user?.userName || 'User'}
             </h1>
-            <p className="text-blue-100 mb-1">{user?.userEmail}</p>
+            <p className="text-blue-100 mb-1 text-sm sm:text-base break-all">{user?.userEmail}</p>
             {user?.location && (
-              <p className="text-blue-100 flex items-center justify-center sm:justify-start">
-                <svg className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <p className="text-blue-100 flex items-center justify-center sm:justify-start text-sm sm:text-base">
+                <svg className="h-4 w-4 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                {user.location}
+                <span className="break-words">{user.location}</span>
               </p>
             )}
           </div>
 
           {/* Edit Button */}
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 w-full sm:w-auto">
             {!isEditing ? (
               <button
                 onClick={() => setIsEditing(true)}
-                className="bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 transition-colors shadow-sm"
+                className="w-full sm:w-auto bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 transition-colors shadow-sm text-sm sm:text-base"
               >
                 Edit Profile
               </button>
             ) : (
-              <div className="flex space-x-2">
+              <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                 <button
                   onClick={handleCancel}
                   disabled={loading}
-                  className="bg-gray-200 text-gray-700 px-3 py-2 rounded-lg font-medium hover:bg-gray-300 transition-colors disabled:opacity-50"
+                  className="bg-gray-200 text-gray-700 px-3 py-2 rounded-lg font-medium hover:bg-gray-300 transition-colors disabled:opacity-50 text-sm"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSubmit}
                   disabled={loading}
-                  className="bg-white text-blue-600 px-3 py-2 rounded-lg font-medium hover:bg-gray-50 transition-colors shadow-sm disabled:opacity-50"
+                  className="bg-white text-blue-600 px-3 py-2 rounded-lg font-medium hover:bg-gray-50 transition-colors shadow-sm disabled:opacity-50 text-sm"
                 >
                   {loading ? 'Saving...' : 'Save'}
                 </button>
@@ -118,7 +118,7 @@ const ProfileHeader = ({ user, onUpdate }) => {
 
       {/* Edit Form */}
       {isEditing && (
-        <div className="px-6 py-6 border-t border-gray-200">
+        <div className="px-4 sm:px-6 py-4 sm:py-6 border-t border-gray-200">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -131,7 +131,7 @@ const ProfileHeader = ({ user, onUpdate }) => {
                   name="userName"
                   value={formData.userName}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
                   required
                 />
               </div>
@@ -145,7 +145,7 @@ const ProfileHeader = ({ user, onUpdate }) => {
                   name="userEmail"
                   value={formData.userEmail}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
                   required
                 />
               </div>
@@ -161,7 +161,7 @@ const ProfileHeader = ({ user, onUpdate }) => {
                 value={formData.location}
                 onChange={handleInputChange}
                 placeholder="Enter your location"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
               />
             </div>
           </form>
