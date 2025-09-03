@@ -53,19 +53,11 @@ const ProfileHeader = ({ user, onUpdate }) => {
         <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
           {/* Profile Picture */}
           <div className="flex-shrink-0">
-            {user?.profilePic ? (
-              <img
-                src={user.profilePic}
-                alt={user.userName}
-                className="h-20 w-20 sm:h-24 sm:w-24 rounded-full border-4 border-white shadow-lg object-cover"
-              />
-            ) : (
-              <div className="h-20 w-20 sm:h-24 sm:w-24 rounded-full border-4 border-white shadow-lg bg-white flex items-center justify-center">
-                <span className="text-2xl sm:text-3xl font-bold text-blue-600">
-                  {getInitials(user?.userName)}
-                </span>
-              </div>
-            )}
+            <div className="h-20 w-20 sm:h-24 sm:w-24 rounded-full border-4 border-white shadow-lg bg-white flex items-center justify-center">
+              <span className="text-2xl sm:text-3xl font-bold text-blue-600">
+                {getInitials(user?.userName)}
+              </span>
+            </div>
           </div>
 
           {/* User Info */}

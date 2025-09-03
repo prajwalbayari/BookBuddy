@@ -1,4 +1,3 @@
-import cloudinary from "../lib/cloudinary.js";
 import User from "../models/user.model.js";
 import Book from "../models/book.model.js";
 import bcrypt from "bcryptjs";
@@ -35,17 +34,7 @@ export const updateUserDetails = async (req, res) => {
     if (!userName?.trim() || !location?.trim()) {
       return res.status(400).json({ message: "All fields are required!" });
     }
-    const profileImage = req.file;
 
-    if (profileImage && profileImage.path) {
-      const uploadResponse = await cloudinary.uploader.upload(
-        profileImage.path
-      );
-      if (uploadResponse?.secure_url) {
-        console.log(uploadResponse);
-        user.profilePic = uploadResponse.secure_url;
-      }
-    }
     user.userName = userName.trim();
     user.location = location.trim();
 
