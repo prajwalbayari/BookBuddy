@@ -35,6 +35,29 @@ const bookSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    url: {
+      type: String,
+      default: null,
+      trim: true,
+      validate: {
+        validator: function(v) {
+          // If url is provided, validate it's a proper URL format
+          if (v === null || v === '') return true;
+          
+          // Comprehensive URL regex that handles most common cases
+          const urlPattern = /^(https?:\/\/)?([\da-zA-Z\.-]+)\.([a-zA-Z\.]{2,63})([\/\w \.\-~:?#\[\]@!$&'()*+,;=%]*)*\/?$/i;
+          
+          // Block dangerous protocols
+          const dangerousProtocols = /^(javascript|data|vbscript|file|about):/i;
+          if (dangerousProtocols.test(v)) {
+            return false;
+          }
+          
+          return urlPattern.test(v);
+        },
+        message: 'Please provide a valid URL'
+      }
+    },
     status: {
       type: String,
       enum: ["Pending","Rejected","Approved"],

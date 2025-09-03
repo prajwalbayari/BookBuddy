@@ -12,6 +12,7 @@ const EditBook = () => {
     bookName: '',
     edition: '',
     description: '',
+    url: '',
     available: 'Available',
     borrowerId: ''
   });
@@ -55,6 +56,7 @@ const EditBook = () => {
         bookName: book.bookName || '',
         edition: book.edition?.toString() || '',
         description: book.description || '',
+        url: book.url || '',
         available: book.available || 'Available',
         borrowerId: book.borrowedBy || ''
       });
@@ -126,6 +128,26 @@ const EditBook = () => {
         return;
       }
 
+      // Validate URL if provided
+      if (formData.url.trim()) {
+        // Comprehensive URL regex that handles most common cases
+        const urlPattern = /^(https?:\/\/)?([\da-zA-Z\.-]+)\.([a-zA-Z\.]{2,63})([\/\w \.\-~:?#\[\]@!$&'()*+,;=%]*)*\/?$/i;
+        
+        // Block dangerous protocols
+        const dangerousProtocols = /^(javascript|data|vbscript|file|about):/i;
+        if (dangerousProtocols.test(formData.url.trim())) {
+          setError('Invalid URL protocol detected');
+          toast.error('Invalid URL protocol detected');
+          return;
+        }
+        
+        if (!urlPattern.test(formData.url.trim())) {
+          setError('Please provide a valid URL for the book softcopy');
+          toast.error('Please provide a valid URL for the book softcopy');
+          return;
+        }
+      }
+
       // Validate borrower selection for Borrowed status
       if (formData.available === 'Borrowed' && !formData.borrowerId) {
         setError('Please select a borrower when status is set to Borrowed');
@@ -137,6 +159,7 @@ const EditBook = () => {
         bookName: formData.bookName.trim(),
         edition: parseInt(formData.edition),
         description: formData.description.trim(),
+        url: formData.url.trim() || null,
         available: formData.available
       };
 
@@ -284,6 +307,25 @@ const EditBook = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 required
               />
+            </div>
+
+            {/* Book URL */}
+            <div>
+              <label htmlFor="url" className="block text-sm font-medium text-gray-700 mb-2">
+                Book Softcopy URL (Optional)
+              </label>
+              <input
+                type="url"
+                id="url"
+                name="url"
+                value={formData.url}
+                onChange={handleInputChange}
+                placeholder="https://drive.google.com/... or any public link to digital copy"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+              <p className="text-sm text-gray-500 mt-1">
+                Provide a link to the digital/softcopy version of the book (Google Drive, Dropbox, etc.)
+              </p>
             </div>
 
             {/* Availability */}

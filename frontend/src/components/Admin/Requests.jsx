@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { adminApi } from "../../api/adminApi";
+import { sanitizeUrl, isValidUrl } from "../../utils/urlUtils";
 import { toast } from "react-hot-toast";
 
 const Requests = () => {
@@ -112,6 +113,23 @@ const Requests = () => {
                       <div>
                         <h3 className="text-base lg:text-lg xl:text-xl font-semibold text-gray-900">{book.bookName}</h3>
                         <p className="text-xs lg:text-sm text-gray-600">Submitted by {book.requestedBy || 'Unknown'}</p>
+                        {book.url && isValidUrl(book.url) ? (
+                          <a
+                            href={sanitizeUrl(book.url)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center text-xs text-blue-600 hover:text-blue-800 font-medium mt-1"
+                          >
+                            <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                            Digital Copy
+                          </a>
+                        ) : (
+                          <p className="text-xs text-gray-500 mt-1">
+                            Softcopy not available
+                          </p>
+                        )}
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -174,6 +192,39 @@ const Requests = () => {
                               <span className="text-xs lg:text-sm font-medium text-gray-600 uppercase tracking-wide">Owner</span>
                             </div>
                             <p className="text-base lg:text-lg xl:text-xl font-semibold text-blue-600 break-words">{book.requestedBy || 'Unknown'}</p>
+                          </div>
+
+                          {/* Digital Copy URL */}
+                          <div className={`rounded-lg p-4 lg:p-6 ${book.url && isValidUrl(book.url) ? 'bg-blue-50' : 'bg-gray-50'}`}>
+                            <div className="flex items-center space-x-2 mb-2 lg:mb-3">
+                              <svg className={`w-4 h-4 ${book.url && isValidUrl(book.url) ? 'text-blue-500' : 'text-gray-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                {book.url && isValidUrl(book.url) ? (
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                                ) : (
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                )}
+                              </svg>
+                              <span className={`text-xs lg:text-sm font-medium uppercase tracking-wide ${book.url && isValidUrl(book.url) ? 'text-blue-600' : 'text-gray-600'}`}>
+                                Digital Copy
+                              </span>
+                            </div>
+                            {book.url && isValidUrl(book.url) ? (
+                              <a
+                                href={sanitizeUrl(book.url)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center text-sm text-blue-600 hover:text-blue-800 font-medium break-all"
+                              >
+                                <svg className="w-3 h-3 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                                View Softcopy
+                              </a>
+                            ) : (
+                              <p className="text-sm text-gray-500">
+                                Softcopy not available
+                              </p>
+                            )}
                           </div>
                         </div>
                         

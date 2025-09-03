@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 
 // Add a new book
 export const addBookDetails = async (req, res) => {
-  const { bookName, edition, description } = req.body;
+  const { bookName, edition, description, url } = req.body;
   const userId = req.user._id;
   try {
     if (!bookName?.trim() || !edition || !description?.trim()) {
@@ -20,6 +20,27 @@ export const addBookDetails = async (req, res) => {
         message: "Edition must be a valid positive integer!",
       });
     }
+
+    // Validate URL if provided
+    if (url && url.trim()) {
+      // Comprehensive URL regex that handles most common cases
+      const urlPattern = /^(https?:\/\/)?([\da-zA-Z\.-]+)\.([a-zA-Z\.]{2,63})([\/\w \.\-~:?#\[\]@!$&'()*+,;=%]*)*\/?$/i;
+      
+      // Block dangerous protocols
+      const dangerousProtocols = /^(javascript|data|vbscript|file|about):/i;
+      if (dangerousProtocols.test(url.trim())) {
+        return res.status(400).json({
+          message: "Invalid URL protocol detected!",
+        });
+      }
+      
+      if (!urlPattern.test(url.trim())) {
+        return res.status(400).json({
+          message: "Please provide a valid URL for the book softcopy!",
+        });
+      }
+    }
+
     const user = await User.findOne({ _id: userId });
     if (!user) {
       return res.status(401).json({ message: "Unauthorized access!" });
@@ -43,6 +64,7 @@ export const addBookDetails = async (req, res) => {
       description: description.trim(),
       owner: userId,
       bookImages: uploadedImages,
+      url: url && url.trim() ? url.trim() : null,
       status: "Pending",
     });
 
@@ -59,7 +81,7 @@ export const addBookDetails = async (req, res) => {
 
 // Update details of book that already exist in database
 export const updateBookDetails = async (req, res) => {
-  const { bookName, edition, description, available, borrowerId } = req.body;
+  const { bookName, edition, description, available, borrowerId, url } = req.body;
   const userId = req.user._id;
   const { bookId } = req.params;
   try {
@@ -76,6 +98,27 @@ export const updateBookDetails = async (req, res) => {
     ) {
       return res.status(400).json({ message: "All fields are required!" });
     }
+
+    // Validate URL if provided
+    if (url && url.trim()) {
+      // Comprehensive URL regex that handles most common cases
+      const urlPattern = /^(https?:\/\/)?([\da-zA-Z\.-]+)\.([a-zA-Z\.]{2,63})([\/\w \.\-~:?#\[\]@!$&'()*+,;=%]*)*\/?$/i;
+      
+      // Block dangerous protocols
+      const dangerousProtocols = /^(javascript|data|vbscript|file|about):/i;
+      if (dangerousProtocols.test(url.trim())) {
+        return res.status(400).json({
+          message: "Invalid URL protocol detected!",
+        });
+      }
+      
+      if (!urlPattern.test(url.trim())) {
+        return res.status(400).json({
+          message: "Please provide a valid URL for the book softcopy!",
+        });
+      }
+    }
+
     if (
       isNaN(parseInt(edition)) ||
       parseInt(edition) <= 0 ||
@@ -115,6 +158,7 @@ export const updateBookDetails = async (req, res) => {
     book.available = available.trim();
     book.edition = parseInt(edition);
     book.description = description.trim();
+    book.url = url && url.trim() ? url.trim() : null;
 
     // Handle borrowedBy field based on book status
     if (available.trim() === "Borrowed" && borrowerId) {

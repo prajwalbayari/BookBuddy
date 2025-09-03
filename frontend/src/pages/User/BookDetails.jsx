@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { booksApi } from '../../api/booksApi';
 import Header from '../../components/Header';
 import { useAuth } from '../../hooks/useAuth';
+import { sanitizeUrl, isValidUrl } from '../../utils/urlUtils';
 import toast from 'react-hot-toast';
 
 const BookDetails = () => {
@@ -342,6 +343,77 @@ const BookDetails = () => {
                     <div>
                       <h2 className="text-xl font-semibold text-gray-900 mb-3">Description</h2>
                       <p className="text-gray-700 leading-relaxed">{book.description}</p>
+                    </div>
+
+                    {/* Digital Copy URL */}
+                    <div>
+                      <h2 className="text-xl font-semibold text-gray-900 mb-3">Digital Copy</h2>
+                      {book.url && isValidUrl(book.url) ? (
+                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                          <div className="flex items-center space-x-2">
+                            <svg 
+                              className="w-5 h-5 text-blue-600" 
+                              fill="none" 
+                              stroke="currentColor" 
+                              viewBox="0 0 24 24"
+                            >
+                              <path 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                strokeWidth={2} 
+                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" 
+                              />
+                            </svg>
+                            <span className="text-blue-800 font-medium">Softcopy Available</span>
+                          </div>
+                          <a
+                            href={sanitizeUrl(book.url)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                          >
+                            <svg 
+                              className="w-4 h-4 mr-2" 
+                              fill="none" 
+                              stroke="currentColor" 
+                              viewBox="0 0 24 24"
+                            >
+                              <path 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                strokeWidth={2} 
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
+                              />
+                            </svg>
+                            Open Digital Copy
+                          </a>
+                          <p className="text-xs text-blue-600 mt-1">
+                            Opens in a new tab
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                          <div className="flex items-center space-x-2">
+                            <svg 
+                              className="w-5 h-5 text-gray-500" 
+                              fill="none" 
+                              stroke="currentColor" 
+                              viewBox="0 0 24 24"
+                            >
+                              <path 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                strokeWidth={2} 
+                                d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" 
+                              />
+                            </svg>
+                            <span className="text-gray-600 font-medium">Softcopy Not Available</span>
+                          </div>
+                          <p className="text-sm text-gray-500 mt-2">
+                            The digital copy of this book is not currently available. Please contact the book owner for more information.
+                          </p>
+                        </div>
+                      )}
                     </div>
 
                     {/* Feedback Section */}

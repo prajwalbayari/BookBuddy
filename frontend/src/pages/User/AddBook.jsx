@@ -9,6 +9,7 @@ const AddBook = () => {
     bookName: '',
     edition: '',
     description: '',
+    url: '',
     bookImages: []
   });
   const [loading, setLoading] = useState(false);
@@ -69,11 +70,34 @@ const AddBook = () => {
         return;
       }
 
+      // Validate URL if provided
+      if (formData.url.trim()) {
+        // Comprehensive URL regex that handles most common cases
+        const urlPattern = /^(https?:\/\/)?([\da-zA-Z\.-]+)\.([a-zA-Z\.]{2,63})([\/\w \.\-~:?#\[\]@!$&'()*+,;=%]*)*\/?$/i;
+        
+        // Block dangerous protocols
+        const dangerousProtocols = /^(javascript|data|vbscript|file|about):/i;
+        if (dangerousProtocols.test(formData.url.trim())) {
+          setError('Invalid URL protocol detected');
+          return;
+        }
+        
+        if (!urlPattern.test(formData.url.trim())) {
+          setError('Please provide a valid URL for the book softcopy');
+          return;
+        }
+      }
+
       // Create FormData for file upload
       const submitData = new FormData();
       submitData.append('bookName', formData.bookName.trim());
       submitData.append('edition', parseInt(formData.edition));
       submitData.append('description', formData.description.trim());
+      
+      // Add URL if provided
+      if (formData.url.trim()) {
+        submitData.append('url', formData.url.trim());
+      }
       
       // Append images
       formData.bookImages.forEach((image) => {
@@ -186,6 +210,25 @@ const AddBook = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 required
               />
+            </div>
+
+            {/* Book URL */}
+            <div>
+              <label htmlFor="url" className="block text-sm font-medium text-gray-700 mb-2">
+                Book Softcopy URL (Optional)
+              </label>
+              <input
+                type="url"
+                id="url"
+                name="url"
+                value={formData.url}
+                onChange={handleInputChange}
+                placeholder="https://drive.google.com/... or any public link to digital copy"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+              <p className="text-sm text-gray-500 mt-1">
+                Provide a link to the digital/softcopy version of the book (Google Drive, Dropbox, etc.)
+              </p>
             </div>
 
             {/* Book Images */}
