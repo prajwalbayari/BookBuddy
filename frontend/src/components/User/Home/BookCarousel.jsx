@@ -160,15 +160,15 @@ const BookCarousel = () => {
   const getAvailabilityColor = (status) => {
     switch (status) {
       case 'Available':
-        return 'bg-green-100 text-green-800';
+        return 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300';
       case 'Requested':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300';
       case 'Borrowed':
-        return 'bg-red-100 text-red-800';
+        return 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300';
       case 'Returned':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300';
     }
   };
 
@@ -214,7 +214,7 @@ const BookCarousel = () => {
   if (books.length === 0) {
     return (
       <div className="text-center py-16">
-        <p className="text-gray-500">No books available at the moment.</p>
+        <p className="text-gray-500 dark:text-gray-400">No books available at the moment.</p>
       </div>
     );
   }
@@ -255,19 +255,19 @@ const BookCarousel = () => {
           <div className="flex justify-center mt-6 space-x-4">
             <button 
               onClick={prevSlide}
-              className="p-2 rounded-lg bg-white border shadow-sm hover:bg-gray-50 transition-colors duration-200 touch-manipulation"
+              className="p-2 rounded-lg bg-white dark:bg-gray-800 border dark:border-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 touch-manipulation"
               aria-label="Previous slide"
             >
-              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button 
               onClick={nextSlide}
-              className="p-2 rounded-lg bg-white border shadow-sm hover:bg-gray-50 transition-colors duration-200 touch-manipulation"
+              className="p-2 rounded-lg bg-white dark:bg-gray-800 border dark:border-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 touch-manipulation"
               aria-label="Next slide"
             >
-              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
@@ -280,7 +280,7 @@ const BookCarousel = () => {
                 key={i}
                 onClick={() => setActiveIndex(i)}
                 className={`w-2 h-2 rounded-full transition-colors duration-200 ${
-                  i === activeIndex ? 'bg-blue-600' : 'bg-gray-300'
+                  i === activeIndex ? 'bg-blue-600 dark:bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
                 }`}
                 aria-label={`Go to slide ${i + 1}`}
               />
@@ -292,12 +292,12 @@ const BookCarousel = () => {
       {/* Book Details Popup */}
       {showPopup && selectedBook && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative animate-popup">
-            <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-              <h2 className="text-xl font-bold truncate pr-4">{selectedBook.bookName}</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative animate-popup">
+            <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between">
+              <h2 className="text-xl font-bold truncate pr-4 text-gray-900 dark:text-white">{selectedBook.bookName}</h2>
               <button 
                 onClick={closePopup}
-                className="flex-shrink-0 p-1 text-gray-500 hover:text-gray-700 transition-colors duration-200 touch-manipulation"
+                className="flex-shrink-0 p-1 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200 touch-manipulation"
                 aria-label="Close popup"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -309,7 +309,7 @@ const BookCarousel = () => {
             <div className="p-4 sm:p-6">
               <div className="flex flex-col md:flex-row gap-6">
                 <div className="md:w-1/3">
-                  <div className="aspect-[3/4] bg-gray-100 rounded-md overflow-hidden mb-3">
+                  <div className="aspect-[3/4] bg-gray-100 dark:bg-gray-700 rounded-md overflow-hidden mb-3">
                     {selectedBook.bookImages && selectedBook.bookImages.length > 0 ? (
                       <img 
                         src={selectedBook.bookImages[0]} 
@@ -317,8 +317,8 @@ const BookCarousel = () => {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-gray-200">
-                        <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-600">
+                        <svg className="w-16 h-16 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                         </svg>
                       </div>
@@ -331,18 +331,18 @@ const BookCarousel = () => {
                 
                 <div className="md:w-2/3">
                   <div className="mb-4">
-                    <p className="text-gray-700 mb-1">
+                    <p className="text-gray-700 dark:text-gray-300 mb-1">
                       <span className="font-medium">Edition:</span> {selectedBook.edition || 'N/A'}
                     </p>
-                    <p className="text-gray-700 mb-1">
+                    <p className="text-gray-700 dark:text-gray-300 mb-1">
                       <span className="font-medium">Owner:</span> {selectedBook.ownerName || (selectedBook.owner && (typeof selectedBook.owner === 'object' ? selectedBook.owner.userName : selectedBook.owner)) || 'Unknown'}
                     </p>
                     {selectedBook.feedback && selectedBook.feedback.length > 0 && (
                       <div className="flex items-center space-x-2 mt-2">
-                        <span className="font-medium text-gray-700">Rating:</span>
+                        <span className="font-medium text-gray-700 dark:text-gray-300">Rating:</span>
                         <div className="flex items-center space-x-1">
                           {renderStars(Math.round(calculateAverageRating(selectedBook.feedback)))}
-                          <span className="text-sm text-gray-600 ml-2">
+                          <span className="text-sm text-gray-600 dark:text-gray-400 ml-2">
                             {calculateAverageRating(selectedBook.feedback)} ({selectedBook.feedback.length} feedback{selectedBook.feedback.length !== 1 ? 's' : ''})
                           </span>
                         </div>
@@ -351,8 +351,8 @@ const BookCarousel = () => {
                   </div>
                   
                   <div className="mb-4">
-                    <h3 className="font-semibold text-lg mb-2">Description</h3>
-                    <p className="text-gray-700">{selectedBook.description}</p>
+                    <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white">Description</h3>
+                    <p className="text-gray-700 dark:text-gray-300">{selectedBook.description}</p>
                   </div>
                   
                   <div className="mt-6 flex flex-col sm:flex-row gap-3">

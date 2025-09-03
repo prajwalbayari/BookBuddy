@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import { UserHome, ChatPage, Profile, AddBook, EditBook, BooksPage, BookDetails } from "./pages/User";
 import { AdminDashboard } from "./pages/Admin";
 import { useAuth } from "./hooks/useAuth";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import "./App.css";
 import { Toaster } from "react-hot-toast";
 
@@ -23,24 +24,25 @@ function App() {
   // Show loading spinner while authentication state is being determined
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
       </div>
     );
   }
   
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="min-h-screen bg-gray-50">
-        <Toaster position="top-center" />
-        <Routes>
+    <ThemeProvider>
+      <Router>
+        <ScrollToTop />
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+          <Toaster position="top-center" />
+          <Routes>
           <Route path="*" element={<NotFound />} />
           {/* Admin Dashboard: no header, only for admin */}
           <Route
             path="/admin/dashboard"
             element={
-              isAuthenticated && isAdmin ? <AdminDashboard /> : <NotFound />
+              isAuthenticated && isAdmin ? <AdminDashboard /> : <Navigate to="/" replace />
             }
           />
           {/* User Home: only for authenticated users who are not admin */}
@@ -149,7 +151,7 @@ function App() {
           <Route
             path="/"
             element={
-              isAuthenticated ? (
+              isAuthenticated && !loading ? (
                 isAdmin ? (
                   <Navigate to="/admin/dashboard" replace />
                 ) : (
@@ -201,6 +203,7 @@ function App() {
         </Routes>
       </div>
     </Router>
+    </ThemeProvider>
   );
 }
 

@@ -21,21 +21,21 @@ const MessageList = ({ messages, currentUser, selectedUser, receiverName }) => {
       <div className="flex items-center justify-center h-full px-6">
         <div className="text-center max-w-sm">
           <div className="mb-6">
-            <div className="mx-auto h-16 w-16 bg-gray-200 rounded-full flex items-center justify-center">
-              <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="mx-auto h-16 w-16 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center">
+              <svg className="h-8 w-8 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
             </div>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No messages yet</h3>
-          <p className="text-gray-500">Start the conversation with {receiverName || selectedUser.name}. Say hello!</p>
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No messages yet</h3>
+          <p className="text-gray-500 dark:text-gray-400">Start the conversation with {receiverName || selectedUser.name}. Say hello!</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="h-full overflow-y-auto p-4 space-y-4 bg-gray-50">
+    <div className="h-full overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-gray-900">
       {messages.map((message, index) => {
         const isMine = isMyMessage(message);
         const showAvatar = index === 0 || isMyMessage(messages[index - 1]) !== isMine;
@@ -47,7 +47,7 @@ const MessageList = ({ messages, currentUser, selectedUser, receiverName }) => {
             {/* Timestamp separator */}
             {showTimestamp && (
               <div className="flex justify-center">
-                <span className="text-xs text-gray-500 bg-white px-3 py-1 rounded-full shadow-sm">
+                <span className="text-xs text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 px-3 py-1 rounded-full shadow-sm border border-gray-200 dark:border-gray-600">
                   {formatMessageTime(message.createdAt)}
                 </span>
               </div>
@@ -60,7 +60,7 @@ const MessageList = ({ messages, currentUser, selectedUser, receiverName }) => {
                 <div className="flex-shrink-0">
                   {showAvatar ? (
                     <div className={`h-8 w-8 rounded-full flex items-center justify-center ${
-                      isMine ? 'bg-blue-500' : 'bg-gray-400'
+                      isMine ? 'bg-blue-500 dark:bg-blue-600' : 'bg-gray-400 dark:bg-gray-500'
                     }`}>
                       <span className="text-white font-medium text-xs">
                         {isMine 
@@ -79,8 +79,8 @@ const MessageList = ({ messages, currentUser, selectedUser, receiverName }) => {
                   <div
                     className={`rounded-2xl px-4 py-2 shadow-sm ${
                       isMine
-                        ? 'bg-blue-500 text-white rounded-br-md'
-                        : 'bg-white text-gray-900 border border-gray-200 rounded-bl-md'
+                        ? 'bg-blue-500 dark:bg-blue-600 text-white rounded-br-md'
+                        : 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600 rounded-bl-md'
                     }`}
                   >
                     <p className="text-sm leading-relaxed break-words">{message.text}</p>
@@ -88,7 +88,7 @@ const MessageList = ({ messages, currentUser, selectedUser, receiverName }) => {
                   
                   {/* Message status and time */}
                   <div className={`mt-1 flex items-center space-x-1`}>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
                       {format(new Date(message.createdAt), 'HH:mm')}
                     </span>
                   </div>

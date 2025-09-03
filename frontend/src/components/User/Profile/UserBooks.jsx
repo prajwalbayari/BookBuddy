@@ -20,20 +20,20 @@ const UserBooks = ({ books, onRefresh }) => {
   // Early return for empty books
   if (!books || books.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 sm:p-12">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-8 sm:p-12">
         <div className="text-center max-w-md mx-auto">
           <div className="mb-6">
-            <svg className="mx-auto h-16 w-16 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="mx-auto h-16 w-16 text-gray-300 dark:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </div>
-          <h3 className="text-xl font-medium text-gray-900 mb-3">No books yet</h3>
-          <p className="text-gray-500 mb-6 leading-relaxed">
+          <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-3">No books yet</h3>
+          <p className="text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
             Start building your book collection by adding your first book. Share your favorite reads with the community!
           </p>
           <button 
             onClick={() => navigate('/user/books/add')}
-            className="inline-flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm"
+            className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors font-medium shadow-sm"
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -70,7 +70,7 @@ const UserBooks = ({ books, onRefresh }) => {
   });
 
   const BookCard = ({ book }) => (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md transition-shadow">
       <div className="p-3 sm:p-4 lg:p-5">
         <div className="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-4">
           <div className="flex-shrink-0 mx-auto sm:mx-0">
@@ -81,8 +81,8 @@ const UserBooks = ({ books, onRefresh }) => {
                 className="h-24 w-16 sm:h-28 sm:w-20 lg:h-24 lg:w-18 object-cover rounded-md shadow-sm"
               />
             ) : (
-              <div className="h-24 w-16 sm:h-28 sm:w-20 lg:h-24 lg:w-18 bg-gray-200 rounded-md flex items-center justify-center">
-                <svg className="h-6 w-6 sm:h-8 sm:w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="h-24 w-16 sm:h-28 sm:w-20 lg:h-24 lg:w-18 bg-gray-200 dark:bg-gray-600 rounded-md flex items-center justify-center">
+                <svg className="h-6 w-6 sm:h-8 sm:w-8 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
@@ -92,11 +92,11 @@ const UserBooks = ({ books, onRefresh }) => {
           <div className="flex-1 min-w-0 text-center sm:text-left">
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 space-y-2 sm:space-y-0">
               <div className="min-w-0 flex-1">
-                <h4 className="text-base sm:text-lg font-semibold text-gray-900 break-words">
+                <h4 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white break-words">
                   {book.bookName}
                 </h4>
                 {book.edition && (
-                  <p className="text-xs sm:text-sm text-gray-600 mt-1">Edition: {book.edition}</p>
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Edition: {book.edition}</p>
                 )}
               </div>
               <div className="flex flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-2">
@@ -104,7 +104,7 @@ const UserBooks = ({ books, onRefresh }) => {
                   onClick={() => navigate(`/book-details/${book._id}`, { 
                     state: { book: book, fromProfile: true } 
                   })}
-                  className="inline-flex items-center justify-center px-3 py-1.5 border border-blue-300 rounded-md text-xs font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors flex-shrink-0"
+                  className="inline-flex items-center justify-center px-3 py-1.5 border border-blue-300 dark:border-blue-600 rounded-md text-xs font-medium text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors flex-shrink-0"
                 >
                   <svg className="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -113,7 +113,7 @@ const UserBooks = ({ books, onRefresh }) => {
                 </button>
                 <button
                   onClick={() => navigate(`/user/books/edit/${book._id}`)}
-                  className="inline-flex items-center justify-center px-3 py-1.5 border border-gray-300 rounded-md text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors flex-shrink-0"
+                  className="inline-flex items-center justify-center px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-xs font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors flex-shrink-0"
                 >
                   <svg className="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -124,7 +124,7 @@ const UserBooks = ({ books, onRefresh }) => {
             </div>
 
             {book.description && (
-              <p className="text-xs sm:text-sm text-gray-600 mb-3 line-clamp-2 leading-relaxed break-words">
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2 leading-relaxed break-words">
                 {book.description}
               </p>
             )}
@@ -132,23 +132,23 @@ const UserBooks = ({ books, onRefresh }) => {
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-3">
               <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                 book.available === 'Available'
-                  ? 'bg-green-100 text-green-800' 
-                  : 'bg-red-100 text-red-800'
+                  ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' 
+                  : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300'
               }`}>
                 {book.available || 'Unknown'}
               </span>
               <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                 book.status === 'Approved' 
-                  ? 'bg-blue-100 text-blue-800'
+                  ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300'
                   : book.status === 'Pending'
-                  ? 'bg-yellow-100 text-yellow-800'
-                  : 'bg-red-100 text-red-800'
+                  ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300'
+                  : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300'
               }`}>
                 {book.status || 'Unknown'}
               </span>
             </div>
 
-            <div className="text-xs text-gray-500">
+            <div className="text-xs text-gray-500 dark:text-gray-400">
               Added {new Date(book.createdAt).toLocaleDateString()}
             </div>
           </div>
@@ -159,12 +159,12 @@ const UserBooks = ({ books, onRefresh }) => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
             <div>
-              <h3 className="text-xl font-semibold text-gray-900">My Books</h3>
-              <p className="text-sm text-gray-600 mt-1">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">My Books</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                 Showing {filteredBooks.length} of {books.length} books
               </p>
             </div>
@@ -190,22 +190,22 @@ const UserBooks = ({ books, onRefresh }) => {
             </div>
           </div>
 
-          <div className="pt-4 border-t border-gray-100">
+          <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
             <div className="space-y-4">
               <div>
-                <h4 className="text-sm font-medium text-gray-700 mb-3">Filter & Sort Options</h4>
+                <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Filter & Sort Options</h4>
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
                 <div className="space-y-2">
-                  <label htmlFor="filter" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="filter" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Availability
                   </label>
                   <select
                     id="filter"
                     value={filterBy}
                     onChange={(e) => setFilterBy(e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-colors"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   >
                     <option value="all">All Books</option>
                     <option value="available">Available</option>
@@ -214,14 +214,14 @@ const UserBooks = ({ books, onRefresh }) => {
                 </div>
                 
                 <div className="space-y-2">
-                  <label htmlFor="statusFilter" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="statusFilter" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Approval Status
                   </label>
                   <select
                     id="statusFilter"
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-colors"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   >
                     <option value="all">All Status</option>
                     <option value="pending">Pending</option>
@@ -231,14 +231,14 @@ const UserBooks = ({ books, onRefresh }) => {
                 </div>
                 
                 <div className="space-y-2 sm:col-span-2 xl:col-span-1">
-                  <label htmlFor="sort" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="sort" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Sort Order
                   </label>
                   <select
                     id="sort"
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-colors"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   >
                     <option value="newest">Newest First</option>
                     <option value="oldest">Oldest First</option>
@@ -289,7 +289,7 @@ const UserBooks = ({ books, onRefresh }) => {
                       setStatusFilter('all');
                       setSortBy('newest');
                     }}
-                    className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium text-gray-600 hover:bg-gray-100 transition-colors"
+                    className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                   >
                     Clear all
                   </button>
@@ -307,15 +307,15 @@ const UserBooks = ({ books, onRefresh }) => {
       </div>
 
       {filteredBooks.length === 0 && books.length > 0 && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 sm:p-12">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-8 sm:p-12">
           <div className="text-center max-w-md mx-auto">
             <div className="mb-6">
-              <svg className="mx-auto h-12 w-12 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="mx-auto h-12 w-12 text-gray-300 dark:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-3">No books match your filters</h3>
-            <p className="text-gray-500 mb-6 leading-relaxed">
+            <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-3">No books match your filters</h3>
+            <p className="text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
               Try adjusting your filters to see more results, or clear all filters to view your entire collection.
             </p>
             <button
@@ -325,7 +325,7 @@ const UserBooks = ({ books, onRefresh }) => {
                 setSortBy('newest');
                 toast.success('Filters cleared successfully!');
               }}
-              className="inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors shadow-sm"
+              className="inline-flex items-center px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors shadow-sm"
             >
               <svg className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />

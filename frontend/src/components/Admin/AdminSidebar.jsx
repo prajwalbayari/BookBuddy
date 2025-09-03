@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { toast } from 'react-hot-toast';
+import ThemeToggle from '../ThemeToggle';
 
 const AdminSidebar = ({ onSelect, selected }) => {
   const navigate = useNavigate();
@@ -28,11 +29,16 @@ const AdminSidebar = ({ onSelect, selected }) => {
   ];
 
   return (
-    <aside className="h-full w-full flex flex-col bg-gradient-to-b from-blue-600 to-blue-700 text-white">
+    <aside className="h-full w-full flex flex-col bg-gradient-to-b from-blue-600 to-blue-700 dark:from-gray-800 dark:to-gray-900 text-white">
       {/* Header */}
-      <div className="p-4 sm:p-6 border-b border-blue-500 flex-shrink-0">
-        <h2 className="text-base sm:text-lg font-bold">BookBuddy</h2>
-        <p className="text-blue-200 text-xs mt-1">Admin Dashboard</p>
+      <div className="p-4 sm:p-6 border-b border-blue-500 dark:border-gray-700 flex-shrink-0">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-base sm:text-lg font-bold">BookBuddy</h2>
+            <p className="text-blue-200 dark:text-gray-400 text-xs mt-1">Admin Dashboard</p>
+          </div>
+          <ThemeToggle />
+        </div>
       </div>
       
       {/* Navigation */}
@@ -42,8 +48,8 @@ const AdminSidebar = ({ onSelect, selected }) => {
             key={item.id}
             className={`w-full flex items-center space-x-3 px-3 sm:px-4 py-3 rounded-lg text-left transition-all duration-200 text-xs sm:text-sm ${
               selected === item.id 
-                ? 'bg-white text-blue-700 shadow-md' 
-                : 'text-blue-100 hover:bg-blue-500 hover:text-white'
+                ? 'bg-white dark:bg-gray-700 text-blue-700 dark:text-white shadow-md' 
+                : 'text-blue-100 dark:text-gray-300 hover:bg-blue-500 dark:hover:bg-gray-700 hover:text-white'
             }`}
             onClick={() => onSelect(item.id)}
           >
@@ -56,17 +62,20 @@ const AdminSidebar = ({ onSelect, selected }) => {
       </nav>
       
       {/* Footer */}
-      <div className="p-3 sm:p-4 border-t border-blue-500 flex-shrink-0">
+      <div className="p-3 sm:p-4 border-t border-blue-500 dark:border-gray-700 flex-shrink-0">
         <button
-          className="w-full flex items-center space-x-3 px-3 sm:px-4 py-3 rounded-lg text-left text-red-200 hover:bg-red-600 hover:text-white transition-all duration-200 text-xs sm:text-sm"
+          className="w-full flex items-center space-x-3 px-3 sm:px-4 py-3 rounded-lg text-left text-red-200 dark:text-red-300 hover:bg-red-600 dark:hover:bg-red-700 hover:text-white transition-all duration-200 text-xs sm:text-sm"
           onClick={async () => {
             try {
-              toast.success('Logged out successfully!', { duration: 3000 });
               await logout();
-              navigate('/', { replace: true });
+              // Add a small delay to ensure state is cleared before navigation
+              setTimeout(() => {
+                toast.success('Logged out successfully!', { duration: 2000 });
+                navigate('/', { replace: true });
+              }, 100);
             } catch (error) {
               console.error('Logout error:', error);
-              toast.success('Logged out successfully!', { duration: 3000 });
+              toast.success('Logged out successfully!', { duration: 2000 });
               navigate('/', { replace: true });
             }
           }}

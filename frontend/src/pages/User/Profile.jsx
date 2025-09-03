@@ -92,8 +92,8 @@ const Profile = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
             </svg>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Error</h3>
-          <p className="text-gray-600 mb-4">{error}</p>
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Error</h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">{error}</p>
           <button
             onClick={fetchUserData}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -106,7 +106,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="max-w-6xl xl:max-w-7xl 2xl:max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-6 sm:py-8 xl:py-12">
         {/* Profile Header */}
         <ProfileHeader 
@@ -116,14 +116,14 @@ const Profile = () => {
 
         {/* Navigation Tabs */}
         <div className="mt-6 sm:mt-8">
-          <div className="border-b border-gray-200">
+          <div className="border-b border-gray-200 dark:border-gray-700">
             <nav className="-mb-px flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-8 xl:justify-center xl:space-x-16">
               <button
                 onClick={() => setActiveTab('details')}
                 className={`py-3 px-4 sm:px-6 xl:px-8 border-b-2 font-medium text-sm xl:text-base transition-colors text-center sm:text-left rounded-t-lg sm:rounded-none ${
                   activeTab === 'details'
-                    ? 'border-blue-500 text-blue-600 bg-blue-50 sm:bg-transparent'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-50 sm:hover:bg-transparent'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 sm:bg-transparent dark:sm:bg-transparent'
+                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 sm:hover:bg-transparent dark:sm:hover:bg-transparent'
                 }`}
               >
                 Profile Details
@@ -132,8 +132,8 @@ const Profile = () => {
                 onClick={() => setActiveTab('books')}
                 className={`py-3 px-4 sm:px-6 xl:px-8 border-b-2 font-medium text-sm xl:text-base transition-colors text-center sm:text-left rounded-t-lg sm:rounded-none ${
                   activeTab === 'books'
-                    ? 'border-blue-500 text-blue-600 bg-blue-50 sm:bg-transparent'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-50 sm:hover:bg-transparent'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 sm:bg-transparent dark:sm:bg-transparent'
+                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 sm:hover:bg-transparent dark:sm:hover:bg-transparent'
                 }`}
               >
                 <span className="block sm:inline">My Books</span>

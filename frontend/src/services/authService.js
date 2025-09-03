@@ -5,11 +5,21 @@ class AuthService {
     this.currentUser = null;
     this.isAuthenticated = false;
     this.isInitialized = false;
+    this.hasLoggedOut = false; // Track if user has explicitly logged out
   }
 
   // Initialize auth state by checking both localStorage and cookie authentication
   async init() {
     if (this.isInitialized) return;
+    
+    // Check if user has explicitly logged out
+    const hasLoggedOut = localStorage.getItem('hasLoggedOut') === 'true';
+    if (hasLoggedOut || this.hasLoggedOut) {
+      this.currentUser = null;
+      this.isAuthenticated = false;
+      this.isInitialized = true;
+      return;
+    }
     
     try {
       // First check if we have a valid cookie-based session
@@ -21,17 +31,14 @@ class AuthService {
       }
     } catch (error) {
       console.log("Cookie auth check failed:", error);
+      // Clear potentially stale localStorage data if cookie auth fails
+      this.handleAuthLogout();
+      this.isInitialized = true;
+      return;
     }
 
-    // Fallback to localStorage if cookie auth fails
-    const token = localStorage.getItem("authToken");
-    const user = localStorage.getItem("currentUser");
-
-    if (token && user) {
-      this.isAuthenticated = true;
-      this.currentUser = JSON.parse(user);
-    }
-    
+    // If cookie auth failed, clear everything to ensure clean state
+    this.handleAuthLogout();
     this.isInitialized = true;
   }
 
@@ -86,9 +93,11 @@ class AuthService {
   async logout() {
     try {
       await authApi.logout();
+      this.hasLoggedOut = true; // Mark that user has explicitly logged out
       this.handleAuthLogout();
     } catch (error) {
       console.error("Logout failed:", error);
+      this.hasLoggedOut = true; // Mark logout even on error
       this.handleAuthLogout();
     }
   }
@@ -97,6 +106,10 @@ class AuthService {
   handleAuthSuccess(user, token, storeInLocalStorage = true) {
     this.currentUser = user;
     this.isAuthenticated = true;
+    this.hasLoggedOut = false; // Reset logout flag on successful auth
+    
+    // Clear the logout flag from localStorage
+    localStorage.removeItem('hasLoggedOut');
 
     // Only store in localStorage if explicitly requested (for login actions)
     if (storeInLocalStorage) {
@@ -112,8 +125,25 @@ class AuthService {
     this.currentUser = null;
     this.isAuthenticated = false;
 
+    // Clear authentication-related storage aggressively
     localStorage.removeItem("authToken");
     localStorage.removeItem("currentUser");
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("authToken");
+    sessionStorage.removeItem("currentUser");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    
+    // Clear all cookies
+    document.cookie.split(";").forEach((c) => {
+      const eqPos = c.indexOf("=");
+      const name = eqPos > -1 ? c.substr(0, eqPos).trim() : c.trim();
+      if (name) {
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;";
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=" + window.location.hostname + ";";
+      }
+    });
   }
 
   // Check if user is authenticated

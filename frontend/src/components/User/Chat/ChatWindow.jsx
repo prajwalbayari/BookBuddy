@@ -35,6 +35,10 @@ const ChatWindow = ({ selectedUser, currentUser, onMessageSent, onBack, receiver
       const response = await chatApi.getMessages(selectedUser._id);
       if (response.data.success) {
         setMessages(response.data.messages);
+        // Always scroll to bottom (latest messages) when opening a chat
+        setTimeout(() => {
+          messagesEndRef.current?.scrollIntoView({ behavior: 'auto', block: 'end' });
+        }, 200);
       }
     } catch (err) {
       setError('Failed to load messages');
@@ -70,21 +74,21 @@ const ChatWindow = ({ selectedUser, currentUser, onMessageSent, onBack, receiver
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+      <div className="flex items-center justify-center h-full bg-gray-50 dark:bg-gray-900">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-blue-400"></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-red-600 text-center">
+      <div className="flex items-center justify-center h-full bg-gray-50 dark:bg-gray-900">
+        <div className="text-red-600 dark:text-red-400 text-center">
           <p className="text-lg font-semibold">Error</p>
-          <p>{error}</p>
+          <p className="text-gray-700 dark:text-gray-300">{error}</p>
           <button
             onClick={fetchMessages}
-            className="mt-2 px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700"
+            className="mt-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
           >
             Retry
           </button>
@@ -94,14 +98,14 @@ const ChatWindow = ({ selectedUser, currentUser, onMessageSent, onBack, receiver
   }
 
   return (
-    <div className="flex flex-col h-full bg-white">
+    <div className="flex flex-col h-full bg-white dark:bg-gray-800">
       {/* Chat Header */}
-      <div className="flex-shrink-0 bg-white border-b border-gray-200 p-4 shadow-sm">
+      <div className="flex-shrink-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4 shadow-sm">
         <div className="flex items-center space-x-3">
           {/* Back Button for Mobile */}
           <button
             onClick={onBack}
-            className="md:hidden p-2 -ml-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
+            className="md:hidden p-2 -ml-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -110,7 +114,7 @@ const ChatWindow = ({ selectedUser, currentUser, onMessageSent, onBack, receiver
           
           {/* User Avatar */}
           <div className="flex-shrink-0">
-            <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center">
+            <div className="h-10 w-10 rounded-full bg-blue-500 dark:bg-blue-600 flex items-center justify-center">
               <span className="text-white font-medium text-sm">
                 {(receiverName || selectedUser.name)?.charAt(0)?.toUpperCase() || 'U'}
               </span>
@@ -119,13 +123,13 @@ const ChatWindow = ({ selectedUser, currentUser, onMessageSent, onBack, receiver
           
           {/* User Info */}
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-semibold text-gray-900 truncate">{receiverName || selectedUser.name}</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white truncate">{receiverName || selectedUser.name}</h3>
           </div>
           
           {/* Close Button */}
           <button
             onClick={onBack}
-            className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -135,7 +139,7 @@ const ChatWindow = ({ selectedUser, currentUser, onMessageSent, onBack, receiver
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-hidden bg-gray-50">
+      <div className="flex-1 overflow-hidden bg-gray-50 dark:bg-gray-900">
         <MessageList
           messages={messages}
           currentUser={currentUser}
@@ -146,7 +150,7 @@ const ChatWindow = ({ selectedUser, currentUser, onMessageSent, onBack, receiver
       </div>
 
       {/* Message Input */}
-      <div className="flex-shrink-0 bg-white border-t border-gray-200 p-4">
+      <div className="flex-shrink-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4">
         <MessageInput
           onSendMessage={handleSendMessage}
           disabled={sending}

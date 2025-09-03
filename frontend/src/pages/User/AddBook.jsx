@@ -129,32 +129,32 @@ const AddBook = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <button
             onClick={handleCancel}
-            className="flex items-center text-gray-600 hover:text-gray-900 mb-4"
+            className="flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-4"
           >
             <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             Back to Profile
           </button>
-          <h1 className="text-3xl font-bold text-gray-900">Add New Book</h1>
-          <p className="text-gray-600 mt-2">Share your book with the BookBuddy community</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Add New Book</h1>
+          <p className="text-gray-600 dark:text-gray-300 mt-2">Share your book with the BookBuddy community</p>
         </div>
 
         {/* Form */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
           {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
               <div className="flex">
-                <svg className="h-5 w-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-5 w-5 text-red-400 dark:text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
                 </svg>
-                <p className="ml-3 text-sm text-red-700">{error}</p>
+                <p className="ml-3 text-sm text-red-700 dark:text-red-400">{error}</p>
               </div>
             </div>
           )}
@@ -162,7 +162,7 @@ const AddBook = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Book Name */}
             <div>
-              <label htmlFor="bookName" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="bookName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Book Name *
               </label>
               <input
@@ -172,14 +172,14 @@ const AddBook = () => {
                 value={formData.bookName}
                 onChange={handleInputChange}
                 placeholder="Enter the book name"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                 required
               />
             </div>
 
             {/* Edition */}
             <div>
-              <label htmlFor="edition" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="edition" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Edition *
               </label>
               <input
@@ -190,14 +190,14 @@ const AddBook = () => {
                 onChange={handleInputChange}
                 placeholder="Enter edition number"
                 min="1"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                 required
               />
             </div>
 
             {/* Description */}
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Description *
               </label>
               <textarea
@@ -207,14 +207,14 @@ const AddBook = () => {
                 onChange={handleInputChange}
                 placeholder="Describe the book condition, content, or any additional information"
                 rows={4}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                 required
               />
             </div>
 
             {/* Book URL */}
             <div>
-              <label htmlFor="url" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="url" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Book Softcopy URL (Optional)
               </label>
               <input
@@ -224,16 +224,16 @@ const AddBook = () => {
                 value={formData.url}
                 onChange={handleInputChange}
                 placeholder="https://drive.google.com/... or any public link to digital copy"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               />
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                 Provide a link to the digital/softcopy version of the book (Google Drive, Dropbox, etc.)
               </p>
             </div>
 
             {/* Book Images */}
             <div>
-              <label htmlFor="bookImages" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="bookImages" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Book Images (Optional, max 3)
               </label>
               <input
@@ -243,9 +243,9 @@ const AddBook = () => {
                 onChange={handleImageChange}
                 accept="image/*"
                 multiple
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               />
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                 Upload clear images of your book. Accepted formats: JPG, PNG, GIF
               </p>
             </div>
@@ -253,19 +253,19 @@ const AddBook = () => {
             {/* Image Preview */}
             {imagePreview.length > 0 && (
               <div>
-                <h4 className="text-sm font-medium text-gray-700 mb-2">Preview Images</h4>
+                <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Preview Images</h4>
                 <div className="grid grid-cols-3 gap-4">
                   {imagePreview.map((url, index) => (
                     <div key={index} className="relative">
                       <img
                         src={url}
                         alt={`Preview ${index + 1}`}
-                        className="w-full h-32 object-cover rounded-lg border border-gray-200"
+                        className="w-full h-32 object-cover rounded-lg border border-gray-200 dark:border-gray-600"
                       />
                       <button
                         type="button"
                         onClick={() => removeImage(index)}
-                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600"
+                        className="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center"
                       >
                         ×
                       </button>
@@ -280,7 +280,7 @@ const AddBook = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 bg-blue-600 dark:bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <span className="flex items-center justify-center">
@@ -298,7 +298,7 @@ const AddBook = () => {
                 type="button"
                 onClick={handleCancel}
                 disabled={loading}
-                className="flex-1 bg-gray-300 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-400 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-200 py-3 px-4 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Cancel
               </button>
@@ -307,14 +307,14 @@ const AddBook = () => {
         </div>
 
         {/* Info Section */}
-        <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <div className="mt-8 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
           <div className="flex">
-            <svg className="h-5 w-5 text-blue-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="h-5 w-5 text-blue-400 dark:text-blue-500 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div className="ml-3">
-              <h3 className="text-sm font-medium text-blue-800">Note</h3>
-              <p className="text-sm text-blue-700 mt-1">
+              <h3 className="text-sm font-medium text-blue-800 dark:text-blue-300">Note</h3>
+              <p className="text-sm text-blue-700 dark:text-blue-400 mt-1">
                 Your book will be reviewed by our admin team before being made available to other users. You'll be notified once it's approved.
               </p>
             </div>

@@ -160,15 +160,15 @@ const BookDetails = () => {
     return (
       <>
         <Header />
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
           <div className="text-center max-w-md mx-auto px-4">
             <div className="mb-4">
-              <svg className="mx-auto h-16 w-16 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="mx-auto h-16 w-16 text-gray-300 dark:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
             </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-3">Book not found</h3>
-            <p className="text-gray-500 mb-6">The book you're looking for doesn't exist or has been removed.</p>
+            <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-3">Book not found</h3>
+            <p className="text-gray-500 dark:text-gray-400 mb-6">The book you're looking for doesn't exist or has been removed.</p>
             <button
               onClick={() => navigate('/user/books')}
               className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
@@ -184,7 +184,7 @@ const BookDetails = () => {
   return (
     <>
       <Header />
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4 py-8">
           {/* Breadcrumb - Only show if current user is not the owner and not from profile */}
           {user && book && book.owner && (
@@ -195,18 +195,18 @@ const BookDetails = () => {
                 <li>
                   <button
                     onClick={() => navigate('/user/books')}
-                    className="text-blue-600 hover:text-blue-800 transition-colors"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
                   >
                     Books
                   </button>
                 </li>
                 <li>
-                  <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-5 h-5 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                   </svg>
                 </li>
                 <li>
-                  <span className="text-gray-500 truncate max-w-xs">{book.bookName}</span>
+                  <span className="text-gray-500 dark:text-gray-400 truncate max-w-xs">{book.bookName}</span>
                 </li>
               </ol>
             </nav>
@@ -217,7 +217,7 @@ const BookDetails = () => {
             <div className="mb-6">
               <button
                 onClick={() => navigate('/user/profile')}
-                className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors font-medium"
+                className="inline-flex items-center space-x-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors font-medium"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -228,13 +228,13 @@ const BookDetails = () => {
           )}
 
           {/* Main Content */}
-          <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
             <div className="p-6 lg:p-8">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Book Images */}
                 <div className="lg:col-span-1">
                   <div className="sticky top-6">
-                    <div className="aspect-[3/4] bg-gray-100 rounded-lg overflow-hidden mb-4 relative">
+                    <div className="aspect-[3/4] bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden mb-4 relative">
                       {book.bookImages && book.bookImages.length > 0 ? (
                         <>
                           <img
@@ -264,8 +264,8 @@ const BookDetails = () => {
                           )}
                         </>
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gray-200">
-                          <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-600">
+                          <svg className="w-16 h-16 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                           </svg>
                         </div>
@@ -279,7 +279,7 @@ const BookDetails = () => {
                           <button
                             key={index}
                             onClick={() => setCurrentImageIndex(index)}
-                            className={`aspect-[3/4] bg-gray-100 rounded-md overflow-hidden border-2 ${
+                            className={`aspect-[3/4] bg-gray-100 dark:bg-gray-700 rounded-md overflow-hidden border-2 ${
                               index === currentImageIndex ? 'border-blue-500' : 'border-transparent'
                             }`}
                           >
@@ -315,22 +315,22 @@ const BookDetails = () => {
                   <div className="space-y-6">
                     {/* Title and Basic Info */}
                     <div>
-                      <h1 className="text-3xl font-bold text-gray-900 mb-4">{book.bookName}</h1>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-600">
+                      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{book.bookName}</h1>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-600 dark:text-gray-400">
                         <div className="space-y-2">
-                          <p><span className="font-medium">Edition:</span> {book.edition || 'N/A'}</p>
-                          <p><span className="font-medium">Owner:</span> {book.ownerName || 'Unknown'}</p>
+                          <p><span className="font-medium text-gray-700 dark:text-gray-300">Edition:</span> {book.edition || 'N/A'}</p>
+                          <p><span className="font-medium text-gray-700 dark:text-gray-300">Owner:</span> {book.ownerName || 'Unknown'}</p>
                         </div>
                         <div className="space-y-2">
                           <p>
-                            <span className="font-medium">Availability:</span> 
+                            <span className="font-medium text-gray-700 dark:text-gray-300">Availability:</span> 
                             <span className={`ml-2 inline-block px-3 py-1 text-sm font-medium rounded-full ${getAvailabilityColor(book.available)}`}>
                               {book.available}
                             </span>
                           </p>
                           {book.borrowerName && (book.available === 'Borrowed' || book.available === 'Requested') && (
                             <p>
-                              <span className="font-medium">
+                              <span className="font-medium text-gray-700 dark:text-gray-300">
                                 {book.available === 'Borrowed' ? 'Borrowed by:' : 'Requested by:'}
                               </span> {book.borrowerName}
                             </p>
@@ -341,13 +341,13 @@ const BookDetails = () => {
 
                     {/* Description */}
                     <div>
-                      <h2 className="text-xl font-semibold text-gray-900 mb-3">Description</h2>
-                      <p className="text-gray-700 leading-relaxed">{book.description}</p>
+                      <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Description</h2>
+                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{book.description}</p>
                     </div>
 
                     {/* Digital Copy URL */}
                     <div>
-                      <h2 className="text-xl font-semibold text-gray-900 mb-3">Digital Copy</h2>
+                      <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Digital Copy</h2>
                       {book.url && isValidUrl(book.url) ? (
                         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                           <div className="flex items-center space-x-2">
@@ -418,7 +418,7 @@ const BookDetails = () => {
 
                     {/* Feedback Section */}
                     <div>
-                      <h2 className="text-xl font-semibold text-gray-900 mb-4">Feedback</h2>
+                      <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Feedback</h2>
                       
                       {book.feedback && book.feedback.length > 0 ? (
                         <>
@@ -427,7 +427,7 @@ const BookDetails = () => {
                               <div className="flex items-center">
                                 {renderStars(Math.round(calculateAverageRating(book.feedback)))}
                               </div>
-                              <span className="text-sm text-gray-600">
+                              <span className="text-sm text-gray-600 dark:text-gray-400">
                                 {calculateAverageRating(book.feedback)} out of 5 ({book.feedback.length} feedback{book.feedback.length !== 1 ? 's' : ''})
                               </span>
                             </div>
@@ -435,7 +435,7 @@ const BookDetails = () => {
 
                           <div className="space-y-4">
                             {getCurrentFeedbacks().map((feedback, index) => (
-                              <div key={index} className="bg-gray-50 rounded-lg p-4">
+                              <div key={index} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                                 <div className="flex items-start justify-between mb-2">
                                   <div className="flex items-center space-x-2">
                                     <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
@@ -444,7 +444,7 @@ const BookDetails = () => {
                                       </span>
                                     </div>
                                     <div>
-                                      <p className="font-medium text-gray-900">
+                                      <p className="font-medium text-gray-900 dark:text-white">
                                         {feedback.userId?.userName || 'Anonymous'}
                                       </p>
                                       <div className="flex items-center">

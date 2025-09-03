@@ -64,15 +64,15 @@ const BorrowedBooks = ({ books, onRefresh }) => {
   // Early return for empty books
   if (!books || books.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 sm:p-12">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-8 sm:p-12">
         <div className="text-center max-w-md mx-auto">
           <div className="mb-6">
-            <svg className="mx-auto h-16 w-16 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="mx-auto h-16 w-16 text-gray-300 dark:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </div>
-          <h3 className="text-xl font-medium text-gray-900 mb-3">No borrowed books</h3>
-          <p className="text-gray-500 mb-6 leading-relaxed">
+          <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-3">No borrowed books</h3>
+          <p className="text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
             You haven't borrowed any books yet. Browse the community library to find books you'd like to borrow!
           </p>
         </div>
@@ -89,7 +89,7 @@ const BorrowedBooks = ({ books, onRefresh }) => {
     const userHasFeedback = hasUserGivenFeedback(book, user?._id);
     
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md transition-shadow">
         <div className="p-3 sm:p-4 lg:p-5">
           <div className="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-4">
             {/* Book Cover */}
@@ -101,8 +101,8 @@ const BorrowedBooks = ({ books, onRefresh }) => {
                   className="h-24 w-16 sm:h-28 sm:w-20 lg:h-24 lg:w-18 object-cover rounded-md shadow-sm"
                 />
               ) : (
-                <div className="h-24 w-16 sm:h-28 sm:w-20 lg:h-24 lg:w-18 bg-gray-200 rounded-md flex items-center justify-center">
-                  <svg className="h-6 w-6 sm:h-8 sm:w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="h-24 w-16 sm:h-28 sm:w-20 lg:h-24 lg:w-18 bg-gray-200 dark:bg-gray-600 rounded-md flex items-center justify-center">
+                  <svg className="h-6 w-6 sm:h-8 sm:w-8 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
                 </div>
@@ -114,7 +114,7 @@ const BorrowedBooks = ({ books, onRefresh }) => {
               {/* Title and Owner */}
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 space-y-2 sm:space-y-0">
                 <div className="min-w-0 flex-1">
-                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 break-words">
+                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white break-words">
                     {book.bookName}
                   </h4>
                   {book.edition && (
@@ -129,8 +129,8 @@ const BorrowedBooks = ({ books, onRefresh }) => {
               {/* Description */}
               {book.description && (
                 <div className="mb-3">
-                  <p className="text-xs sm:text-sm text-gray-700 leading-relaxed break-words">
-                    <span className="font-medium text-gray-900">Description:</span> {book.description}
+                  <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed break-words">
+                    <span className="font-medium text-gray-900 dark:text-white">Description:</span> {book.description}
                   </p>
                 </div>
               )}
@@ -184,11 +184,11 @@ const BorrowedBooks = ({ books, onRefresh }) => {
   return (
     <div className="space-y-6">
       {/* Header with Actions */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
           <div>
-            <h3 className="text-xl font-semibold text-gray-900">Borrowed Books</h3>
-            <p className="text-sm text-gray-600 mt-1">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Borrowed Books</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
               Showing {sortedBooks.length} borrowed books
             </p>
           </div>
@@ -216,13 +216,13 @@ const BorrowedBooks = ({ books, onRefresh }) => {
       {/* Feedback Modal */}
       {feedbackModal.isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" onClick={closeFeedbackModal}>
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <div className="p-4 sm:p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">Give Feedback</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Give Feedback</h3>
                 <button
                   onClick={closeFeedbackModal}
-                  className="text-gray-400 hover:text-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded p-1"
+                  className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded p-1"
                   aria-label="Close modal"
                 >
                   <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -232,9 +232,9 @@ const BorrowedBooks = ({ books, onRefresh }) => {
               </div>
 
               {/* Book Info */}
-              <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-                <h4 className="font-medium text-gray-900 break-words">{feedbackModal.book?.bookName}</h4>
-                <p className="text-sm text-gray-600 break-words">by {feedbackModal.book?.ownerName}</p>
+              <div className="mb-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <h4 className="font-medium text-gray-900 dark:text-white break-words">{feedbackModal.book?.bookName}</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400 break-words">by {feedbackModal.book?.ownerName}</p>
               </div>
 
               {/* Feedback Form */}

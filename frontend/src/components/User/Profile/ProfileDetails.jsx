@@ -96,24 +96,24 @@ const ProfileDetails = ({ user, onUpdate, bookCount = 0 }) => {
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Personal Information */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Personal Information</h3>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Personal Information</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-500 mb-1">Full Name</label>
-            <p className="text-gray-900 font-medium break-words">{user?.userName || 'Not provided'}</p>
+            <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Full Name</label>
+            <p className="text-gray-900 dark:text-white font-medium break-words">{user?.userName || 'Not provided'}</p>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-500 mb-1">Email Address</label>
-            <p className="text-gray-900 font-medium break-all text-sm sm:text-base">{user?.userEmail || 'Not provided'}</p>
+            <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Email Address</label>
+            <p className="text-gray-900 dark:text-white font-medium break-all text-sm sm:text-base">{user?.userEmail || 'Not provided'}</p>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-500 mb-1">Location</label>
-            <p className="text-gray-900 font-medium break-words">{user?.location || 'Not provided'}</p>
+            <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Location</label>
+            <p className="text-gray-900 dark:text-white font-medium break-words">{user?.location || 'Not provided'}</p>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-500 mb-1">Number of Books</label>
-            <p className="text-gray-900 font-medium">
+            <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Number of Books</label>
+            <p className="text-gray-900 dark:text-white font-medium">
               {bookCount} {bookCount === 1 ? 'Book' : 'Books'} 
             </p>
           </div>
@@ -121,25 +121,25 @@ const ProfileDetails = ({ user, onUpdate, bookCount = 0 }) => {
       </div>
 
       {/* Account Statistics */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
         <div className="flex items-center mb-4">
-          <div className="p-2 bg-gray-100 rounded-lg mr-3 flex-shrink-0">
-            <svg className="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="p-2 bg-gray-100 dark:bg-gray-700 rounded-lg mr-3 flex-shrink-0">
+            <svg className="h-5 w-5 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <h3 className="text-lg font-semibold text-gray-900">Account Statistics</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Account Statistics</h3>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           {profileStats.map((stat, index) => (
-            <div key={index} className="bg-gray-50 rounded-lg p-3 sm:p-4 border border-gray-100">
+            <div key={index} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 sm:p-4 border border-gray-100 dark:border-gray-600">
               <div className="flex items-center">
-                <div className="p-2 bg-blue-100 rounded-lg mr-3 flex-shrink-0">
+                <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg mr-3 flex-shrink-0">
                   {stat.icon}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-gray-500">{stat.label}</p>
-                  <p className="text-base sm:text-lg font-semibold text-gray-900 break-words">{stat.value}</p>
+                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{stat.label}</p>
+                  <p className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white break-words">{stat.value}</p>
                 </div>
               </div>
             </div>
@@ -149,16 +149,16 @@ const ProfileDetails = ({ user, onUpdate, bookCount = 0 }) => {
 
       {/* Feedback Section */}
       {user?.feedback && user.feedback.length > 0 && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Feedback</h3>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recent Feedback</h3>
           <div className="space-y-3">
             {user.feedback.slice(0, 3).map((feedback, index) => (
-              <div key={index} className="p-3 bg-gray-50 rounded-lg">
-                <p className="text-gray-700 text-sm break-words">{feedback}</p>
+              <div key={index} className="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <p className="text-gray-700 dark:text-gray-300 text-sm break-words">{feedback}</p>
               </div>
             ))}
             {user.feedback.length > 3 && (
-              <p className="text-sm text-gray-500 text-center">
+              <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
                 And {user.feedback.length - 3} more feedback items...
               </p>
             )}
@@ -167,13 +167,13 @@ const ProfileDetails = ({ user, onUpdate, bookCount = 0 }) => {
       )}
 
       {/* Change Password Section */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-2 sm:space-y-0">
-          <h3 className="text-lg font-semibold text-gray-900">Security</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Security</h3>
           {!showChangePassword && (
             <button
               onClick={() => setShowChangePassword(true)}
-              className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
+              className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors font-medium text-sm"
             >
               Change Password
             </button>
@@ -183,7 +183,7 @@ const ProfileDetails = ({ user, onUpdate, bookCount = 0 }) => {
         {showChangePassword ? (
           <form onSubmit={handlePasswordSubmit} className="space-y-4">
             <div>
-              <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Current Password
               </label>
               <input
@@ -192,13 +192,13 @@ const ProfileDetails = ({ user, onUpdate, bookCount = 0 }) => {
                 name="currentPassword"
                 value={passwordData.currentPassword}
                 onChange={handlePasswordChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
                 required
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   New Password
                 </label>
                 <input
@@ -207,13 +207,13 @@ const ProfileDetails = ({ user, onUpdate, bookCount = 0 }) => {
                   name="newPassword"
                   value={passwordData.newPassword}
                   onChange={handlePasswordChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
                   required
                   minLength={6}
                 />
               </div>
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Confirm New Password
                 </label>
                 <input
@@ -222,7 +222,7 @@ const ProfileDetails = ({ user, onUpdate, bookCount = 0 }) => {
                   name="confirmPassword"
                   value={passwordData.confirmPassword}
                   onChange={handlePasswordChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
                   required
                   minLength={6}
                 />
@@ -232,7 +232,7 @@ const ProfileDetails = ({ user, onUpdate, bookCount = 0 }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full sm:w-auto bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="w-full sm:w-auto bg-green-600 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 {loading ? 'Changing Password...' : 'Change Password'}
               </button>
@@ -240,14 +240,14 @@ const ProfileDetails = ({ user, onUpdate, bookCount = 0 }) => {
                 type="button"
                 onClick={handleCancelPasswordChange}
                 disabled={loading}
-                className="w-full sm:w-auto bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors font-medium disabled:opacity-50 text-sm"
+                className="w-full sm:w-auto bg-gray-600 hover:bg-gray-700 dark:bg-gray-600 dark:hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors font-medium disabled:opacity-50 text-sm"
               >
                 Cancel
               </button>
             </div>
           </form>
         ) : (
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 dark:text-gray-400 text-sm">
             Keep your account secure by regularly updating your password.
           </p>
         )}

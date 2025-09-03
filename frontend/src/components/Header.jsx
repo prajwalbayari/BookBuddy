@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { toast } from 'react-hot-toast';
+import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
   const location = useLocation();
@@ -32,15 +33,15 @@ const Header = () => {
     }
   }, [isMenuOpen]);
 
-  // Hide header for admin
-  if (isAdmin) return null;
+  // Hide header for admin only on admin routes
+  if (isAuthenticated && isAdmin && location.pathname.startsWith('/admin')) return null;
 
   return (
     <header className={`
       sticky top-0 left-0 right-0 z-50 transition-all duration-300
       ${isScrolled 
-        ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100' 
-        : 'bg-white shadow-sm'
+        ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg border-b border-gray-100 dark:border-gray-800' 
+        : 'bg-white dark:bg-gray-900 shadow-sm'
       }
     `}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -77,8 +78,8 @@ const Header = () => {
                   to="/"
                   className={`relative font-medium transition-all duration-300 hover:scale-105 ${
                     isActive('/')
-                      ? 'text-blue-600'
-                      : 'text-gray-700 hover:text-blue-600'
+                      ? 'text-blue-600 dark:text-blue-400'
+                      : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
                   }`}
                 >
                   Home
@@ -90,8 +91,8 @@ const Header = () => {
                   to="/about"
                   className={`relative font-medium transition-all duration-300 hover:scale-105 ${
                     isActive('/about')
-                      ? 'text-blue-600'
-                      : 'text-gray-700 hover:text-blue-600'
+                      ? 'text-blue-600 dark:text-blue-400'
+                      : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
                   }`}
                 >
                   About
@@ -107,8 +108,8 @@ const Header = () => {
                   to="/user/home"
                   className={`relative font-medium transition-all duration-300 hover:scale-105 ${
                     isActive('/user/home')
-                      ? 'text-blue-600'
-                      : 'text-gray-700 hover:text-blue-600'
+                      ? 'text-blue-600 dark:text-blue-400'
+                      : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
                   }`}
                 >
                   Home
@@ -120,8 +121,8 @@ const Header = () => {
                   to="/user/books"
                   className={`relative font-medium transition-all duration-300 hover:scale-105 ${
                     isActive('/user/books')
-                      ? 'text-blue-600'
-                      : 'text-gray-700 hover:text-blue-600'
+                      ? 'text-blue-600 dark:text-blue-400'
+                      : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
                   }`}
                 >
                   Books
@@ -138,9 +139,10 @@ const Header = () => {
             <div className="hidden lg:flex items-center space-x-4">
               {!isAuthenticated ? (
                 <>
+                  <ThemeToggle />
                   <Link
                     to="/login"
-                    className="px-6 py-2.5 text-gray-700 font-medium rounded-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105"
+                    className="px-6 py-2.5 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 hover:scale-105"
                   >
                     Login
                   </Link>
@@ -153,8 +155,9 @@ const Header = () => {
                 </>
               ) : (
                 <div className="flex items-center space-x-3">
+                  <ThemeToggle />
                   <button
-                    className="flex items-center space-x-2 px-4 py-2.5 text-gray-700 font-medium rounded-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105"
+                    className="flex items-center space-x-2 px-4 py-2.5 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 hover:scale-105"
                     onClick={() => location.pathname !== '/user/chat' && window.location.assign('/user/chat')}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -163,7 +166,7 @@ const Header = () => {
                     <span>Chat</span>
                   </button>
                   <button
-                    className="flex items-center space-x-2 px-4 py-2.5 text-gray-700 font-medium rounded-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105"
+                    className="flex items-center space-x-2 px-4 py-2.5 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 hover:scale-105"
                     onClick={() => location.pathname !== '/user/profile' && window.location.assign('/user/profile')}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -175,12 +178,12 @@ const Header = () => {
                     className="flex items-center space-x-2 px-4 py-2.5 bg-gradient-to-r from-red-500 to-red-600 text-white font-medium rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
                     onClick={async () => {
                       try {
-                        toast.success('Logged out successfully!', { duration: 3000 });
+                        toast.success('Logged out successfully!', { duration: 2000 });
                         await logout();
                         navigate('/', { replace: true });
                       } catch (error) {
                         console.error('Logout error:', error);
-                        toast.success('Logged out successfully!', { duration: 3000 });
+                        toast.success('Logged out successfully!', { duration: 2000 });
                         navigate('/', { replace: true });
                       }
                     }}
@@ -197,16 +200,16 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-300"
+            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"
             onClick={(e) => {
               e.stopPropagation();
               setIsMenuOpen(!isMenuOpen);
             }}
           >
             <div className="w-6 h-6 relative flex flex-col justify-center items-center">
-              <span className={`block absolute h-0.5 w-6 bg-gray-600 transform transition duration-300 ${isMenuOpen ? 'rotate-45' : '-translate-y-1.5'}`}></span>
-              <span className={`block absolute h-0.5 w-6 bg-gray-600 transition duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
-              <span className={`block absolute h-0.5 w-6 bg-gray-600 transform transition duration-300 ${isMenuOpen ? '-rotate-45' : 'translate-y-1.5'}`}></span>
+              <span className={`block absolute h-0.5 w-6 bg-gray-600 dark:bg-gray-300 transform transition duration-300 ${isMenuOpen ? 'rotate-45' : '-translate-y-1.5'}`}></span>
+              <span className={`block absolute h-0.5 w-6 bg-gray-600 dark:bg-gray-300 transition duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
+              <span className={`block absolute h-0.5 w-6 bg-gray-600 dark:bg-gray-300 transform transition duration-300 ${isMenuOpen ? '-rotate-45' : 'translate-y-1.5'}`}></span>
             </div>
           </button>
         </div>
@@ -216,7 +219,7 @@ const Header = () => {
           lg:hidden overflow-hidden transition-all duration-300 ease-in-out
           ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
         `}>
-          <div className="py-4 space-y-4 border-t border-gray-100">
+          <div className="py-4 space-y-4 border-t border-gray-100 dark:border-gray-800">
             {!isAuthenticated ? (
               <>
                 <nav className="space-y-2">
@@ -224,8 +227,8 @@ const Header = () => {
                     to="/"
                     className={`block px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
                       isActive('/') 
-                        ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                        : 'text-gray-700 hover:bg-gray-50'
+                        ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border-l-4 border-blue-600 dark:border-blue-400' 
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -240,8 +243,8 @@ const Header = () => {
                     to="/about"
                     className={`block px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
                       isActive('/about') 
-                        ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                        : 'text-gray-700 hover:bg-gray-50'
+                        ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border-l-4 border-blue-600 dark:border-blue-400' 
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -253,10 +256,13 @@ const Header = () => {
                     </div>
                   </Link>
                 </nav>
-                <div className="pt-4 space-y-3 border-t border-gray-100">
+                <div className="pt-4 space-y-3 border-t border-gray-100 dark:border-gray-800">
+                  <div className="flex justify-center pb-3">
+                    <ThemeToggle />
+                  </div>
                   <Link
                     to="/login"
-                    className="block w-full px-4 py-3 text-center font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all duration-300"
+                    className="block w-full px-4 py-3 text-center font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Login
@@ -277,8 +283,8 @@ const Header = () => {
                     to="/user/home"
                     className={`block px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
                       isActive('/user/home') 
-                        ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                        : 'text-gray-700 hover:bg-gray-50'
+                        ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border-l-4 border-blue-600 dark:border-blue-400' 
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -293,8 +299,8 @@ const Header = () => {
                     to="/user/books"
                     className={`block px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
                       isActive('/user/books') 
-                        ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                        : 'text-gray-700 hover:bg-gray-50'
+                        ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border-l-4 border-blue-600 dark:border-blue-400' 
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -306,9 +312,15 @@ const Header = () => {
                     </div>
                   </Link>
                 </nav>
-                <div className="pt-2 space-y-2 border-t border-gray-100">
+                <div className="pt-2 space-y-2 border-t border-gray-100 dark:border-gray-800">
+                  <div className="px-4 py-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Theme</span>
+                      <ThemeToggle />
+                    </div>
+                  </div>
                   <button
-                    className="w-full flex items-center space-x-3 px-4 py-3 text-left font-medium text-gray-700 rounded-lg hover:bg-gray-50 transition-all duration-300"
+                    className="w-full flex items-center space-x-3 px-4 py-3 text-left font-medium text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300"
                     onClick={() => {
                       setIsMenuOpen(false);
                       if (location.pathname !== '/user/chat') window.location.assign('/user/chat');
@@ -320,7 +332,7 @@ const Header = () => {
                     <span>Chat</span>
                   </button>
                   <button
-                    className="w-full flex items-center space-x-3 px-4 py-3 text-left font-medium text-gray-700 rounded-lg hover:bg-gray-50 transition-all duration-300"
+                    className="w-full flex items-center space-x-3 px-4 py-3 text-left font-medium text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300"
                     onClick={() => {
                       setIsMenuOpen(false);
                       if (location.pathname !== '/user/profile') window.location.assign('/user/profile');
@@ -336,12 +348,12 @@ const Header = () => {
                     onClick={async () => {
                       setIsMenuOpen(false);
                       try {
-                        toast.success('Logged out successfully!', { duration: 3000 });
+                        toast.success('Logged out successfully!', { duration: 2000 });
                         await logout();
                         navigate('/', { replace: true });
                       } catch (error) {
                         console.error('Logout error:', error);
-                        toast.success('Logged out successfully!', { duration: 3000 });
+                        toast.success('Logged out successfully!', { duration: 2000 });
                         navigate('/', { replace: true });
                       }
                     }}

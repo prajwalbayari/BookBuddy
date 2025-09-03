@@ -37,9 +37,9 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Hero Section */}
-      <div className="bg-white">
+      <div className="bg-white dark:bg-gray-800">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
             className={`text-center py-16 sm:py-24 transform transition-all duration-700 ease-out ${
@@ -47,16 +47,16 @@ const Home = () => {
             }`}
           >
             <div className="mb-6">
-              <span className="inline-flex items-center px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
+              <span className="inline-flex items-center px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-sm font-medium rounded-full">
                 📚 Your Reading Journey Starts Here
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
               Welcome to <span className="gradient-text">BookBuddy</span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
               Your personal reading companion that helps you discover, track,
               and enjoy books like never before. Join a community of passionate
               readers today.
@@ -89,13 +89,13 @@ const Home = () => {
       <div className="py-16 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <span className="inline-block px-3 py-1 bg-purple-100 text-purple-800 text-sm font-medium rounded-full mb-4">
+            <span className="inline-block px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-sm font-medium rounded-full mb-4">
               Features
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
               Why Choose BookBuddy?
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Everything you need to enhance your reading experience in one
               simple platform.
             </p>
@@ -105,7 +105,7 @@ const Home = () => {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className={`bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 ${
+                className={`bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-300 ${
                   isLoaded
                     ? "translate-y-0 opacity-100"
                     : "translate-y-5 opacity-0"
@@ -113,16 +113,16 @@ const Home = () => {
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div
-                  className={`w-12 h-12 ${feature.bgColor} rounded-lg flex items-center justify-center mb-4`}
+                  className={`w-12 h-12 ${feature.bgColor} dark:bg-gray-700 rounded-lg flex items-center justify-center mb-4`}
                 >
                   <div className="text-2xl">{feature.icon}</div>
                 </div>
 
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
                   {feature.title}
                 </h3>
 
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                   {feature.description}
                 </p>
               </div>
@@ -132,13 +132,13 @@ const Home = () => {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-white border-t border-gray-200">
+      <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
             Ready to Start Reading?
           </h2>
 
-          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
             Join thousands of readers and discover your next favorite book
             today.
           </p>

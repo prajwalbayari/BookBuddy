@@ -9,7 +9,7 @@ const NotFound = () => {
   }, []);
 
   return (
-    <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-20 -right-20 w-60 h-60 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
@@ -38,8 +38,8 @@ const NotFound = () => {
 
       {/* Main content */}
       <div className={`
-        relative z-10 bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl p-6 sm:p-8 lg:p-10 
-        flex flex-col items-center max-w-xl w-full mx-auto border border-white/20
+        relative z-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-2xl rounded-3xl p-6 sm:p-8 lg:p-10 
+        flex flex-col items-center max-w-xl w-full mx-auto border border-white/20 dark:border-gray-700/20
         transform transition-all duration-1000 ease-out
         ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}
       `}>
@@ -48,15 +48,15 @@ const NotFound = () => {
           <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent leading-none">
             404
           </h1>
-          <div className="absolute inset-0 text-6xl sm:text-7xl lg:text-8xl font-black text-gray-200 -z-10 transform translate-x-1 translate-y-1">
+          <div className="absolute inset-0 text-6xl sm:text-7xl lg:text-8xl font-black text-gray-200 dark:text-gray-700 -z-10 transform translate-x-1 translate-y-1">
             404
           </div>
         </div>
 
         {/* Error illustration */}
         <div className="mb-6 relative">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center shadow-xl">
-            <svg className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 rounded-full flex items-center justify-center shadow-xl">
+            <svg className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </div>
@@ -68,13 +68,13 @@ const NotFound = () => {
 
         {/* Text content */}
         <div className="text-center mb-6">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-3">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-3">
             Page Not Found
           </h2>
-          <p className="text-gray-600 text-base sm:text-lg leading-relaxed max-w-md mx-auto mb-2">
+          <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg leading-relaxed max-w-md mx-auto mb-2">
             Oops! Looks like this page went on a reading adventure and got lost in the library.
           </p>
-          <p className="text-gray-500 text-sm sm:text-base">
+          <p className="text-gray-500 dark:text-gray-500 text-sm sm:text-base">
             Don't worry, we'll help you find your way back to the books!
           </p>
         </div>
@@ -93,7 +93,7 @@ const NotFound = () => {
           
           <button
             onClick={() => window.history.back()}
-            className="group px-6 py-3 bg-white text-gray-700 border-2 border-gray-200 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:border-gray-300 transition-all duration-300 hover:scale-105 transform flex items-center justify-center space-x-2"
+            className="group px-6 py-3 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-2 border-gray-200 dark:border-gray-600 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:border-gray-300 dark:hover:border-gray-500 transition-all duration-300 hover:scale-105 transform flex items-center justify-center space-x-2"
           >
             <svg className="w-4 h-4 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -104,9 +104,9 @@ const NotFound = () => {
 
         {/* Additional help text */}
         <div className="mt-4 text-center">
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-400 dark:text-gray-500">
             Lost? Try searching for books or{' '}
-            <Link to="/about" className="text-blue-600 hover:text-blue-700 underline transition-colors">
+            <Link to="/about" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline transition-colors">
               learn more about BookBuddy
             </Link>
           </p>
