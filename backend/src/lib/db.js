@@ -17,11 +17,10 @@ if (result.error) {
 
 export const connectDB = async () => {
   try {
-    // Use the hardcoded MongoDB URI if environment variable is not available
-    const mongoUri = process.env.MONGO_URI || "mongodb+srv://prajwalbayari4:dGMIU4HxRyzVUYnj@cluster0.gp4outr.mongodb.net/";
+    const mongoUri = process.env.MONGODB_URI;
     
     if (!mongoUri) {
-      throw new Error("MongoDB URI is not defined");
+      throw new Error("MongoDB URI is not defined in environment variables. Please check your .env file.");
     }
     
     console.log("Attempting to connect to MongoDB...");

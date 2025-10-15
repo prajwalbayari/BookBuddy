@@ -133,7 +133,7 @@ export const sendOTP = async (req, res) => {
 
       const otp = generateOTP();
       const otpExpiry = new Date();
-      otpExpiry.setMinutes(otpExpiry.getMinutes() + 1);
+      otpExpiry.setMinutes(otpExpiry.getMinutes() + 5);
 
       const tempUser = new TempUser({
         userName,
@@ -188,7 +188,7 @@ export const sendOTP = async (req, res) => {
             <div style="background-color: #f7f7f7; padding: 15px; border-radius: 5px; text-align: center; font-size: 24px; font-weight: bold; letter-spacing: 5px; margin: 20px 0;">
               ${savedOTP}
             </div>
-            <p>This OTP is valid for 1 minute only.</p>
+            <p>This OTP is valid for 5 minutes only.</p>
             <p>If you didn't request this, please ignore this email.</p>
             <p style="margin-top: 30px; text-align: center; color: #777;">© ${new Date().getFullYear()} BookBuddy. All rights reserved.</p>
           </div>
@@ -274,7 +274,7 @@ export const resendOTP = async (req, res) => {
 
     const otp = generateOTP();
     const otpExpiry = new Date();
-    otpExpiry.setMinutes(otpExpiry.getMinutes() + 1);
+    otpExpiry.setMinutes(otpExpiry.getMinutes() + 5);
 
     tempUser.emailVerificationOTP = otp;
     tempUser.otpExpiry = otpExpiry;
@@ -292,7 +292,7 @@ export const resendOTP = async (req, res) => {
           <div style="background-color: #f7f7f7; padding: 15px; border-radius: 5px; text-align: center; font-size: 24px; font-weight: bold; letter-spacing: 5px; margin: 20px 0;">
             ${otp}
           </div>
-          <p>This OTP is valid for 1 minute only.</p>
+          <p>This OTP is valid for 5 minutes only.</p>
           <p>If you didn't request this, please ignore this email.</p>
           <p style="margin-top: 30px; text-align: center; color: #777;">© ${new Date().getFullYear()} BookBuddy. All rights reserved.</p>
         </div>
