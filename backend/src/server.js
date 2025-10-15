@@ -10,22 +10,25 @@ import bookRoutes from "./router/book.routes.js";
 import userRoutes from "./router/user.router.js";
 import adminRoutes from "./router/admin.routes.js";
 import chatRoutes from "./router/chat.routes.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
-dotenv.config();
+// Ensure environment variables are loaded
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const envPath = path.resolve(__dirname, "../.env");
+dotenv.config({ path: envPath });
+
 const app = express();
-const server = createServer(app);
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
+const ALT_PORT = process.env.ALT_PORT || 5002;
 
 connectDB();
 
-// Initialize Socket.IO
-socketManager.init(server);
-
 app.use(express.json());
 app.use(cookieParser());
-// CORS setup for credentials
 app.use(cors({
-  origin: process.env.CLIENT_URL || "http://localhost:5173", // frontend URL with fallback
+  origin: process.env.CLIENT_URL || "http://localhost:5173",
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -37,6 +40,37 @@ app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/chat", chatRoutes);
 
-server.listen(PORT, () => {
-  console.log(`Server is now running on the port ${PORT}`);
-});
+// Try to start the server with error handling for port conflicts
+const startServer = (port) => {
+  const serverInstance = createServer(app);
+  
+  // Initialize Socket.IO on this specific server instance
+  socketManager.init(serverInstance);
+  
+  serverInstance.listen(port)
+    .on('listening', () => {
+      console.log(`Server is now running on port ${port}`);
+    })
+    .on('error', (error) => {
+      if (error.code === 'EADDRINUSE') {
+        console.warn(`Port ${port} is already in use.`);
+        
+        // If we're trying the primary port, try the alternate port
+        if (port === PORT && PORT !== ALT_PORT) {
+          console.warn(`Trying alternate port ${ALT_PORT}...`);
+          startServer(ALT_PORT); // Try the alternate port
+        } else {
+          console.error(`Both ports ${PORT} and ${ALT_PORT} are in use. Please free a port or configure a different one.`);
+          process.exit(1);
+        }
+      } else {
+        console.error('Server error:', error);
+        process.exit(1);
+      }
+    });
+};
+
+// Start the server directly
+(async () => {
+  startServer(PORT);
+})();

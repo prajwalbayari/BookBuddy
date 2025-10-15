@@ -19,6 +19,18 @@ const userSchema = new mongoose.Schema(
       minLength: 8,
       select: false, // Prevents accidental exposure of passwords
     },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
+    emailVerificationOTP: {
+      type: String,
+      default: null,
+    },
+    otpExpiry: {
+      type: Date,
+      default: null,
+    },
     feedback: {
       type: [String],
       default: [],

@@ -74,7 +74,6 @@ export const addBookDetails = async (req, res) => {
       book: book,
     });
   } catch (error) {
-    console.log("Error in addBookDetails controller", error.message);
     res.status(500).json({ message: "Internal server Error" });
   }
 };
@@ -175,7 +174,6 @@ export const updateBookDetails = async (req, res) => {
       message: "Book details updated successfully!",
     });
   } catch (error) {
-    console.log("Error in updateBookDetails controller", error.message);
     res.status(500).json({ message: "Internal server Error" });
   }
 };
@@ -206,8 +204,7 @@ export const removeBook = async (req, res) => {
     if (Array.isArray(bookImages) && bookImages.length > 0) {
       for (const image of bookImages) {
         const publicId = image.split("/").slice(-1)[0].split(".")[0];
-        const result = await cloudinary.uploader.destroy(publicId);
-        console.log("Deleted from cloudinary. Result:", result);
+        await cloudinary.uploader.destroy(publicId);
       }
     }
 
@@ -215,7 +212,6 @@ export const removeBook = async (req, res) => {
       .status(200)
       .json({ success: true, message: "Book deleted successfully!" });
   } catch (error) {
-    console.log("Error in removeBook controller", error.message);
     res.status(500).json({ message: "Internal server Error" });
   }
 };
@@ -253,7 +249,6 @@ export const getAllBooks = async (req, res) => {
       message: "Fetched all the books successfully!",
     });
   } catch (error) {
-    console.log("Error in getAllBooks controller", error.message);
     res.status(500).json({ message: "Internal server Error" });
   }
 };
@@ -283,10 +278,9 @@ export const getMyBooks = async (req, res) => {
     res.status(200).json({
       success: true,
       data: booksWithDetails,
-      message: "Fetched book successfully!",
+      message: "Fetched all the books successfully!",
     });
   } catch (error) {
-    console.log("Error in getMyBooks controller", error.message);
     res.status(500).json({ message: "Internal server Error" });
   }
 };

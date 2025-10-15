@@ -1,5 +1,6 @@
 // API Configuration
-export const API_BASE_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:5000/api';
+export const API_BASE_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:5001/api';
+export const ALT_API_BASE_URL = import.meta.env.VITE_APP_ALT_API_URL || 'http://localhost:5002/api';
 
 // App Configuration
 export const APP_NAME = 'BookBuddy';

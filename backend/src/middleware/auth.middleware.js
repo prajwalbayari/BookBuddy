@@ -27,7 +27,6 @@ export const protectedRoute = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.log("Error in protectRoute middleware:", error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -52,7 +51,6 @@ export const adminProtectedRoute = async (req, res, next) => {
     req.user = admin;
     next();
   } catch (error) {
-    console.log("Error in adminProtectedRoute middleware:", error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 };

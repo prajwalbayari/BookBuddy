@@ -5,8 +5,8 @@ import User from '../models/user.model.js';
 class SocketManager {
   constructor() {
     this.io = null;
-    this.onlineUsers = new Map(); // userId -> socketId
-    this.userSockets = new Map(); // socketId -> userId
+    this.onlineUsers = new Map();
+    this.userSockets = new Map();
   }
 
   init(server) {
@@ -18,12 +18,10 @@ class SocketManager {
       }
     });
 
-    // Authentication middleware
     this.io.use(async (socket, next) => {
       try {
         let token = socket.handshake.auth.token;
         
-        // Parse cookies if no auth token
         if (!token && socket.handshake.headers.cookie) {
           const cookies = socket.handshake.headers.cookie.split(';');
           for (let cookie of cookies) {
@@ -62,7 +60,6 @@ class SocketManager {
 
       this.broadcastOnlineUsers();
 
-      // Handle real-time message sending (supplementary to REST API)
       socket.on('send_message', (data) => {
         const { receiverId, message } = data;
         

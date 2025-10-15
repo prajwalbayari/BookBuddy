@@ -1,28 +1,35 @@
 import { apiClient } from './apiClient';
 
 export const authApi = {
-  // User signup
+  sendOTP: async (userData) => {
+    return apiClient.post('/auth/send-otp', userData);
+  },
+
+  verifyOTP: async (verificationData) => {
+    return apiClient.post('/auth/verify-otp', verificationData);
+  },
+
+  resendOTP: async (emailData) => {
+    return apiClient.post('/auth/resend-otp', emailData);
+  },
+
   signup: async (userData) => {
     return apiClient.post('/auth/signup', userData);
   },
 
-  // User login
   login: async (credentials) => {
     return apiClient.post('/auth/login', credentials);
   },
 
-  // User logout
   logout: async () => {
     return apiClient.post('/auth/logout');
   },
 
-  // Admin login
   adminLogin: async (credentials) => {
     return apiClient.post('/auth/adminLogin', credentials);
   },
 
-  // Check authentication status
   checkAuth: async () => {
     return apiClient.get('/auth/check');
-  },
+  }
 };

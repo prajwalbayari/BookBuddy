@@ -19,6 +19,7 @@ A comprehensive book sharing and management platform that enables users to share
 
 ### Core Features
 - **User Authentication**: Secure registration and login system with JWT tokens
+- **Email Verification**: OTP-based email verification during registration
 - **Book Management**: Add, edit, delete, and manage personal book collections
 - **Book Discovery**: Search and browse books with advanced filtering options
 - **Borrowing System**: Request books from other users with approval workflow
@@ -32,8 +33,10 @@ A comprehensive book sharing and management platform that enables users to share
 - **Advanced Search**: Full-text search with multiple filter criteria
 - **Responsive Design**: Mobile-first design that works on all devices
 - **Real-time Updates**: Live status updates for book availability
+- **Email Notifications**: Welcome emails and verification OTP emails
 - **Pagination**: Efficient handling of large datasets
 - **Security**: Comprehensive security measures including input validation and authorization
+- **Dark/Light Mode**: Theme toggle for better user experience
 
 ## Technology Stack
 
@@ -77,9 +80,15 @@ Create `.env` files in both backend and frontend directories:
 
 #### Backend (.env)
 ```env
-PORT=5000
+PORT=5001
+ALT_PORT=5002
+NODE_ENV=development
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
+JWT_EXPIRES_IN=7d
+EMAIL_USER=your_email_address
+EMAIL_PASS=your_email_app_password
+CLIENT_URL=http://localhost:5173
 CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
@@ -87,8 +96,25 @@ CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
 #### Frontend (.env)
 ```env
-VITE_API_URL=http://localhost:5000/api
+VITE_APP_API_URL=http://localhost:5001/api
+VITE_APP_ALT_API_URL=http://localhost:5002/api
 ```
+
+### Email Configuration
+
+For OTP verification and welcome email functionality to work properly:
+
+1. Use a Gmail account and create an App Password:
+   - Go to your Google Account settings
+   - Select "Security" > "2-Step Verification" > "App passwords"
+   - Generate a new app password for "Mail" and "Other (Custom name)"
+   - Use this password in your EMAIL_PASS environment variable
+
+2. Email Features:
+   - **OTP Verification**: 1-minute validity period for secure account verification
+   - **Welcome Emails**: Personalized welcome messages sent after successful registration
+   - **Development Mode**: In development mode, OTP is also included in API response for easier testing
+   - **Production Mode**: In production mode, emails are sent to actual user mailboxes
 
 ## Installation
 
@@ -148,9 +174,14 @@ BookBuddy/
 ## API Documentation
 
 ### Authentication Endpoints
-- `POST /api/auth/register` - User registration
+- `POST /api/auth/send-otp` - Send verification OTP to email
+- `POST /api/auth/verify-otp` - Verify OTP sent to email
+- `POST /api/auth/resend-otp` - Resend verification OTP
+- `POST /api/auth/signup` - Complete user registration after OTP verification
 - `POST /api/auth/login` - User login
 - `POST /api/auth/logout` - User logout
+- `GET /api/auth/check` - Check authentication status
+- `POST /api/auth/adminLogin` - Admin login
 
 ### Book Endpoints
 - `GET /api/books` - Get all books
@@ -172,7 +203,12 @@ For detailed API documentation, see the [Implementation Guide](BookBuddy_Impleme
 
 ### For Users
 
-1. **Registration**: Create an account with email and password
+1. **Registration Process**: 
+   - Enter your name and email
+   - Receive OTP via email (valid for 1 minute)
+   - Verify your email with the OTP
+   - Complete registration with password
+   - Receive welcome email
 2. **Add Books**: Upload your books with images and descriptions
 3. **Browse Books**: Search and filter through available books
 4. **Request Books**: Send borrowing requests to book owners
@@ -187,6 +223,15 @@ For detailed API documentation, see the [Implementation Guide](BookBuddy_Impleme
 3. **Content Moderation**: Monitor and moderate user-generated content
 
 ## Key Features Walkthrough
+
+### User Authentication & Email Verification
+- Secure two-step registration process
+- Email verification via one-time password (OTP)
+- OTP expires after 1 minute for security
+- Personalized welcome emails for new users
+- JWT token-based authentication
+- Secure password hashing
+- Session management
 
 ### Book Management
 - Upload multiple images for each book
@@ -218,6 +263,13 @@ For detailed API documentation, see the [Implementation Guide](BookBuddy_Impleme
 - Chat initiation from book details page
 - Message history persistence
 - Real-time communication capabilities
+
+### UI & Experience
+- Dark/Light theme toggling
+- Responsive design for all screen sizes
+- Toast notifications for important actions
+- Intuitive navigation and user flow
+- Email integration for critical notifications
 
 ## Contributing
 

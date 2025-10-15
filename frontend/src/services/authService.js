@@ -30,7 +30,7 @@ class AuthService {
         return;
       }
     } catch (error) {
-      console.log("Cookie auth check failed:", error);
+      console.error("Cookie auth check failed:", error);
       // Clear potentially stale localStorage data if cookie auth fails
       this.handleAuthLogout();
       this.isInitialized = true;
@@ -56,7 +56,34 @@ class AuthService {
     }
   }
 
-  // User signup
+  // Send OTP for email verification
+  async sendOTP(userData) {
+    try {
+      return await authApi.sendOTP(userData);
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  // Verify OTP
+  async verifyOTP(verificationData) {
+    try {
+      return await authApi.verifyOTP(verificationData);
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  // Resend OTP
+  async resendOTP(emailData) {
+    try {
+      return await authApi.resendOTP(emailData);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // User signup (after OTP verification)
   async signup(userData) {
     try {
       const response = await authApi.signup(userData);
